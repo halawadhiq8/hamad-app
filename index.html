@@ -534,6 +534,13 @@
 .wallet-header{padding:4px 2px 14px;}
 .wallet-title{font-size:19px; font-weight:800; color:var(--text);}
 .wallet-subtitle{font-size:12.5px; color:var(--muted); margin-top:4px;}
+.wallet-month-nav{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:14px;}
+.wallet-month-arrow{width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--border); color:var(--text);
+  font-size:19px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.wallet-month-arrow:active{background:var(--card2);}
+.wallet-month-mid{display:flex; flex-direction:column; align-items:center; gap:4px; flex:1;}
+.wallet-month-label{font-size:15.5px; font-weight:800; color:var(--text);}
+.wallet-month-today{font-size:11px; color:var(--accent); background:none; border:none; padding:0; font-family:inherit;}
 .wallet-balance-card{background:var(--card); border:1px solid var(--border); border-radius:20px; padding:18px; margin-bottom:14px; box-shadow:0 6px 18px rgba(0,0,0,.22);}
 .wallet-balance-label{font-size:12px; color:var(--muted); text-align:left;}
 .wallet-balance-amount{font-size:34px; font-weight:800; text-align:left; margin:4px 0 14px; font-variant-numeric:tabular-nums;}
@@ -564,6 +571,10 @@
 .wallet-item-amount{font-weight:700; font-variant-numeric:tabular-nums; flex-shrink:0;}
 .wallet-item-name{flex:1; text-align:left; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .wallet-item-sub{font-size:11px; color:var(--muted); flex-shrink:0;}
+.wallet-renew-badge{font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:20px; flex-shrink:0; white-space:nowrap;}
+.wallet-renew-badge.ok{background:rgba(127,176,105,.15); color:var(--good);}
+.wallet-renew-badge.soon{background:rgba(224,164,88,.15); color:var(--accent);}
+.wallet-renew-badge.due{background:rgba(217,88,79,.15); color:var(--bad);}
 .wallet-empty-row{font-size:12.5px; color:var(--muted); text-align:center; padding:12px 0;}
 .wallet-add-row{display:flex; align-items:center; gap:6px; margin-top:10px; flex-wrap:wrap;}
 .wallet-add-btn{width:30px; height:30px; border-radius:50%; background:var(--accent2); color:var(--bg); border:none;
@@ -677,6 +688,15 @@
   <div class="wallet-header">
     <div class="wallet-title">ميزانيتي الشهرية</div>
     <div class="wallet-subtitle">تتبع دخلك، مصاريفك، والتزاماتك في مكان واحد</div>
+  </div>
+
+  <div class="wallet-month-nav">
+    <button class="wallet-month-arrow" onclick="walletChangeMonth(-1)">‹</button>
+    <div class="wallet-month-mid">
+      <div class="wallet-month-label" id="walletMonthLabel">أغسطس ٢٠٢٦</div>
+      <button class="wallet-month-today" id="walletMonthToday" onclick="walletGoToCurrentMonth()" style="display:none;">هذا الشهر</button>
+    </div>
+    <button class="wallet-month-arrow" onclick="walletChangeMonth(1)">›</button>
   </div>
 
   <div class="wallet-balance-card">
@@ -3126,9 +3146,54 @@ function resetNoteIconSettings(){
 /* ================= ميزانيتي (WALLET) ================= */
 let walletData = { income:[], ads:[], commit:[], subs:[] };
 const WALLET_TRASH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>';
+const WALLET_ARABIC_MONTHS = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+let walletViewYear = null;
+let walletViewMonth = null;
+function initWalletMonth(){
+  const now = new Date();
+  const saved = localStorage.getItem('rihala_wallet_month');
+  if(saved && /^\d+-\d+$/.test(saved)){
+    const parts = saved.split('-').map(Number);
+    walletViewYear = parts[0]; walletViewMonth = parts[1];
+  } else {
+    walletViewYear = now.getFullYear(); walletViewMonth = now.getMonth();
+  }
+}
+function walletChangeMonth(delta){
+  walletViewMonth += delta;
+  if(walletViewMonth < 0){ walletViewMonth = 11; walletViewYear--; }
+  if(walletViewMonth > 11){ walletViewMonth = 0; walletViewYear++; }
+  localStorage.setItem('rihala_wallet_month', walletViewYear+'-'+walletViewMonth);
+  renderWallet();
+}
+function walletGoToCurrentMonth(){
+  const now = new Date();
+  walletViewYear = now.getFullYear(); walletViewMonth = now.getMonth();
+  localStorage.setItem('rihala_wallet_month', walletViewYear+'-'+walletViewMonth);
+  renderWallet();
+}
+function walletIsTsInMonth(ts){
+  const d = new Date(ts);
+  return d.getFullYear()===walletViewYear && d.getMonth()===walletViewMonth;
+}
+function walletIsDateStrInMonth(dateStr){
+  if(!dateStr) return false;
+  const d = new Date(dateStr+'T00:00:00');
+  return d.getFullYear()===walletViewYear && d.getMonth()===walletViewMonth;
+}
+function walletEntryInMonth(en){
+  return en.date ? walletIsDateStrInMonth(en.date) : walletIsTsInMonth(en.createdAt);
+}
+function subsDaysLeft(dateStr){
+  if(!dateStr) return null;
+  const target = new Date(dateStr+'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  return Math.round((target - today) / 86400000);
+}
 function loadWallet(){
   try{ walletData = Object.assign({income:[],ads:[],commit:[],subs:[]}, JSON.parse(localStorage.getItem('rihala_wallet')||'{}')); }
   catch(e){ walletData = { income:[], ads:[], commit:[], subs:[] }; }
+  initWalletMonth();
   renderWallet();
 }
 function saveWalletStore(){ localStorage.setItem('rihala_wallet', JSON.stringify(walletData)); }
@@ -3137,10 +3202,20 @@ function renderWallet(){
   const balEl = document.getElementById('walletBalanceTxt');
   if(!balEl) return;
 
-  const incomeSum = walletData.income.reduce((s,e)=>s+(parseFloat(e.amount)||0), 0);
-  const adsReceived = walletData.ads.reduce((s,e)=>s+(parseFloat(e.deposit)||0), 0);
-  const adsRemaining = walletData.ads.reduce((s,e)=>s+Math.max(0,(parseFloat(e.value)||0)-(parseFloat(e.deposit)||0)), 0);
-  const commitSum = walletData.commit.reduce((s,e)=>s+(parseFloat(e.amount)||0), 0);
+  const monthLabel = WALLET_ARABIC_MONTHS[walletViewMonth] + ' ' + walletViewYear;
+  document.getElementById('walletMonthLabel').textContent = monthLabel;
+  const now = new Date();
+  const isCurrentMonth = walletViewYear===now.getFullYear() && walletViewMonth===now.getMonth();
+  document.getElementById('walletMonthToday').style.display = isCurrentMonth ? 'none' : 'block';
+
+  const monthIncome = walletData.income.filter(walletEntryInMonth);
+  const monthAds = walletData.ads.filter(walletEntryInMonth);
+  const monthCommit = walletData.commit.filter(walletEntryInMonth);
+
+  const incomeSum = monthIncome.reduce((s,e)=>s+(parseFloat(e.amount)||0), 0);
+  const adsReceived = monthAds.reduce((s,e)=>s+(parseFloat(e.deposit)||0), 0);
+  const adsRemaining = monthAds.reduce((s,e)=>s+Math.max(0,(parseFloat(e.value)||0)-(parseFloat(e.deposit)||0)), 0);
+  const commitSum = monthCommit.reduce((s,e)=>s+(parseFloat(e.amount)||0), 0);
   const subsSum = walletData.subs.reduce((s,e)=>s+(parseFloat(e.amount)||0), 0);
 
   const totalIncome = incomeSum + adsReceived;
@@ -3163,42 +3238,58 @@ function renderWallet(){
   document.getElementById('walletStatIncome').textContent = fmtKD(totalIncome);
 
   document.getElementById('walletIncomeTotal').textContent = fmtKD(incomeSum);
-  document.getElementById('walletAdsTotal').textContent = fmtKD(adsReceived) + (adsRemaining>0 ? ' · متبقي '+fmtKD(adsRemaining) : '');
+  document.getElementById('walletAdsTotal').textContent = monthAds.length+' إعلان · '+fmtKD(adsReceived) + (adsRemaining>0 ? ' · متبقي '+fmtKD(adsRemaining) : '');
   document.getElementById('walletCommitTotal').textContent = fmtKD(commitSum);
   document.getElementById('walletSubsTotal').textContent = fmtKD(subsSum);
 
   const emptyRow = (txt)=> '<div class="wallet-empty-row">'+txt+'</div>';
 
   const incomeList = document.getElementById('walletIncomeList');
-  incomeList.innerHTML = walletData.income.length ? walletData.income.slice().sort((a,b)=>b.createdAt-a.createdAt).map(en=>
+  incomeList.innerHTML = monthIncome.length ? monthIncome.slice().sort((a,b)=>b.createdAt-a.createdAt).map(en=>
     '<div class="wallet-cat-item" onclick="openWalletEdit(\'income\',\''+en.id+'\')"><button class="wallet-item-del" onclick="event.stopPropagation(); deleteWalletEntry(\'income\',\''+en.id+'\')">'+WALLET_TRASH_SVG+'</button>'+
     '<div class="wallet-item-amount">'+fmtKD(en.amount)+'</div>'+
     '<div><div class="wallet-item-name">'+(en.name||'دخل')+'</div>'+(en.note?'<div class="wallet-item-sub">'+en.note+'</div>':'')+'</div></div>'
-  ).join('') : emptyRow('لا يوجد دخل مسجل بعد');
+  ).join('') : emptyRow('لا يوجد دخل في '+monthLabel);
 
   const adsList = document.getElementById('walletAdsList');
-  adsList.innerHTML = walletData.ads.length ? walletData.ads.slice().sort((a,b)=>b.createdAt-a.createdAt).map(en=>{
+  adsList.innerHTML = monthAds.length ? monthAds.slice().sort((a,b)=>b.createdAt-a.createdAt).map(en=>{
     const rem = Math.max(0,(parseFloat(en.value)||0)-(parseFloat(en.deposit)||0));
     const sub = (en.note?en.note+' · ':'') + 'مستلم '+fmtKD(en.deposit) + (rem>0 ? ' · متبقي '+fmtKD(rem) : '');
     return '<div class="wallet-cat-item" onclick="openWalletEdit(\'ads\',\''+en.id+'\')"><button class="wallet-item-del" onclick="event.stopPropagation(); deleteWalletEntry(\'ads\',\''+en.id+'\')">'+WALLET_TRASH_SVG+'</button>'+
       '<div class="wallet-item-amount">'+fmtKD(en.deposit)+'</div>'+
       '<div><div class="wallet-item-name">'+(en.name||'إعلان')+'</div><div class="wallet-item-sub">'+sub+'</div></div></div>';
-  }).join('') : emptyRow('لا توجد إعلانات مسجلة بعد');
+  }).join('') : emptyRow('لا توجد إعلانات في '+monthLabel);
 
   const commitList = document.getElementById('walletCommitList');
-  commitList.innerHTML = walletData.commit.length ? walletData.commit.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.createdAt-a.createdAt).map(en=>{
+  commitList.innerHTML = monthCommit.length ? monthCommit.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.createdAt-a.createdAt).map(en=>{
     const dateTxt = en.date ? new Date(en.date+'T00:00:00').toLocaleDateString('ar-KW', {day:'numeric', month:'short'}) : '';
     return '<div class="wallet-cat-item" onclick="openWalletEdit(\'commit\',\''+en.id+'\')"><button class="wallet-item-del" onclick="event.stopPropagation(); deleteWalletEntry(\'commit\',\''+en.id+'\')">'+WALLET_TRASH_SVG+'</button>'+
       '<div class="wallet-item-amount">'+fmtKD(en.amount)+'</div>'+
       '<div><div class="wallet-item-name">'+(en.name||'التزام')+'</div>'+(dateTxt?'<div class="wallet-item-sub">'+dateTxt+'</div>':'')+'</div></div>';
-  }).join('') : emptyRow('لا توجد التزامات مسجلة بعد');
+  }).join('') : emptyRow('لا توجد التزامات في '+monthLabel);
 
   const subsList = document.getElementById('walletSubsList');
-  subsList.innerHTML = walletData.subs.length ? walletData.subs.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.createdAt-a.createdAt).map(en=>{
+  const sortedSubs = walletData.subs.slice().sort((a,b)=>{
+    const da = subsDaysLeft(a.date), db = subsDaysLeft(b.date);
+    if(da===null && db===null) return b.createdAt-a.createdAt;
+    if(da===null) return 1;
+    if(db===null) return -1;
+    return da-db;
+  });
+  subsList.innerHTML = sortedSubs.length ? sortedSubs.map(en=>{
     const dateTxt = en.date ? new Date(en.date+'T00:00:00').toLocaleDateString('ar-KW', {day:'numeric', month:'short'}) : '';
+    const daysLeft = subsDaysLeft(en.date);
+    let badge = '';
+    if(daysLeft !== null){
+      let cls = 'ok', txt = 'باقي '+daysLeft+' يوم';
+      if(daysLeft < 0){ cls='due'; txt='متأخر '+Math.abs(daysLeft)+' يوم'; }
+      else if(daysLeft === 0){ cls='due'; txt='ينتهي اليوم'; }
+      else if(daysLeft <= 5){ cls='soon'; }
+      badge = '<span class="wallet-renew-badge '+cls+'">'+txt+'</span>';
+    }
     return '<div class="wallet-cat-item" onclick="openWalletEdit(\'subs\',\''+en.id+'\')"><button class="wallet-item-del" onclick="event.stopPropagation(); deleteWalletEntry(\'subs\',\''+en.id+'\')">'+WALLET_TRASH_SVG+'</button>'+
       '<div class="wallet-item-amount">'+fmtKD(en.amount)+'</div>'+
-      '<div><div class="wallet-item-name">'+(en.name||'اشتراك')+'</div>'+(dateTxt?'<div class="wallet-item-sub">'+dateTxt+'</div>':'')+'</div></div>';
+      '<div style="flex:1;"><div class="wallet-item-name">'+(en.name||'اشتراك')+'</div>'+(dateTxt?'<div class="wallet-item-sub">يتجدد '+dateTxt+'</div>':'')+'</div>'+badge+'</div>';
   }).join('') : emptyRow('لا توجد اشتراكات مسجلة بعد');
 }
 function clearWalletDate(id){
@@ -3300,8 +3391,9 @@ function openWalletEdit(category, id){
   } else if(category==='commit' || category==='subs'){
     const amtLabel = category==='commit' ? 'مبلغ الالتزام' : 'مبلغ الاشتراك';
     const nameLabel = category==='commit' ? 'اسم الالتزام' : 'اسم البرنامج';
+    const dateLabel = category==='commit' ? 'التاريخ' : 'تاريخ التجديد القادم';
     html += '<div class="field"><label>المبلغ (د.ك)</label><input class="wallet-mini-input" style="width:100%; text-align:right; padding:11px 12px;" id="we-amount" readonly onclick="openWalletKeypad(\'we-amount\',\''+amtLabel+'\')" value="'+(en.amount||'')+'"></div>';
-    html += '<div class="field"><label>التاريخ</label><div class="field-date-row"><input type="date" id="we-date" value="'+(en.date||'')+'"><button class="wallet-date-clear" onclick="clearWalletDate(\'we-date\')" title="بدون تاريخ">×</button></div></div>';
+    html += '<div class="field"><label>'+dateLabel+'</label><div class="field-date-row"><input type="date" id="we-date" value="'+(en.date||'')+'"><button class="wallet-date-clear" onclick="clearWalletDate(\'we-date\')" title="بدون تاريخ">×</button></div></div>';
     html += '<div class="field"><label>'+nameLabel+'</label><input type="text" id="we-name" value="'+weEsc(en.name)+'"></div>';
   }
   fields.innerHTML = html;
