@@ -534,13 +534,12 @@
 .wallet-header{padding:4px 2px 14px;}
 .wallet-title{font-size:19px; font-weight:800; color:var(--text);}
 .wallet-subtitle{font-size:12.5px; color:var(--muted); margin-top:4px;}
-.wallet-month-nav{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:14px;}
-.wallet-month-arrow{width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--border); color:var(--text);
-  font-size:19px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
-.wallet-month-arrow:active{background:var(--card2);}
-.wallet-month-mid{display:flex; flex-direction:column; align-items:center; gap:4px; flex:1;}
-.wallet-month-label{font-size:15.5px; font-weight:800; color:var(--text);}
-.wallet-month-today{font-size:11px; color:var(--accent); background:none; border:none; padding:0; font-family:inherit;}
+.wallet-month-strip{display:flex; gap:8px; overflow-x:auto; padding:2px 2px 14px; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
+.wallet-month-strip::-webkit-scrollbar{display:none;}
+.wallet-month-chip{flex-shrink:0; min-width:56px; padding:8px 10px; border-radius:14px; background:var(--card); border:1px solid var(--border);
+  color:var(--muted); font-size:12px; font-weight:700; text-align:center; scroll-snap-align:center;}
+.wallet-month-chip .yr{display:block; font-size:9px; font-weight:600; opacity:.75; margin-top:1px;}
+.wallet-month-chip.active{background:var(--accent); color:#14151f; border-color:var(--accent);}
 .wallet-balance-card{background:var(--card); border:1px solid var(--border); border-radius:20px; padding:18px; margin-bottom:14px; box-shadow:0 6px 18px rgba(0,0,0,.22);}
 .wallet-balance-label{font-size:12px; color:var(--muted); text-align:left;}
 .wallet-balance-amount{font-size:34px; font-weight:800; text-align:left; margin:4px 0 14px; font-variant-numeric:tabular-nums;}
@@ -551,11 +550,17 @@
 .wallet-progress-rem{height:100%; background:var(--good);}
 .wallet-balance-foot{display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted);}
 .wallet-balance-foot b{color:var(--text); font-weight:700;}
-.wallet-stats-row{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px;}
-.wallet-stat-card{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:10px; text-align:center;}
-.wallet-stat-label{display:flex; align-items:center; justify-content:center; gap:5px; font-size:10.5px; color:var(--muted); margin-bottom:6px;}
-.wallet-stat-dot{width:7px; height:7px; border-radius:50%; flex-shrink:0;}
-.wallet-stat-val{font-size:14px; font-weight:800; font-variant-numeric:tabular-nums;}
+.wallet-donut-card{display:flex; align-items:center; gap:16px; margin-bottom:14px;}
+.wallet-donut-svg{flex-shrink:0; width:104px; height:104px; position:relative;}
+.wallet-donut-svg svg{width:100%; height:100%;}
+.wallet-donut-center{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+.wallet-donut-center-label{font-size:9px; color:var(--muted);}
+.wallet-donut-center-amount{font-size:12.5px; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums;}
+.wallet-donut-legend{flex:1; display:flex; flex-direction:column; gap:9px; min-width:0;}
+.wallet-donut-legend-row{display:flex; align-items:center; gap:8px; font-size:12px;}
+.wallet-donut-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
+.wallet-donut-label{flex:1; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.wallet-donut-amount{font-weight:700; color:var(--text); font-variant-numeric:tabular-nums; flex-shrink:0;}
 .wallet-cat-card{margin-bottom:14px;}
 .wallet-cat-head{display:flex; align-items:center; gap:7px; margin-bottom:10px;}
 .wallet-cat-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
@@ -621,6 +626,8 @@
 <div class="topbar hero-topbar">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
+  <button class="hero-img-editbtn topbar-img-editbtn" onclick="triggerTopbarImgUpload()" title="تغيير الصورة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="14" r="3.4"/></svg></button>
+  <input type="file" accept="image/*" id="topbarImgUploadInput" style="display:none;" onchange="onTopbarImgSelected(event)">
   <h1>Hamad Al Awadhi</h1>
   <div class="locrow">
     <span id="locLabel">جارٍ تحديد الموقع…</span>
@@ -690,14 +697,7 @@
     <div class="wallet-subtitle">تتبع دخلك، مصاريفك، والتزاماتك في مكان واحد</div>
   </div>
 
-  <div class="wallet-month-nav">
-    <button class="wallet-month-arrow" onclick="walletChangeMonth(-1)">‹</button>
-    <div class="wallet-month-mid">
-      <div class="wallet-month-label" id="walletMonthLabel">أغسطس ٢٠٢٦</div>
-      <button class="wallet-month-today" id="walletMonthToday" onclick="walletGoToCurrentMonth()" style="display:none;">هذا الشهر</button>
-    </div>
-    <button class="wallet-month-arrow" onclick="walletChangeMonth(1)">›</button>
-  </div>
+  <div class="wallet-month-strip" id="walletMonthStrip"></div>
 
   <div class="wallet-balance-card">
     <div class="wallet-balance-label">الرصيد المتبقي شهرياً</div>
@@ -709,19 +709,9 @@
     </div>
   </div>
 
-  <div class="wallet-stats-row">
-    <div class="wallet-stat-card">
-      <div class="wallet-stat-label"><span class="wallet-stat-dot" style="background:#e8c14a;"></span>الاشتراكات</div>
-      <div class="wallet-stat-val" style="color:#e8c14a;" id="walletStatSubs">0 د.ك</div>
-    </div>
-    <div class="wallet-stat-card">
-      <div class="wallet-stat-label"><span class="wallet-stat-dot" style="background:var(--bad);"></span>الالتزامات والمصاريف</div>
-      <div class="wallet-stat-val" style="color:var(--bad);" id="walletStatCommit">0 د.ك</div>
-    </div>
-    <div class="wallet-stat-card">
-      <div class="wallet-stat-label"><span class="wallet-stat-dot" style="background:var(--good);"></span>الدخل</div>
-      <div class="wallet-stat-val" style="color:var(--good);" id="walletStatIncome">0 د.ك</div>
-    </div>
+  <div class="card wallet-donut-card">
+    <div class="wallet-donut-svg" id="walletDonutSvg"></div>
+    <div class="wallet-donut-legend" id="walletDonutLegend"></div>
   </div>
 
   <!-- INCOME -->
@@ -1296,6 +1286,11 @@
     <div class="storage-detail-head" style="margin-bottom:16px;">
       <button class="backbtn" onclick="closeHeroImgSettings()"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="storage-detail-title">تحكم بصورة سيارتي</div>
+    </div>
+    <input type="file" accept="image/*" id="heroImgUploadInput" style="display:none;" onchange="onHeroImgSelected(event)">
+    <div class="modal-actions" style="margin-bottom:14px;">
+      <button class="btn secondary" onclick="triggerHeroImgUpload()">تغيير الصورة</button>
+      <button class="btn secondary" onclick="resetHeroImgSrc()">الصورة الافتراضية</button>
     </div>
     <div class="field">
       <label>ارتفاع الصورة <span class="field-val" id="his-h-val">180px</span></label>
@@ -2914,6 +2909,53 @@ function applyHeroImgSettings(s){
   root.setProperty('--hero-pos-x', s.x+'%');
   root.setProperty('--hero-pos-y', s.y+'%');
 }
+function loadHeroImgSrc(){
+  const saved = localStorage.getItem('rihala_hero_img_src');
+  if(saved) document.documentElement.style.setProperty('--hero-img', "url('"+saved+"')");
+}
+function resizeImageFileToDataUrl(file, maxW, cb){
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = function(){
+      let w = img.width, h = img.height;
+      if(w > maxW){ h = Math.round(h*maxW/w); w = maxW; }
+      const canvas = document.createElement('canvas'); canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      cb(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function triggerHeroImgUpload(){ document.getElementById('heroImgUploadInput').click(); }
+function onHeroImgSelected(e){
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  resizeImageFileToDataUrl(file, 1000, function(dataUrl){
+    localStorage.setItem('rihala_hero_img_src', dataUrl);
+    document.documentElement.style.setProperty('--hero-img', "url('"+dataUrl+"')");
+    e.target.value='';
+  });
+}
+function resetHeroImgSrc(){
+  localStorage.removeItem('rihala_hero_img_src');
+  document.documentElement.style.removeProperty('--hero-img');
+}
+function loadTopbarImgSrc(){
+  const saved = localStorage.getItem('rihala_topbar_img_src');
+  if(saved) document.documentElement.style.setProperty('--topbar-img', "url('"+saved+"')");
+}
+function triggerTopbarImgUpload(){ document.getElementById('topbarImgUploadInput').click(); }
+function onTopbarImgSelected(e){
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  resizeImageFileToDataUrl(file, 1000, function(dataUrl){
+    localStorage.setItem('rihala_topbar_img_src', dataUrl);
+    document.documentElement.style.setProperty('--topbar-img', "url('"+dataUrl+"')");
+    e.target.value='';
+  });
+}
 function openHeroImgSettings(){
   let s;
   try{ s = JSON.parse(localStorage.getItem('rihala_hero_img_settings')||'null'); }catch(e){ s = null; }
@@ -3146,7 +3188,7 @@ function resetNoteIconSettings(){
 /* ================= ميزانيتي (WALLET) ================= */
 let walletData = { income:[], ads:[], commit:[], subs:[] };
 const WALLET_TRASH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>';
-const WALLET_ARABIC_MONTHS = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const WALLET_ARABIC_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 let walletViewYear = null;
 let walletViewMonth = null;
 function initWalletMonth(){
@@ -3159,18 +3201,30 @@ function initWalletMonth(){
     walletViewYear = now.getFullYear(); walletViewMonth = now.getMonth();
   }
 }
-function walletChangeMonth(delta){
-  walletViewMonth += delta;
-  if(walletViewMonth < 0){ walletViewMonth = 11; walletViewYear--; }
-  if(walletViewMonth > 11){ walletViewMonth = 0; walletViewYear++; }
+function walletSelectMonth(y, m){
+  walletViewYear = y; walletViewMonth = m;
   localStorage.setItem('rihala_wallet_month', walletViewYear+'-'+walletViewMonth);
   renderWallet();
 }
-function walletGoToCurrentMonth(){
+function renderWalletMonthStrip(){
+  const strip = document.getElementById('walletMonthStrip');
+  if(!strip) return;
   const now = new Date();
-  walletViewYear = now.getFullYear(); walletViewMonth = now.getMonth();
-  localStorage.setItem('rihala_wallet_month', walletViewYear+'-'+walletViewMonth);
-  renderWallet();
+  const chips = [];
+  for(let i=-12; i<=12; i++){
+    let y = now.getFullYear(), m = now.getMonth() + i;
+    while(m < 0){ m += 12; y--; }
+    while(m > 11){ m -= 12; y++; }
+    chips.push({y, m});
+  }
+  const activeIdx = chips.findIndex(c => c.y===walletViewYear && c.m===walletViewMonth);
+  strip.innerHTML = chips.map((c,idx)=>{
+    const active = c.y===walletViewYear && c.m===walletViewMonth;
+    return '<button class="wallet-month-chip'+(active?' active':'')+'" data-idx="'+idx+'" onclick="walletSelectMonth('+c.y+','+c.m+')">'+
+      WALLET_ARABIC_MONTHS[c.m].slice(0,3)+'<span class="yr">'+c.y+'</span></button>';
+  }).join('');
+  const activeChip = strip.querySelector('.wallet-month-chip.active');
+  if(activeChip && typeof activeChip.scrollIntoView === 'function') activeChip.scrollIntoView({inline:'center', block:'nearest'});
 }
 function walletIsTsInMonth(ts){
   const d = new Date(ts);
@@ -3198,15 +3252,40 @@ function loadWallet(){
 }
 function saveWalletStore(){ localStorage.setItem('rihala_wallet', JSON.stringify(walletData)); }
 function fmtKD(n){ return (parseFloat(n)||0).toFixed(3) + ' د.ك'; }
+function renderWalletDonut(segments){
+  const svgEl = document.getElementById('walletDonutSvg');
+  const legendEl = document.getElementById('walletDonutLegend');
+  if(!svgEl || !legendEl) return;
+  const total = segments.reduce((s,x)=>s+x.value, 0);
+  const r = 40, cx = 52, cy = 52, sw = 14;
+  const circumference = 2 * Math.PI * r;
+  let offset = 0;
+  let circles = '';
+  if(total <= 0){
+    circles = '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="var(--border)" stroke-width="'+sw+'"/>';
+  } else {
+    segments.forEach(seg=>{
+      if(seg.value <= 0) return;
+      const frac = seg.value / total;
+      const arcLen = frac * circumference;
+      circles += '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+seg.color+'" stroke-width="'+sw+'" '+
+        'stroke-dasharray="'+arcLen.toFixed(2)+' '+(circumference-arcLen).toFixed(2)+'" stroke-dashoffset="'+(-offset).toFixed(2)+'"/>';
+      offset += arcLen;
+    });
+  }
+  svgEl.innerHTML = '<svg viewBox="0 0 104 104"><g transform="rotate(-90 52 52)">'+circles+'</g></svg>'+
+    '<div class="wallet-donut-center"><div class="wallet-donut-center-label">الإجمالي</div><div class="wallet-donut-center-amount">'+fmtKD(total)+'</div></div>';
+  legendEl.innerHTML = segments.map(seg=>
+    '<div class="wallet-donut-legend-row"><span class="wallet-donut-dot" style="background:'+seg.color+';"></span>'+
+    '<span class="wallet-donut-label">'+seg.label+'</span><span class="wallet-donut-amount">'+fmtKD(seg.value)+'</span></div>'
+  ).join('');
+}
 function renderWallet(){
   const balEl = document.getElementById('walletBalanceTxt');
   if(!balEl) return;
 
   const monthLabel = WALLET_ARABIC_MONTHS[walletViewMonth] + ' ' + walletViewYear;
-  document.getElementById('walletMonthLabel').textContent = monthLabel;
-  const now = new Date();
-  const isCurrentMonth = walletViewYear===now.getFullYear() && walletViewMonth===now.getMonth();
-  document.getElementById('walletMonthToday').style.display = isCurrentMonth ? 'none' : 'block';
+  renderWalletMonthStrip();
 
   const monthIncome = walletData.income.filter(walletEntryInMonth);
   const monthAds = walletData.ads.filter(walletEntryInMonth);
@@ -3233,9 +3312,12 @@ function renderWallet(){
   document.getElementById('walletTotalExpenseTxt').textContent = fmtKD(totalExpense);
   document.getElementById('walletTotalIncomeTxt').textContent = fmtKD(totalIncome);
 
-  document.getElementById('walletStatSubs').textContent = fmtKD(subsSum);
-  document.getElementById('walletStatCommit').textContent = fmtKD(commitSum);
-  document.getElementById('walletStatIncome').textContent = fmtKD(totalIncome);
+  renderWalletDonut([
+    {label:'الدخل', value:incomeSum, color:'var(--good)'},
+    {label:'الإعلانات', value:adsReceived, color:'#6fa3d9'},
+    {label:'الالتزامات والمصاريف', value:commitSum, color:'var(--bad)'},
+    {label:'الاشتراكات', value:subsSum, color:'#e8c14a'}
+  ]);
 
   document.getElementById('walletIncomeTotal').textContent = fmtKD(incomeSum);
   document.getElementById('walletAdsTotal').textContent = monthAds.length+' إعلان · '+fmtKD(adsReceived) + (adsRemaining>0 ? ' · متبقي '+fmtKD(adsRemaining) : '');
@@ -3262,7 +3344,7 @@ function renderWallet(){
 
   const commitList = document.getElementById('walletCommitList');
   commitList.innerHTML = monthCommit.length ? monthCommit.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.createdAt-a.createdAt).map(en=>{
-    const dateTxt = en.date ? new Date(en.date+'T00:00:00').toLocaleDateString('ar-KW', {day:'numeric', month:'short'}) : '';
+    const dateTxt = en.date ? new Date(en.date+'T00:00:00').toLocaleDateString('en-GB', {day:'numeric', month:'short'}) : '';
     return '<div class="wallet-cat-item" onclick="openWalletEdit(\'commit\',\''+en.id+'\')"><button class="wallet-item-del" onclick="event.stopPropagation(); deleteWalletEntry(\'commit\',\''+en.id+'\')">'+WALLET_TRASH_SVG+'</button>'+
       '<div class="wallet-item-amount">'+fmtKD(en.amount)+'</div>'+
       '<div><div class="wallet-item-name">'+(en.name||'التزام')+'</div>'+(dateTxt?'<div class="wallet-item-sub">'+dateTxt+'</div>':'')+'</div></div>';
@@ -3277,7 +3359,7 @@ function renderWallet(){
     return da-db;
   });
   subsList.innerHTML = sortedSubs.length ? sortedSubs.map(en=>{
-    const dateTxt = en.date ? new Date(en.date+'T00:00:00').toLocaleDateString('ar-KW', {day:'numeric', month:'short'}) : '';
+    const dateTxt = en.date ? new Date(en.date+'T00:00:00').toLocaleDateString('en-GB', {day:'numeric', month:'short'}) : '';
     const daysLeft = subsDaysLeft(en.date);
     let badge = '';
     if(daysLeft !== null){
@@ -4431,6 +4513,8 @@ function buildStarfield(){
 }
 function init(){
   document.getElementById('locLabel').textContent = LOC.label + ' · ' + LOC.lat.toFixed(3)+', '+LOC.lng.toFixed(3);
+  loadHeroImgSrc();
+  loadTopbarImgSrc();
   loadHeroImgSettings();
   loadHomeNotes();
   loadNoteIconSettings();
