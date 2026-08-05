@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rihala-cache-v6';
+const CACHE_NAME = 'rihala-cache-v7';
 const APP_SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png', './favicon-16.png', './favicon.ico'];
 
 self.addEventListener('install', function(event){
