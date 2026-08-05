@@ -645,7 +645,7 @@
 </div>
 
 <!-- TAB 0: HOME -->
-<div class="tab active" id="tab-home">
+<div class="tab active show" id="tab-home">
   <div class="home-greet-row">
     <div class="home-greet-left">
       <div class="home-logo-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.3 8.7l-2.4 4.6-4.6 2.4 2.4-4.6 4.6-2.4z" fill="currentColor" stroke="none"/><path d="M12 2.3v2M12 19.7v2M2.3 12h2M19.7 12h2"/></svg></div>
@@ -4520,6 +4520,8 @@ function buildStarfield(){
   setTimeout(loopShoot, 2500);
 }
 function init(){
+  preloadMoonTexture();
+  document.querySelectorAll('.tab.active').forEach(t=>t.classList.add('show'));
   document.getElementById('locLabel').textContent = LOC.label + ' · ' + LOC.lat.toFixed(3)+', '+LOC.lng.toFixed(3);
   loadHeroImgSrc();
   loadTopbarImgSrc();
@@ -4542,10 +4544,6 @@ function init(){
   updateCoordsTopMap();
   updateHomeMap();
   loadHomeWeather();
-  preloadMoonTexture();
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    document.querySelectorAll('.tab.active').forEach(t=>t.classList.add('show'));
-  }));
   setInterval(recalcAll, 20000);
 }
 function preloadMoonTexture(){
