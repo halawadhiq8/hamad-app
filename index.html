@@ -1739,6 +1739,7 @@ function showTab(id, btn){
     if(id==='tab-qibla' && !compassEnabled) enableCompass();
     if(id==='tab-coords') updateCoordsTopMap();
     if(id==='tab-home'){ updateHomeMap(); loadHomeWeather(); }
+    if(id==='tab-sun') renderMoonInstant();
     return;
   }
   document.querySelectorAll('.tab').forEach(t=>{ t.classList.remove('active'); t.classList.remove('show'); });
@@ -1750,6 +1751,7 @@ function showTab(id, btn){
   if(id==='tab-qibla' && !compassEnabled) enableCompass();
   if(id==='tab-coords') updateCoordsTopMap();
   if(id==='tab-home'){ updateHomeMap(); loadHomeWeather(); }
+  if(id==='tab-sun') renderMoonInstant();
 }
 function goToTab(id){
   const btn = document.querySelector('.tabbtn[data-tab="'+id+'"]');
@@ -4481,6 +4483,18 @@ function renderMoon(now){
   const riseEl = document.getElementById('moonRiseTime'), setEl = document.getElementById('moonSetTime');
   if(riseEl) riseEl.textContent = rs.rise ? rs.rise.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : 'لا يوجد اليوم';
   if(setEl) setEl.textContent = rs.set ? rs.set.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : 'لا يوجد اليوم';
+}
+function renderMoonInstant(){
+  const shadowEl = document.getElementById('moonShadowCircle');
+  if(shadowEl){
+    const prevTransition = shadowEl.style.transition;
+    shadowEl.style.transition = 'none';
+    renderMoon(new Date());
+    void shadowEl.offsetWidth;
+    shadowEl.style.transition = prevTransition;
+  } else {
+    renderMoon(new Date());
+  }
 }
 
 function recalcAll(){
