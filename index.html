@@ -34,7 +34,8 @@
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI",Tahoma,sans-serif;
     min-height:100%; overscroll-behavior:none; -webkit-overflow-scrolling:touch;}
-  body{padding-bottom:calc(150px + env(safe-area-inset-bottom)); padding-top:env(safe-area-inset-top); overflow-y:auto;}
+  body{padding-bottom:calc(150px + env(safe-area-inset-bottom)); padding-top:env(safe-area-inset-top); overflow-y:auto;
+    min-height:calc(100vh + 4px); min-height:calc(100dvh + 4px);}
   .topbar{position:sticky; top:0; z-index:10; background:rgba(21,22,27,.92); backdrop-filter:blur(10px);
     padding:14px 16px 10px; border-bottom:1px solid var(--border);}
   .topbar h1{font-size:19px; margin:0 0 6px;}
@@ -224,6 +225,28 @@
   .ar-target.sunset .ar-target-dot{background:radial-gradient(circle, rgba(255,107,74,.95), rgba(255,107,74,0));
     box-shadow:0 0 18px 6px rgba(255,107,74,.55);}
   .ar-target.sunset.onaim .ar-target-dot{background:radial-gradient(circle, rgba(94,208,138,.95), rgba(94,208,138,0)); box-shadow:0 0 22px 8px rgba(94,208,138,.6);}
+
+  /* ---- AR edge-of-screen direction arrows (sunrise / sunset finder) ---- */
+  .ar-edge{position:absolute; top:50%; left:50%; z-index:3; display:flex; flex-direction:column; align-items:center; gap:3px;
+    opacity:0; pointer-events:none; transition:opacity .3s ease, transform .12s linear;}
+  .ar-edge.show{opacity:1;}
+  .ar-edge-glow{position:absolute; top:16px; left:50%; width:52px; height:52px; margin-left:-26px; border-radius:50%; z-index:-1;
+    background:radial-gradient(circle, rgba(224,164,88,.5), rgba(224,164,88,0) 70%); animation:arEdgePulse 1.8s ease-in-out infinite;}
+  @keyframes arEdgePulse{0%,100%{transform:scale(.8); opacity:.55;} 50%{transform:scale(1.22); opacity:1;}}
+  .ar-edge-bob{animation:arEdgeBob 1.5s ease-in-out infinite;}
+  @keyframes arEdgeBob{0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);}}
+  .ar-edge-rotor{width:34px; height:42px; transition:transform .15s linear;}
+  .ar-edge-rotor svg{width:100%; height:100%; overflow:visible; display:block;}
+  .ar-edge-chevron .tip{fill:var(--accent); filter:drop-shadow(0 0 9px rgba(224,164,88,.85));}
+  .ar-edge-chevron .core{fill:#fff3d6; opacity:.9;}
+  .ar-edge-badge{display:flex; align-items:center; gap:5px; background:linear-gradient(135deg, rgba(224,164,88,.95), rgba(240,192,120,.95));
+    color:#251a02; font-size:11.5px; font-weight:700; padding:4px 11px 4px 8px; border-radius:14px; white-space:nowrap;
+    box-shadow:0 3px 10px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.25);}
+  .ar-edge-ic{width:14px; height:14px; flex-shrink:0;}
+  .ar-edge-deg{font-variant-numeric:tabular-nums;}
+  .ar-edge.sunset .ar-edge-glow{background:radial-gradient(circle, rgba(255,112,67,.5), rgba(255,112,67,0) 70%);}
+  .ar-edge.sunset .ar-edge-chevron .tip{fill:#ff7a52; filter:drop-shadow(0 0 9px rgba(255,112,67,.85));}
+  .ar-edge.sunset .ar-edge-badge{background:linear-gradient(135deg, rgba(255,112,67,.95), rgba(255,158,94,.95)); color:#2a0d04;}
 
   /* ---- Sun phase list (interactive illustrated rows) ---- */
   .phase-list{display:flex; flex-direction:column;}
@@ -867,6 +890,30 @@
   <div id="sunArTargetSet" class="ar-target sunset">
     <div class="ar-target-dot"></div>
     <div class="ar-target-label" id="sunArSetLabel">غروب</div>
+  </div>
+  <div id="sunArArrowRise" class="ar-edge sunrise">
+    <div class="ar-edge-glow"></div>
+    <div class="ar-edge-bob">
+      <div class="ar-edge-rotor">
+        <svg viewBox="0 0 40 50" class="ar-edge-chevron"><polygon class="tip" points="20,0 37,32 25,32 25,50 15,50 15,32 3,32"/><polygon class="core" points="20,7 30,28 22,28 22,42 18,42 18,28 10,28"/></svg>
+      </div>
+    </div>
+    <div class="ar-edge-badge">
+      <svg viewBox="0 0 24 24" class="ar-edge-ic" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 0 1 4 4h-8a4 4 0 0 1 4-4z"/><path d="M12 3.6v2M6.2 7.8l1.4 1.4M17.8 7.8l-1.4 1.4"/><path d="M2.5 16h19"/></svg>
+      <span class="ar-edge-deg">--°</span>
+    </div>
+  </div>
+  <div id="sunArArrowSet" class="ar-edge sunset">
+    <div class="ar-edge-glow"></div>
+    <div class="ar-edge-bob">
+      <div class="ar-edge-rotor">
+        <svg viewBox="0 0 40 50" class="ar-edge-chevron"><polygon class="tip" points="20,0 37,32 25,32 25,50 15,50 15,32 3,32"/><polygon class="core" points="20,7 30,28 22,28 22,42 18,42 18,28 10,28"/></svg>
+      </div>
+    </div>
+    <div class="ar-edge-badge">
+      <svg viewBox="0 0 24 24" class="ar-edge-ic" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 0 1 4 4h-8a4 4 0 0 1 4-4z"/><path d="M12 3.6v2M6.2 7.8l1.4 1.4M17.8 7.8l-1.4 1.4"/><path d="M2.5 16h19"/></svg>
+      <span class="ar-edge-deg">--°</span>
+    </div>
   </div>
   <div class="ar-guidance">
     <div id="sunArGuideH" class="ar-guide-row">--</div>
@@ -1974,7 +2021,8 @@ function positionSunArTarget(elId, az, alt, heading, elevation){
   const altDiff = alt - elevation;
   const withinH = Math.abs(azDiff) < AR_HFOV*0.6;
   const withinV = Math.abs(altDiff) < AR_VFOV*0.6;
-  if(withinH && withinV){
+  const inView = withinH && withinV;
+  if(inView){
     const xPct = (azDiff / AR_HFOV) * 100;
     const yPct = -(altDiff / AR_VFOV) * 100;
     target.style.transform = 'translate(calc(-50% + '+xPct.toFixed(1)+'vw), calc(-50% + '+yPct.toFixed(1)+'vh))';
@@ -1984,7 +2032,29 @@ function positionSunArTarget(elId, az, alt, heading, elevation){
   }
   const onAim = Math.abs(azDiff) < 4 && Math.abs(altDiff) < 4;
   target.classList.toggle('onaim', onAim);
+  positionSunArEdgeArrow(elId.replace('Target','Arrow'), azDiff, altDiff, inView);
   return {azDiff:azDiff, altDiff:altDiff};
+}
+function positionSunArEdgeArrow(wrapId, azDiff, altDiff, inView){
+  const wrap = document.getElementById(wrapId);
+  if(!wrap) return;
+  if(inView){ wrap.classList.remove('show'); return; }
+  const xRaw = (azDiff / AR_HFOV) * 100;
+  const yRaw = -(altDiff / AR_VFOV) * 100;
+  const xBound = 38, yBound = yRaw < 0 ? 30 : 25;
+  let s = 1;
+  if(Math.abs(xRaw) > 0.01) s = Math.min(s, xBound/Math.abs(xRaw));
+  if(Math.abs(yRaw) > 0.01) s = Math.min(s, yBound/Math.abs(yRaw));
+  const x = xRaw*s, y = yRaw*s;
+  wrap.style.transform = 'translate(calc(-50% + '+x.toFixed(1)+'vw), calc(-50% + '+y.toFixed(1)+'vh))';
+  const rotor = wrap.querySelector('.ar-edge-rotor');
+  if(rotor){
+    const angle = Math.atan2(azDiff, altDiff) * 180/Math.PI;
+    rotor.style.transform = 'rotate('+angle.toFixed(1)+'deg)';
+  }
+  const degEl = wrap.querySelector('.ar-edge-deg');
+  if(degEl) degEl.textContent = Math.round(Math.hypot(azDiff, altDiff))+'°';
+  wrap.classList.add('show');
 }
 function sunArLoop(ts){
   if(!sunArActive){ sunArRafId = null; return; }
