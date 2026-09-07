@@ -252,6 +252,60 @@
   .ar-edge.sunset .ar-edge-chevron .tip{fill:#ff7a52; filter:drop-shadow(0 0 9px rgba(255,112,67,.85));}
   .ar-edge.sunset .ar-edge-badge{background:linear-gradient(135deg, rgba(255,112,67,.95), rgba(255,158,94,.95)); color:#2a0d04;}
 
+  /* ---- AR Milky Way finder: 3 selectable creative styles ---- */
+  .mw-style-switch{position:absolute; top:calc(58px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); z-index:6;
+    display:flex; gap:6px; background:rgba(10,14,22,.55); padding:5px; border-radius:16px; backdrop-filter:blur(6px);}
+  .mw-style-btn{background:none; border:none; color:rgba(255,255,255,.65); font-size:11.5px; font-weight:600; padding:6px 10px; border-radius:12px; white-space:nowrap;}
+  .mw-style-btn.active{background:linear-gradient(135deg, #8b5cf6, #38bdf8); color:#0b0620; box-shadow:0 2px 8px rgba(139,92,246,.5);}
+  .mw-visual{position:relative; width:120px; height:44px; display:flex; align-items:center; justify-content:center;}
+  .mw-vis-band, .mw-vis-orb, .mw-vis-comet{display:none;}
+  #arOverlay.mw-style-band .mw-vis-band{display:block;}
+  #arOverlay.mw-style-orb .mw-vis-orb{display:block;}
+  #arOverlay.mw-style-comet .mw-vis-comet{display:block;}
+  /* style 1: shariit al-majarra (galaxy band) */
+  .mw-vis-band{position:relative; width:120px; height:36px;}
+  .mw-band-glow{position:absolute; inset:-6px 0; border-radius:20px;
+    background:linear-gradient(90deg, transparent, rgba(139,92,246,.35) 15%, rgba(56,189,248,.45) 50%, rgba(244,114,182,.35) 85%, transparent);
+    filter:blur(7px); animation:mwBandGlow 3s ease-in-out infinite;}
+  @keyframes mwBandGlow{0%,100%{opacity:.7;} 50%{opacity:1;}}
+  .mw-band-core{position:absolute; inset:13px 4px; border-radius:8px;
+    background:linear-gradient(90deg, transparent, rgba(196,181,253,.85) 12%, rgba(224,242,254,.95) 50%, rgba(251,207,232,.85) 88%, transparent);
+    filter:blur(1px); box-shadow:0 0 14px 2px rgba(139,92,246,.5);}
+  .mw-band-stars{position:absolute; inset:0;}
+  .mw-band-stars span{position:absolute; width:2.5px; height:2.5px; border-radius:50%; background:#fff;
+    box-shadow:0 0 4px 1px rgba(255,255,255,.9); animation:arPulse 2s ease-in-out infinite;}
+  /* style 2: kurat as-sadeem (nebula orb) */
+  .mw-vis-orb{position:relative; width:44px; height:44px;}
+  .mw-orb-core{position:absolute; inset:0; border-radius:50%;
+    background:radial-gradient(circle at 35% 32%, rgba(244,114,182,.9), transparent 42%),
+                radial-gradient(circle at 66% 62%, rgba(56,189,248,.85), transparent 46%),
+                radial-gradient(circle, rgba(139,92,246,.95), rgba(139,92,246,0) 72%);
+    box-shadow:0 0 18px 6px rgba(139,92,246,.55); animation:arPulse 2.2s ease-in-out infinite;}
+  .mw-orb-ring{position:absolute; inset:-6px; border-radius:50%;
+    background:conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,.55) 8%, transparent 20%, transparent 50%, rgba(196,181,253,.5) 58%, transparent 72%);
+    mix-blend-mode:screen; animation:mwOrbSpin 5s linear infinite;}
+  @keyframes mwOrbSpin{to{transform:rotate(360deg);}}
+  .mw-orb-stars span{position:absolute; width:2px; height:2px; border-radius:50%; background:#fff;
+    box-shadow:0 0 3px 1px rgba(255,255,255,.9); animation:arPulse 1.8s ease-in-out infinite;}
+  /* style 3: al-muthannab (comet trail) */
+  .mw-vis-comet{position:relative; width:82px; height:40px;}
+  .mw-comet-core{position:absolute; left:6px; top:50%; width:18px; height:18px; margin-top:-9px; border-radius:50%;
+    background:radial-gradient(circle, #fff, #e0f2fe 40%, #7dd3fc 62%, rgba(56,189,248,0) 78%); box-shadow:0 0 22px 8px rgba(125,211,252,.85);
+    animation:arPulse 1.6s ease-in-out infinite; z-index:1;}
+  .mw-comet-trail{position:absolute; left:19px; top:50%; width:64px; height:15px; margin-top:-7.5px;
+    background:linear-gradient(90deg, rgba(224,242,254,.95), rgba(125,211,252,.75) 35%, rgba(56,189,248,.4) 65%, transparent);
+    clip-path:polygon(0% 22%, 100% 0%, 100% 100%, 0% 78%); filter:drop-shadow(0 0 8px rgba(56,189,248,.6));}
+  /* edge arrow theme per active mw style */
+  .ar-edge.mw .ar-edge-glow{background:radial-gradient(circle, rgba(139,92,246,.5), rgba(139,92,246,0) 70%);}
+  .ar-edge.mw .ar-edge-chevron .tip{fill:#8b5cf6; filter:drop-shadow(0 0 9px rgba(139,92,246,.85));}
+  .ar-edge.mw .ar-edge-badge{background:linear-gradient(135deg, rgba(139,92,246,.95), rgba(196,181,253,.95)); color:#1c1033;}
+  #arOverlay.mw-style-orb .ar-edge.mw .ar-edge-glow{background:radial-gradient(circle, rgba(244,114,182,.5), rgba(244,114,182,0) 70%);}
+  #arOverlay.mw-style-orb .ar-edge.mw .ar-edge-chevron .tip{fill:#f472b6; filter:drop-shadow(0 0 9px rgba(244,114,182,.85));}
+  #arOverlay.mw-style-orb .ar-edge.mw .ar-edge-badge{background:linear-gradient(135deg, rgba(244,114,182,.95), rgba(251,207,232,.95)); color:#3a0d22;}
+  #arOverlay.mw-style-comet .ar-edge.mw .ar-edge-glow{background:radial-gradient(circle, rgba(56,189,248,.5), rgba(56,189,248,0) 70%);}
+  #arOverlay.mw-style-comet .ar-edge.mw .ar-edge-chevron .tip{fill:#38bdf8; filter:drop-shadow(0 0 9px rgba(56,189,248,.85));}
+  #arOverlay.mw-style-comet .ar-edge.mw .ar-edge-badge{background:linear-gradient(135deg, rgba(56,189,248,.95), rgba(186,230,253,.95)); color:#062233;}
+
   /* ---- Sun phase list (interactive illustrated rows) ---- */
   .phase-list{display:flex; flex-direction:column;}
   .phase-item{border-bottom:1px solid var(--border);}
@@ -954,7 +1008,7 @@
 </div>
 
 <!-- AR MILKY WAY FINDER OVERLAY -->
-<div id="arOverlay" class="ar-overlay">
+<div id="arOverlay" class="ar-overlay mw-style-band">
   <video id="arVideo" autoplay muted playsinline></video>
   <div id="arFallbackBg" class="ar-fallback-bg"></div>
   <div class="ar-topbar">
@@ -962,11 +1016,52 @@
     <div class="ar-title">موجّه درب التبانة</div>
     <button class="ar-iconbtn" onclick="calibrateHorizon()"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.3 8.7l-2 4.6-4.6 2 2-4.6 4.6-2z"/></svg></button>
   </div>
+  <div class="mw-style-switch">
+    <button class="mw-style-btn" data-style="band" onclick="setMwArStyle('band')">شريط المجرة</button>
+    <button class="mw-style-btn" data-style="orb" onclick="setMwArStyle('orb')">كرة السديم</button>
+    <button class="mw-style-btn" data-style="comet" onclick="setMwArStyle('comet')">المذنب</button>
+  </div>
   <div id="arNote" class="ar-note"></div>
   <div class="ar-reticle"></div>
   <div id="arTarget" class="ar-target">
-    <div class="ar-target-dot"></div>
+    <div class="mw-visual">
+      <div class="mw-vis-band">
+        <div class="mw-band-glow"></div>
+        <div class="mw-band-core"></div>
+        <div class="mw-band-stars">
+          <span style="left:6%; top:38%; animation-delay:.1s;"></span><span style="left:16%; top:62%; animation-delay:.6s;"></span>
+          <span style="left:27%; top:30%; animation-delay:1.1s;"></span><span style="left:38%; top:58%; animation-delay:.3s;"></span>
+          <span style="left:50%; top:42%; animation-delay:.9s;"></span><span style="left:61%; top:64%; animation-delay:1.4s;"></span>
+          <span style="left:72%; top:34%; animation-delay:.5s;"></span><span style="left:83%; top:60%; animation-delay:1.2s;"></span>
+          <span style="left:93%; top:40%; animation-delay:.2s;"></span>
+        </div>
+      </div>
+      <div class="mw-vis-orb">
+        <div class="mw-orb-ring"></div>
+        <div class="mw-orb-core"></div>
+        <div class="mw-orb-stars">
+          <span style="left:14%; top:22%; animation-delay:.2s;"></span><span style="left:80%; top:18%; animation-delay:.8s;"></span>
+          <span style="left:20%; top:78%; animation-delay:1.3s;"></span><span style="left:85%; top:72%; animation-delay:.5s;"></span>
+        </div>
+      </div>
+      <div class="mw-vis-comet">
+        <div class="mw-comet-trail"></div>
+        <div class="mw-comet-core"></div>
+      </div>
+    </div>
     <div class="ar-target-label">درب التبانة</div>
+  </div>
+  <div id="arArrowMW" class="ar-edge mw">
+    <div class="ar-edge-glow"></div>
+    <div class="ar-edge-bob">
+      <div class="ar-edge-rotor">
+        <svg viewBox="0 0 40 50" class="ar-edge-chevron"><polygon class="tip" points="20,0 37,32 25,32 25,50 15,50 15,32 3,32"/><polygon class="core" points="20,7 30,28 22,28 22,42 18,42 18,28 10,28"/></svg>
+      </div>
+    </div>
+    <div class="ar-edge-badge">
+      <svg viewBox="0 0 24 24" class="ar-edge-ic" fill="currentColor" stroke="none"><path d="M12 2.5c.5 3.4 1.4 5.3 3 7 1.7 1.6 3.6 2.5 7 3-3.4.5-5.3 1.4-7 3-1.6 1.7-2.5 3.6-3 7-.5-3.4-1.4-5.3-3-7-1.7-1.6-3.6-2.5-7-3 3.4-.5 5.3-1.4 7-3 1.6-1.7 2.5-3.6 3-7z"/></svg>
+      <span class="ar-edge-deg">--°</span>
+    </div>
   </div>
   <div class="ar-guidance">
     <div id="arGuideH" class="ar-guide-row">--</div>
@@ -1847,6 +1942,18 @@ function startCompass(){
 /* ================= AR MILKY WAY FINDER ================= */
 let arActive = false, arStream = null, arRafId = null, arBetaRef = null;
 const AR_HFOV = 62, AR_VFOV = 80;
+let mwArStyle = localStorage.getItem('rihala_mw_ar_style') || 'band';
+function setMwArStyle(style){
+  mwArStyle = style;
+  localStorage.setItem('rihala_mw_ar_style', style);
+  const overlay = document.getElementById('arOverlay');
+  if(overlay){
+    overlay.classList.remove('mw-style-band','mw-style-orb','mw-style-comet');
+    overlay.classList.add('mw-style-'+style);
+  }
+  document.querySelectorAll('.mw-style-btn').forEach(b=>b.classList.toggle('active', b.dataset.style===style));
+}
+setMwArStyle(mwArStyle);
 function openARFinder(){
   const overlay = document.getElementById('arOverlay');
   overlay.classList.add('show');
@@ -1922,7 +2029,8 @@ function arLoop(){
   const target = document.getElementById('arTarget');
   const withinH = Math.abs(azDiff) < AR_HFOV*0.6;
   const withinV = Math.abs(altDiff) < AR_VFOV*0.6;
-  if(withinH && withinV){
+  const inView = withinH && withinV;
+  if(inView){
     const xPct = (azDiff / AR_HFOV) * 100;
     const yPct = -(altDiff / AR_VFOV) * 100;
     target.style.transform = 'translate(calc(-50% + '+xPct.toFixed(1)+'vw), calc(-50% + '+yPct.toFixed(1)+'vh))';
@@ -1932,6 +2040,7 @@ function arLoop(){
   }
   const onAim = Math.abs(azDiff) < 4 && Math.abs(altDiff) < 4;
   target.classList.toggle('onaim', onAim);
+  positionSunArEdgeArrow('arArrowMW', azDiff, altDiff, inView);
 
   const gH = document.getElementById('arGuideH');
   const gV = document.getElementById('arGuideV');
