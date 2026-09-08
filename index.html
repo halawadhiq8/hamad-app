@@ -1926,12 +1926,29 @@ function enableCompass(){
     alert('جهازك لا يدعم البوصلة.');
   }
 }
+// Full-orientation compass heading (alpha/beta/gamma), correct even while the phone is
+// held upright pointing at the sky/horizon — raw "360 - alpha" only works when the phone
+// lies flat, which is why the AR finders could point the wrong way while aiming the camera.
+function computeCompassHeadingFromOrientation(alpha, beta, gamma){
+  const aR = alpha * RAD, bR = beta * RAD, gR = gamma * RAD;
+  const cA = Math.cos(aR), sA = Math.sin(aR);
+  const cB = Math.cos(bR), sB = Math.sin(bR);
+  const cG = Math.cos(gR), sG = Math.sin(gR);
+  const rA = -cA*sG - sA*sB*cG;
+  const rB = -sA*sG + cA*sB*cG;
+  let heading = Math.atan2(rA, rB) * DEG;
+  return (heading + 360) % 360;
+}
 function startCompass(){
   compassEnabled = true;
   window.addEventListener('deviceorientation', e=>{
     let heading = e.webkitCompassHeading;
     if (heading===undefined || heading===null){
-      heading = e.alpha!==null ? (360 - e.alpha) : 0;
+      if(e.alpha!==null && e.beta!==null && e.gamma!==null){
+        heading = computeCompassHeadingFromOrientation(e.alpha, e.beta, e.gamma);
+      } else {
+        heading = e.alpha!==null ? (360 - e.alpha) : 0;
+      }
     }
     deviceHeading = heading;
     if(e.beta !== null && e.beta !== undefined) window.__deviceBeta = e.beta;
@@ -2027,6 +2044,18 @@ function arLoop(){
   const altDiff = gc.altitude - elevation;
 
   const target = document.getElementById('arTarget');
+  const gH = document.getElementById('arGuideH');
+  const gV = document.getElementById('arGuideV');
+  if(gc.altitude < -2){
+    // The galactic core is genuinely below the horizon right now — no amount of aiming
+    // will find it, so say so plainly instead of endlessly telling the user to lower the phone.
+    target.classList.remove('visible');
+    document.getElementById('arArrowMW').classList.remove('show');
+    gH.textContent = 'درب التبانة تحت الأفق الآن'; gH.classList.remove('ok');
+    gV.textContent = 'جرّب بوقت ثاني من الليل — راجع "أفضل نافذة تصوير الليلة"'; gV.classList.remove('ok');
+    arRafId = requestAnimationFrame(arLoop);
+    return;
+  }
   const withinH = Math.abs(azDiff) < AR_HFOV*0.6;
   const withinV = Math.abs(altDiff) < AR_VFOV*0.6;
   const inView = withinH && withinV;
@@ -2042,8 +2071,6 @@ function arLoop(){
   target.classList.toggle('onaim', onAim);
   positionSunArEdgeArrow('arArrowMW', azDiff, altDiff, inView);
 
-  const gH = document.getElementById('arGuideH');
-  const gV = document.getElementById('arGuideV');
   if(Math.abs(azDiff) < 3){ gH.textContent = 'الاتجاه صحيح، ممتاز'; gH.classList.add('ok'); }
   else if(azDiff > 0){ gH.textContent = 'استدر يمينًا '+Math.abs(azDiff).toFixed(0)+'°'; gH.classList.remove('ok'); }
   else { gH.textContent = 'استدر يسارًا '+Math.abs(azDiff).toFixed(0)+'°'; gH.classList.remove('ok'); }
