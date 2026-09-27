@@ -39,10 +39,6 @@
   .topbar{position:sticky; top:0; z-index:10; background:rgba(21,22,27,.92); backdrop-filter:blur(10px);
     padding:14px 16px 10px; border-bottom:1px solid var(--border);}
   .topbar h1{font-size:19px; margin:0 0 6px;}
-  .topbar-ig{display:inline-flex; align-items:center; gap:5px; margin:0 0 8px; font-size:12.5px; font-weight:600;
-    color:var(--accent2); text-decoration:none; direction:ltr;}
-  .topbar-ig-ic{width:14px; height:14px; flex-shrink:0;}
-  .topbar-ig:active{opacity:.75;}
   .locrow{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted);}
   .locrow button{background:var(--card2); color:var(--accent2); border:1px solid var(--border);
     border-radius:20px; padding:5px 12px; font-size:12.5px;}
@@ -251,60 +247,6 @@
   .ar-edge.sunset .ar-edge-glow{background:radial-gradient(circle, rgba(255,112,67,.5), rgba(255,112,67,0) 70%);}
   .ar-edge.sunset .ar-edge-chevron .tip{fill:#ff7a52; filter:drop-shadow(0 0 9px rgba(255,112,67,.85));}
   .ar-edge.sunset .ar-edge-badge{background:linear-gradient(135deg, rgba(255,112,67,.95), rgba(255,158,94,.95)); color:#2a0d04;}
-
-  /* ---- AR Milky Way finder: 3 selectable creative styles ---- */
-  .mw-style-switch{position:absolute; top:calc(58px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); z-index:6;
-    display:flex; gap:6px; background:rgba(10,14,22,.55); padding:5px; border-radius:16px; backdrop-filter:blur(6px);}
-  .mw-style-btn{background:none; border:none; color:rgba(255,255,255,.65); font-size:11.5px; font-weight:600; padding:6px 10px; border-radius:12px; white-space:nowrap;}
-  .mw-style-btn.active{background:linear-gradient(135deg, #8b5cf6, #38bdf8); color:#0b0620; box-shadow:0 2px 8px rgba(139,92,246,.5);}
-  .mw-visual{position:relative; width:120px; height:44px; display:flex; align-items:center; justify-content:center;}
-  .mw-vis-band, .mw-vis-orb, .mw-vis-comet{display:none;}
-  #arOverlay.mw-style-band .mw-vis-band{display:block;}
-  #arOverlay.mw-style-orb .mw-vis-orb{display:block;}
-  #arOverlay.mw-style-comet .mw-vis-comet{display:block;}
-  /* style 1: shariit al-majarra (galaxy band) */
-  .mw-vis-band{position:relative; width:120px; height:36px;}
-  .mw-band-glow{position:absolute; inset:-6px 0; border-radius:20px;
-    background:linear-gradient(90deg, transparent, rgba(139,92,246,.35) 15%, rgba(56,189,248,.45) 50%, rgba(244,114,182,.35) 85%, transparent);
-    filter:blur(7px); animation:mwBandGlow 3s ease-in-out infinite;}
-  @keyframes mwBandGlow{0%,100%{opacity:.7;} 50%{opacity:1;}}
-  .mw-band-core{position:absolute; inset:13px 4px; border-radius:8px;
-    background:linear-gradient(90deg, transparent, rgba(196,181,253,.85) 12%, rgba(224,242,254,.95) 50%, rgba(251,207,232,.85) 88%, transparent);
-    filter:blur(1px); box-shadow:0 0 14px 2px rgba(139,92,246,.5);}
-  .mw-band-stars{position:absolute; inset:0;}
-  .mw-band-stars span{position:absolute; width:2.5px; height:2.5px; border-radius:50%; background:#fff;
-    box-shadow:0 0 4px 1px rgba(255,255,255,.9); animation:arPulse 2s ease-in-out infinite;}
-  /* style 2: kurat as-sadeem (nebula orb) */
-  .mw-vis-orb{position:relative; width:44px; height:44px;}
-  .mw-orb-core{position:absolute; inset:0; border-radius:50%;
-    background:radial-gradient(circle at 35% 32%, rgba(244,114,182,.9), transparent 42%),
-                radial-gradient(circle at 66% 62%, rgba(56,189,248,.85), transparent 46%),
-                radial-gradient(circle, rgba(139,92,246,.95), rgba(139,92,246,0) 72%);
-    box-shadow:0 0 18px 6px rgba(139,92,246,.55); animation:arPulse 2.2s ease-in-out infinite;}
-  .mw-orb-ring{position:absolute; inset:-6px; border-radius:50%;
-    background:conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,.55) 8%, transparent 20%, transparent 50%, rgba(196,181,253,.5) 58%, transparent 72%);
-    mix-blend-mode:screen; animation:mwOrbSpin 5s linear infinite;}
-  @keyframes mwOrbSpin{to{transform:rotate(360deg);}}
-  .mw-orb-stars span{position:absolute; width:2px; height:2px; border-radius:50%; background:#fff;
-    box-shadow:0 0 3px 1px rgba(255,255,255,.9); animation:arPulse 1.8s ease-in-out infinite;}
-  /* style 3: al-muthannab (comet trail) */
-  .mw-vis-comet{position:relative; width:82px; height:40px;}
-  .mw-comet-core{position:absolute; left:6px; top:50%; width:18px; height:18px; margin-top:-9px; border-radius:50%;
-    background:radial-gradient(circle, #fff, #e0f2fe 40%, #7dd3fc 62%, rgba(56,189,248,0) 78%); box-shadow:0 0 22px 8px rgba(125,211,252,.85);
-    animation:arPulse 1.6s ease-in-out infinite; z-index:1;}
-  .mw-comet-trail{position:absolute; left:19px; top:50%; width:64px; height:15px; margin-top:-7.5px;
-    background:linear-gradient(90deg, rgba(224,242,254,.95), rgba(125,211,252,.75) 35%, rgba(56,189,248,.4) 65%, transparent);
-    clip-path:polygon(0% 22%, 100% 0%, 100% 100%, 0% 78%); filter:drop-shadow(0 0 8px rgba(56,189,248,.6));}
-  /* edge arrow theme per active mw style */
-  .ar-edge.mw .ar-edge-glow{background:radial-gradient(circle, rgba(139,92,246,.5), rgba(139,92,246,0) 70%);}
-  .ar-edge.mw .ar-edge-chevron .tip{fill:#8b5cf6; filter:drop-shadow(0 0 9px rgba(139,92,246,.85));}
-  .ar-edge.mw .ar-edge-badge{background:linear-gradient(135deg, rgba(139,92,246,.95), rgba(196,181,253,.95)); color:#1c1033;}
-  #arOverlay.mw-style-orb .ar-edge.mw .ar-edge-glow{background:radial-gradient(circle, rgba(244,114,182,.5), rgba(244,114,182,0) 70%);}
-  #arOverlay.mw-style-orb .ar-edge.mw .ar-edge-chevron .tip{fill:#f472b6; filter:drop-shadow(0 0 9px rgba(244,114,182,.85));}
-  #arOverlay.mw-style-orb .ar-edge.mw .ar-edge-badge{background:linear-gradient(135deg, rgba(244,114,182,.95), rgba(251,207,232,.95)); color:#3a0d22;}
-  #arOverlay.mw-style-comet .ar-edge.mw .ar-edge-glow{background:radial-gradient(circle, rgba(56,189,248,.5), rgba(56,189,248,0) 70%);}
-  #arOverlay.mw-style-comet .ar-edge.mw .ar-edge-chevron .tip{fill:#38bdf8; filter:drop-shadow(0 0 9px rgba(56,189,248,.85));}
-  #arOverlay.mw-style-comet .ar-edge.mw .ar-edge-badge{background:linear-gradient(135deg, rgba(56,189,248,.95), rgba(186,230,253,.95)); color:#062233;}
 
   /* ---- Sun phase list (interactive illustrated rows) ---- */
   .phase-list{display:flex; flex-direction:column;}
@@ -556,9 +498,8 @@
 .hero-topbar{position:relative; overflow:hidden; padding-top:0;}
 .hero-topbar .hero-bg{position:absolute; inset:0; background-image:var(--topbar-img); background-size:cover; background-position:center 62%; opacity:.6; z-index:0;}
 .hero-topbar .hero-overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(21,22,27,.25) 0%, var(--bg) 96%); z-index:0;}
-.hero-topbar h1, .hero-topbar .locrow, .hero-topbar .topbar-ig{position:relative; z-index:1;}
+.hero-topbar h1, .hero-topbar .locrow{position:relative; z-index:1;}
 .hero-topbar h1{text-shadow:0 2px 10px rgba(0,0,0,.55); font-family:'Poppins', -apple-system, sans-serif; font-weight:800; letter-spacing:.4px; direction:ltr; text-align:right;}
-.hero-topbar .topbar-ig{text-shadow:0 2px 8px rgba(0,0,0,.55);}
 .hero-topbar .locrow{display:none;}
 .car-hero-card{padding:0; overflow:hidden; position:relative; margin-bottom:14px;}
 .car-hero-card .car-hero-photo{width:100%; height:var(--hero-h); background-image:var(--hero-img); background-size:cover;
@@ -705,6 +646,148 @@
   padding:16px 0; font-size:15px; font-weight:800; font-family:inherit;}
 .wallet-keypad-confirm:active{background:#767ee0;}
 
+
+  /* ================= صحتي (tab-health) ================= */
+  #tab-health button, #tab-health input, #tab-health summary{font-family:inherit;}
+  #tab-health .hl-head{padding:4px 2px 12px;}
+  #tab-health .hl-title{font-size:19px; font-weight:800; color:var(--text);}
+  #tab-health .hl-subtitle{font-size:12.5px; color:var(--muted); margin-top:4px;}
+  #tab-health .hl-strip{display:grid; grid-template-columns:repeat(3,1fr); background:var(--card); border:1px solid var(--border);
+    border-radius:20px; overflow:hidden; margin-bottom:12px; box-shadow:0 6px 18px rgba(0,0,0,.22);}
+  #tab-health .hl-strip>div{padding:12px 4px; text-align:center;}
+  #tab-health .hl-strip>div+div{border-inline-start:1px solid var(--border);}
+  #tab-health .hl-strip b{display:block; font-size:17px; font-weight:800; font-variant-numeric:tabular-nums; color:var(--text);}
+  #tab-health .hl-strip small{color:var(--muted); font-size:11.5px;}
+  #tab-health .hl-seg{display:flex; gap:6px; overflow-x:auto; margin-bottom:12px; scrollbar-width:none;}
+  #tab-health .hl-seg::-webkit-scrollbar{display:none;}
+  #tab-health .hl-seg button{flex:1; white-space:nowrap; background:var(--card2); border:1px solid var(--border); color:var(--muted);
+    border-radius:20px; padding:8px 10px; font-size:13px;}
+  #tab-health .hl-seg button.hl-on{background:var(--accent2); color:#08111f; border-color:var(--accent2); font-weight:700;}
+
+  #tab-health .hl-card{background:var(--card); border:1px solid var(--border); border-radius:20px; padding:16px; margin-bottom:14px; box-shadow:0 6px 18px rgba(0,0,0,.22);}
+  #tab-health .hl-card h2{font-size:15px; margin:0 0 10px; color:var(--accent2); display:flex; align-items:baseline; justify-content:space-between; gap:8px;}
+  #tab-health .hl-card h2 span{font-size:12px; font-weight:400; color:var(--muted);}
+  #tab-health .hl-muted{color:var(--muted); font-size:12.5px; line-height:1.7; margin:8px 0 0;}
+
+  /* day nav */
+  #tab-health .hl-daynav{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:12px;}
+  #tab-health .hl-daynav .hl-lbl{flex:1; text-align:center;}
+  #tab-health .hl-daynav .hl-lbl b{font-size:16px; font-weight:800;}
+  #tab-health .hl-daynav .hl-lbl small{display:block; color:var(--muted); font-size:12.5px;}
+  #tab-health .hl-nb{background:var(--card2); border:1px solid var(--border); color:var(--text); border-radius:12px; padding:9px 12px; font-size:13px; min-height:40px;}
+  #tab-health .hl-badge{display:inline-block; background:var(--accent); color:#251a02; border-radius:10px; font-size:11px; padding:1px 8px; margin-inline-start:6px; vertical-align:middle; font-weight:700;}
+  #tab-health .hl-back{display:block; margin:-4px auto 10px; background:none; border:1px solid var(--border); color:var(--accent2); border-radius:20px; padding:5px 14px; font-size:12.5px;}
+
+  /* gauge */
+  #tab-health .hl-gauge{text-align:center;}
+  #tab-health .hl-gauge svg{width:100%; max-width:400px; height:auto; display:block; margin:0 auto; direction:ltr;}
+  #tab-health .hl-g-track{fill:none; stroke:var(--border); stroke-width:14;}
+  #tab-health .hl-g-fill{fill:none; stroke:var(--good); stroke-width:14;}
+  #tab-health .hl-g-over{fill:none; stroke:var(--bad); stroke-width:14;}
+  #tab-health .hl-tick{stroke:var(--muted); stroke-width:1.5;}
+  #tab-health .hl-tick.hl-mj{stroke:var(--text); stroke-width:2;}
+  #tab-health .hl-needle{stroke:var(--accent); stroke-width:4; stroke-linecap:round; filter:drop-shadow(0 0 4px rgba(224,164,88,.6));}
+  #tab-health .hl-hub{fill:var(--text);}
+  #tab-health .hl-hub2{fill:var(--card);}
+  #tab-health .hl-gtxt{font-size:13px; fill:var(--muted); font-weight:700;}
+  #tab-health .hl-big{font-size:46px; font-weight:800; line-height:1; margin-top:-4px; font-variant-numeric:tabular-nums;}
+  #tab-health .hl-bigcap{color:var(--muted); font-size:13px; margin-top:4px;}
+  #tab-health .hl-bigcap.hl-over{color:var(--bad); font-weight:700;}
+  #tab-health .hl-prot{margin-top:16px;}
+  #tab-health .hl-prot .hl-prow{display:flex; justify-content:space-between; align-items:baseline; font-size:13.5px; margin-bottom:6px;}
+  #tab-health .hl-prot .hl-prow b{font-size:16px; font-weight:800;}
+  #tab-health .hl-seg10{display:grid; grid-template-columns:repeat(10,1fr); gap:3px;}
+  #tab-health .hl-seg10 i{height:12px; border-radius:3px; background:var(--border);}
+  #tab-health .hl-seg10 i.hl-on{background:var(--good);}
+
+  /* switch rows */
+  #tab-health .hl-trow{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0; border:0; border-bottom:1px solid var(--border);
+    width:100%; background:none; color:var(--text); text-align:start;}
+  #tab-health .hl-trow:last-child{border-bottom:0;}
+  #tab-health .hl-trow .hl-t b{display:block; font-weight:600; font-size:14.5px;}
+  #tab-health .hl-trow .hl-t small{color:var(--muted); font-size:12.5px;}
+  #tab-health .hl-sw{flex:none; width:46px; height:27px; border-radius:99px; background:var(--card2); border:1px solid var(--border); position:relative; transition:background .2s;}
+  #tab-health .hl-sw::after{content:''; position:absolute; top:3px; inset-inline-start:3px; width:19px; height:19px; border-radius:50%; background:#fff; transition:transform .2s;}
+  #tab-health .hl-sw.hl-on{background:var(--good); border-color:var(--good);}
+  #tab-health .hl-sw.hl-on::after{transform:translateX(-19px);}
+
+  /* meals route */
+  #tab-health .hl-route{position:relative; padding-inline-start:44px;}
+  #tab-health .hl-route::before{content:''; position:absolute; inset-inline-start:15px; top:22px; bottom:26px; width:2px; background:var(--border);}
+  #tab-health .hl-stop{position:relative; padding:12px 0 14px; border-bottom:1px solid var(--border);}
+  #tab-health .hl-stop:last-child{border-bottom:0;}
+  #tab-health .hl-dot{position:absolute; inset-inline-start:-44px; top:12px; width:32px; height:32px; border-radius:50%; border:2px solid var(--muted);
+    background:var(--card); display:grid; place-items:center; padding:0;}
+  #tab-health .hl-dot svg{width:16px; height:16px; stroke:#06210f; stroke-width:3; fill:none; opacity:0;}
+  #tab-health .hl-stop.hl-done .hl-dot{background:var(--good); border-color:var(--good);}
+  #tab-health .hl-stop.hl-done .hl-dot svg{opacity:1;}
+  #tab-health .hl-stop.hl-done .hl-sname{color:var(--muted); text-decoration:line-through;}
+  #tab-health .hl-shead{display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap;}
+  #tab-health .hl-sname{font-size:15.5px; font-weight:800;}
+  #tab-health .hl-smac{font-size:12.5px; color:var(--muted);}
+  #tab-health .hl-smac em{font-style:normal; color:var(--good); font-weight:700; margin-inline-start:8px;}
+  #tab-health .hl-stop ul{margin:6px 0 0; padding-inline-start:18px; font-size:13.5px; line-height:1.7;}
+  #tab-health .hl-chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;}
+  #tab-health .hl-chip{background:var(--card2); border:1px solid var(--border); color:var(--muted); border-radius:20px; padding:6px 13px; font-size:12.5px; min-height:32px;}
+  #tab-health .hl-chip.hl-on{background:var(--accent2); color:#08111f; border-color:var(--accent2); font-weight:700;}
+  #tab-health .hl-grp{font-size:12.5px; color:var(--accent2); margin:14px 0 0;}
+
+  /* water tank */
+  #tab-health .hl-tank{display:grid; grid-template-columns:repeat(12,1fr); gap:4px; height:70px; align-items:end;}
+  #tab-health .hl-tank button{border:0; padding:0; border-radius:4px 4px 0 0; background:var(--card2);}
+  #tab-health .hl-tank button.hl-on{background:#6fa3d9;}
+  #tab-health .hl-tcap{display:flex; justify-content:space-between; color:var(--muted); font-size:12.5px; margin-top:8px;}
+  #tab-health .hl-tcap b{color:var(--text); font-size:15px;}
+  #tab-health .hl-tip{margin-bottom:14px; padding:13px 15px; background:var(--card2); border-inline-start:4px solid var(--accent); border-radius:12px; font-size:13.5px; line-height:1.7;}
+
+  /* week */
+  #tab-health .hl-stage{display:grid; grid-template-columns:70px 1fr auto; align-items:center; gap:10px; padding:11px 8px; border-bottom:1px solid var(--border); border-inline-start:3px solid transparent;}
+  #tab-health .hl-stage:last-of-type{border-bottom:0;}
+  #tab-health .hl-stage.hl-now{border-inline-start-color:var(--accent); background:linear-gradient(90deg, rgba(224,164,88,.10), transparent);}
+  #tab-health .hl-sday{font-size:15px; font-weight:800;}
+  #tab-health .hl-smeals{display:flex; flex-direction:column; font-size:12.5px; color:var(--muted);}
+  #tab-health .hl-smeals b{color:var(--text); font-weight:600;}
+  #tab-health .hl-list{margin:0; padding:0; list-style:none;}
+  #tab-health .hl-list li{display:flex; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  #tab-health .hl-list li:last-child{border-bottom:0;}
+  #tab-health .hl-list li span:last-child{font-weight:700; text-align:end; font-variant-numeric:tabular-nums;}
+
+  /* weight */
+  #tab-health .hl-wform{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  #tab-health .hl-wform label{font-size:12px; color:var(--muted); display:block; margin-bottom:4px;}
+  #tab-health .hl-wform input{width:100%; font-size:16px; padding:10px 12px; border:1px solid var(--border); border-radius:12px; background:var(--card2); color:var(--text); min-height:46px;}
+  #tab-health .hl-wform .hl-full{grid-column:1/-1;}
+  #tab-health .hl-btn{background:var(--accent2); color:#08111f; border:none; border-radius:12px; padding:11px 16px; font-size:14.5px; font-weight:700; width:100%; min-height:46px;}
+  #tab-health .hl-btn.hl-ghost{background:transparent; border:1px solid var(--bad); color:var(--bad); font-weight:600;}
+  #tab-health .hl-msg{min-height:18px; font-size:12.5px; color:var(--bad); margin-top:6px;}
+  #tab-health .hl-chart{direction:ltr;}
+  #tab-health .hl-chart svg{width:100%; height:auto; display:block;}
+  #tab-health .hl-gl{stroke:var(--border); stroke-width:1;}
+  #tab-health .hl-wl{fill:none; stroke:var(--good); stroke-width:3; stroke-linejoin:round; stroke-linecap:round;}
+  #tab-health .hl-wp{fill:var(--card); stroke:var(--good); stroke-width:3;}
+  #tab-health .hl-gy{stroke:var(--accent); stroke-width:2; stroke-dasharray:6 5;}
+  #tab-health .hl-ax{font-size:11px; fill:var(--muted);}
+  #tab-health .hl-progress{height:12px; background:var(--card2); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-top:8px;}
+  #tab-health .hl-progress i{display:block; height:100%; background:linear-gradient(90deg,var(--good),var(--accent));}
+  #tab-health .hl-verdict{margin-top:12px; padding:12px 14px; background:var(--card2); border-inline-start:4px solid var(--good); border-radius:12px; font-size:13.5px; line-height:1.7;}
+  #tab-health .hl-verdict.hl-warn{border-inline-start-color:var(--accent);}
+  #tab-health .hl-ent{display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  #tab-health .hl-ent:last-child{border-bottom:0;}
+  #tab-health .hl-ent b{font-size:15px; font-weight:800; font-variant-numeric:tabular-nums;}
+  #tab-health .hl-ent .hl-x{border:0; background:none; color:var(--muted); font-size:12px; padding:6px;}
+
+  /* guide */
+  #tab-health .hl-acc{border-bottom:1px solid var(--border);}
+  #tab-health .hl-acc:last-child{border-bottom:0;}
+  #tab-health .hl-acc summary{list-style:none; cursor:pointer; padding:13px 0; font-size:14.5px; font-weight:700; display:flex; justify-content:space-between; align-items:center;}
+  #tab-health .hl-acc summary::-webkit-details-marker{display:none;}
+  #tab-health .hl-acc summary::after{content:'+'; font-size:20px; color:var(--accent); line-height:1;}
+  #tab-health .hl-acc[open] summary::after{content:'\2212';}
+  #tab-health .hl-acc .hl-in{padding:0 0 14px; font-size:13.5px; line-height:1.8;}
+  #tab-health .hl-acc .hl-in p{margin:0 0 8px;}
+  #tab-health .hl-acc .hl-in ul{margin:0 0 8px; padding-inline-start:20px;}
+  #tab-health .hl-acc .hl-in li{margin:3px 0;}
+  #tab-health .hl-acc .hl-in em{font-style:normal; color:var(--accent2); font-weight:700;}
 </style>
 </head>
 <body>
@@ -720,10 +803,6 @@
   <button class="hero-img-editbtn topbar-img-editbtn" onclick="triggerTopbarImgUpload()" title="تغيير الصورة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="14" r="3.4"/></svg></button>
   <input type="file" accept="image/*" id="topbarImgUploadInput" style="display:none;" onchange="onTopbarImgSelected(event)">
   <h1>Hamad Al Awadhi</h1>
-  <a class="topbar-ig" href="https://instagram.com/alawadhiq8" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" class="topbar-ig-ic" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
-    <span>@alawadhiq8</span>
-  </a>
   <div class="locrow">
     <span id="locLabel">جارٍ تحديد الموقع…</span>
     <button onclick="refreshLocation()">تحديث الموقع <svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></button>
@@ -765,6 +844,8 @@
       <button class="home-shortcut-btn" onclick="goToTab('tab-storage')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.2-3.5h13.6l2.2 3.5"/><path d="M3 7.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7.5z"/><path d="M9.5 11.5h5"/></svg></span>مخزني</button>
       <button class="home-shortcut-btn" onclick="goToTab('tab-coords')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></span>إحداثيات</button>
       <button class="home-shortcut-btn" onclick="goToTab('tab-mw')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="currentColor" stroke="none"><path d="M12 2.5c.5 3.4 1.4 5.3 3 7 1.7 1.6 3.6 2.5 7 3-3.4.5-5.3 1.4-7 3-1.6 1.7-2.5 3.6-3 7-.5-3.4-1.4-5.3-3-7-1.7-1.6-3.6-2.5-7-3 3.4-.5 5.3-1.4 7-3 1.6-1.7 2.5-3.6 3-7z"/></svg></span>المجرة</button>
+      <button class="home-shortcut-btn" onclick="goToTab('tab-health')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/><path d="M7.5 12.5h2.4l1.3-2.4 1.8 4 1.2-1.6h2.3"/></svg></span>صحتي</button>
+
     </div>
   </div>
 
@@ -877,6 +958,9 @@
     <div class="wallet-save-note">يتم الحفظ تلقائياً على جهازك</div>
   </div>
 </div>
+
+<!-- TAB: HEALTH (صحتي) -->
+<div class="tab" id="tab-health"><div id="hl-root"></div></div>
 
 <!-- TAB 1: SUN -->
 <div class="tab" id="tab-sun">
@@ -1008,7 +1092,7 @@
 </div>
 
 <!-- AR MILKY WAY FINDER OVERLAY -->
-<div id="arOverlay" class="ar-overlay mw-style-band">
+<div id="arOverlay" class="ar-overlay">
   <video id="arVideo" autoplay muted playsinline></video>
   <div id="arFallbackBg" class="ar-fallback-bg"></div>
   <div class="ar-topbar">
@@ -1016,52 +1100,11 @@
     <div class="ar-title">موجّه درب التبانة</div>
     <button class="ar-iconbtn" onclick="calibrateHorizon()"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.3 8.7l-2 4.6-4.6 2 2-4.6 4.6-2z"/></svg></button>
   </div>
-  <div class="mw-style-switch">
-    <button class="mw-style-btn" data-style="band" onclick="setMwArStyle('band')">شريط المجرة</button>
-    <button class="mw-style-btn" data-style="orb" onclick="setMwArStyle('orb')">كرة السديم</button>
-    <button class="mw-style-btn" data-style="comet" onclick="setMwArStyle('comet')">المذنب</button>
-  </div>
   <div id="arNote" class="ar-note"></div>
   <div class="ar-reticle"></div>
   <div id="arTarget" class="ar-target">
-    <div class="mw-visual">
-      <div class="mw-vis-band">
-        <div class="mw-band-glow"></div>
-        <div class="mw-band-core"></div>
-        <div class="mw-band-stars">
-          <span style="left:6%; top:38%; animation-delay:.1s;"></span><span style="left:16%; top:62%; animation-delay:.6s;"></span>
-          <span style="left:27%; top:30%; animation-delay:1.1s;"></span><span style="left:38%; top:58%; animation-delay:.3s;"></span>
-          <span style="left:50%; top:42%; animation-delay:.9s;"></span><span style="left:61%; top:64%; animation-delay:1.4s;"></span>
-          <span style="left:72%; top:34%; animation-delay:.5s;"></span><span style="left:83%; top:60%; animation-delay:1.2s;"></span>
-          <span style="left:93%; top:40%; animation-delay:.2s;"></span>
-        </div>
-      </div>
-      <div class="mw-vis-orb">
-        <div class="mw-orb-ring"></div>
-        <div class="mw-orb-core"></div>
-        <div class="mw-orb-stars">
-          <span style="left:14%; top:22%; animation-delay:.2s;"></span><span style="left:80%; top:18%; animation-delay:.8s;"></span>
-          <span style="left:20%; top:78%; animation-delay:1.3s;"></span><span style="left:85%; top:72%; animation-delay:.5s;"></span>
-        </div>
-      </div>
-      <div class="mw-vis-comet">
-        <div class="mw-comet-trail"></div>
-        <div class="mw-comet-core"></div>
-      </div>
-    </div>
+    <div class="ar-target-dot"></div>
     <div class="ar-target-label">درب التبانة</div>
-  </div>
-  <div id="arArrowMW" class="ar-edge mw">
-    <div class="ar-edge-glow"></div>
-    <div class="ar-edge-bob">
-      <div class="ar-edge-rotor">
-        <svg viewBox="0 0 40 50" class="ar-edge-chevron"><polygon class="tip" points="20,0 37,32 25,32 25,50 15,50 15,32 3,32"/><polygon class="core" points="20,7 30,28 22,28 22,42 18,42 18,28 10,28"/></svg>
-      </div>
-    </div>
-    <div class="ar-edge-badge">
-      <svg viewBox="0 0 24 24" class="ar-edge-ic" fill="currentColor" stroke="none"><path d="M12 2.5c.5 3.4 1.4 5.3 3 7 1.7 1.6 3.6 2.5 7 3-3.4.5-5.3 1.4-7 3-1.6 1.7-2.5 3.6-3 7-.5-3.4-1.4-5.3-3-7-1.7-1.6-3.6-2.5-7-3 3.4-.5 5.3-1.4 7-3 1.6-1.7 2.5-3.6 3-7z"/></svg>
-      <span class="ar-edge-deg">--°</span>
-    </div>
   </div>
   <div class="ar-guidance">
     <div id="arGuideH" class="ar-guide-row">--</div>
@@ -1598,6 +1641,7 @@
   <button class="tabbtn" data-tab="tab-storage" onclick="showTab('tab-storage',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.2-3.5h13.6l2.2 3.5"/><path d="M3 7.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7.5z"/><path d="M9.5 11.5h5"/></svg></span>مخزني</button>
   <button class="tabbtn" data-tab="tab-coords" onclick="showTab('tab-coords',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></span>إحداثيات</button>
   <button class="tabbtn" data-tab="tab-wallet" onclick="showTab('tab-wallet',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg></span>محفظتي</button>
+  <button class="tabbtn" data-tab="tab-health" onclick="showTab('tab-health',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/><path d="M7.5 12.5h2.4l1.3-2.4 1.8 4 1.2-1.6h2.3"/></svg></span>صحتي</button>
 </div>
 
 <script>
@@ -1891,6 +1935,7 @@ function showTab(id, btn){
     if(id==='tab-coords') updateCoordsTopMap();
     if(id==='tab-home'){ updateHomeMap(); loadHomeWeather(); }
     if(id==='tab-sun') renderMoonInstant();
+  if(id==='tab-health' && window.healthRender) healthRender();
     return;
   }
   document.querySelectorAll('.tab').forEach(t=>{ t.classList.remove('active'); t.classList.remove('show'); });
@@ -1903,6 +1948,7 @@ function showTab(id, btn){
   if(id==='tab-coords') updateCoordsTopMap();
   if(id==='tab-home'){ updateHomeMap(); loadHomeWeather(); }
   if(id==='tab-sun') renderMoonInstant();
+  if(id==='tab-health' && window.healthRender) healthRender();
 }
 function goToTab(id){
   const btn = document.querySelector('.tabbtn[data-tab="'+id+'"]');
@@ -1926,29 +1972,12 @@ function enableCompass(){
     alert('جهازك لا يدعم البوصلة.');
   }
 }
-// Full-orientation compass heading (alpha/beta/gamma), correct even while the phone is
-// held upright pointing at the sky/horizon — raw "360 - alpha" only works when the phone
-// lies flat, which is why the AR finders could point the wrong way while aiming the camera.
-function computeCompassHeadingFromOrientation(alpha, beta, gamma){
-  const aR = alpha * RAD, bR = beta * RAD, gR = gamma * RAD;
-  const cA = Math.cos(aR), sA = Math.sin(aR);
-  const cB = Math.cos(bR), sB = Math.sin(bR);
-  const cG = Math.cos(gR), sG = Math.sin(gR);
-  const rA = -cA*sG - sA*sB*cG;
-  const rB = -sA*sG + cA*sB*cG;
-  let heading = Math.atan2(rA, rB) * DEG;
-  return (heading + 360) % 360;
-}
 function startCompass(){
   compassEnabled = true;
   window.addEventListener('deviceorientation', e=>{
     let heading = e.webkitCompassHeading;
     if (heading===undefined || heading===null){
-      if(e.alpha!==null && e.beta!==null && e.gamma!==null){
-        heading = computeCompassHeadingFromOrientation(e.alpha, e.beta, e.gamma);
-      } else {
-        heading = e.alpha!==null ? (360 - e.alpha) : 0;
-      }
+      heading = e.alpha!==null ? (360 - e.alpha) : 0;
     }
     deviceHeading = heading;
     if(e.beta !== null && e.beta !== undefined) window.__deviceBeta = e.beta;
@@ -1959,18 +1988,6 @@ function startCompass(){
 /* ================= AR MILKY WAY FINDER ================= */
 let arActive = false, arStream = null, arRafId = null, arBetaRef = null;
 const AR_HFOV = 62, AR_VFOV = 80;
-let mwArStyle = localStorage.getItem('rihala_mw_ar_style') || 'band';
-function setMwArStyle(style){
-  mwArStyle = style;
-  localStorage.setItem('rihala_mw_ar_style', style);
-  const overlay = document.getElementById('arOverlay');
-  if(overlay){
-    overlay.classList.remove('mw-style-band','mw-style-orb','mw-style-comet');
-    overlay.classList.add('mw-style-'+style);
-  }
-  document.querySelectorAll('.mw-style-btn').forEach(b=>b.classList.toggle('active', b.dataset.style===style));
-}
-setMwArStyle(mwArStyle);
 function openARFinder(){
   const overlay = document.getElementById('arOverlay');
   overlay.classList.add('show');
@@ -2044,22 +2061,9 @@ function arLoop(){
   const altDiff = gc.altitude - elevation;
 
   const target = document.getElementById('arTarget');
-  const gH = document.getElementById('arGuideH');
-  const gV = document.getElementById('arGuideV');
-  if(gc.altitude < -2){
-    // The galactic core is genuinely below the horizon right now — no amount of aiming
-    // will find it, so say so plainly instead of endlessly telling the user to lower the phone.
-    target.classList.remove('visible');
-    document.getElementById('arArrowMW').classList.remove('show');
-    gH.textContent = 'درب التبانة تحت الأفق الآن'; gH.classList.remove('ok');
-    gV.textContent = 'جرّب بوقت ثاني من الليل — راجع "أفضل نافذة تصوير الليلة"'; gV.classList.remove('ok');
-    arRafId = requestAnimationFrame(arLoop);
-    return;
-  }
   const withinH = Math.abs(azDiff) < AR_HFOV*0.6;
   const withinV = Math.abs(altDiff) < AR_VFOV*0.6;
-  const inView = withinH && withinV;
-  if(inView){
+  if(withinH && withinV){
     const xPct = (azDiff / AR_HFOV) * 100;
     const yPct = -(altDiff / AR_VFOV) * 100;
     target.style.transform = 'translate(calc(-50% + '+xPct.toFixed(1)+'vw), calc(-50% + '+yPct.toFixed(1)+'vh))';
@@ -2069,8 +2073,9 @@ function arLoop(){
   }
   const onAim = Math.abs(azDiff) < 4 && Math.abs(altDiff) < 4;
   target.classList.toggle('onaim', onAim);
-  positionSunArEdgeArrow('arArrowMW', azDiff, altDiff, inView);
 
+  const gH = document.getElementById('arGuideH');
+  const gV = document.getElementById('arGuideV');
   if(Math.abs(azDiff) < 3){ gH.textContent = 'الاتجاه صحيح، ممتاز'; gH.classList.add('ok'); }
   else if(azDiff > 0){ gH.textContent = 'استدر يمينًا '+Math.abs(azDiff).toFixed(0)+'°'; gH.classList.remove('ok'); }
   else { gH.textContent = 'استدر يسارًا '+Math.abs(azDiff).toFixed(0)+'°'; gH.classList.remove('ok'); }
@@ -4797,6 +4802,391 @@ function initViewTransitions(){
   });
   document.querySelectorAll('.view-panel').forEach(el=> obs.observe(el, {attributes:true, attributeFilter:['style']}));
 }
+/* ================= صحتي: خطة غذائية + متابعة الوزن =================
+   وحدة مستقلة: كل الأسماء داخل الدالة، والكلاسات تنضاف لها البادئة hl- تلقائياً عند العرض،
+   والبيانات محفوظة بالمفتاح rihala_health فقط. تتفعل من showTab عبر healthRender(). */
+(function(){
+'use strict';
+var root = document.getElementById('hl-root');
+if(!root) return;
+
+var START='2026-09-23', GOAL=111.4, CAL=2000, PRO=155, POSTCAL=260, POSTPRO=15, PRECAL=140, CUPS=12;
+var AR_DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+var AR_MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+var SCHED={6:['chicken','chicken'],0:['chicken','tuna'],1:['chicken','chicken'],2:['tuna','chicken'],3:['chicken','sardine'],4:['chicken','tuna'],5:['sardine','free']};
+var WEEK_ORDER=[6,0,1,2,3,4,5];
+var PN={chicken:'دجاج',tuna:'تونة',sardine:'سردين',free:'وجبة حرة'};
+var KEY='rihala_health';
+
+/* ---------- helpers ---------- */
+function pad(n){return String(n).padStart(2,'0');}
+function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function parse(s){var p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
+function addDays(s,n){var d=parse(s);d.setDate(d.getDate()+n);return iso(d);}
+function diffDays(a,b){return Math.round((parse(b)-parse(a))/864e5);}
+function fmtDate(s){var d=parse(s);return d.getDate()+' '+AR_MON[d.getMonth()];}
+function n0(x){return Math.round(x).toLocaleString('en-US');}
+
+/* ---------- state ---------- */
+function defaults(){return {days:{},weights:[{id:'start',d:START,kg:121.4,w:null}],bootDays:[]};}
+function load(){
+  try{
+    var r=localStorage.getItem(KEY);
+    if(r){var o=JSON.parse(r),b=defaults();
+      return {days:o.days||b.days,weights:Array.isArray(o.weights)?o.weights:b.weights,bootDays:Array.isArray(o.bootDays)?o.bootDays:b.bootDays};}
+  }catch(e){}
+  return defaults();
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+var S=load();
+function D(k){if(!S.days[k])S.days[k]={};return S.days[k];}
+
+/* ---------- meal data ---------- */
+var SALAD='سلطة كبيرة: جزر وطماطم وخيار مع ليمون وخل وملح خفيف';
+var OIL='ملعقة كبيرة زيت زيتون (قِسها بالملعقة)';
+var RICE='عيش أبيض مطبوخ 300 جم (الوزن بعد الطبخ)';
+var BREAKFAST={cal:600,pro:37,items:['3 بيضات كاملة','شوفان 50 جم (وزن جاف) مطبوخ بـ 250 مل حليب قليل الدسم','شريحة خبز']};
+function lunchOf(v){
+  if(v==='tuna')return {cal:880,pro:75,items:['تونة بالماء 3 علب مصفّاة',RICE,SALAD,OIL]};
+  if(v==='sardine')return {cal:850,pro:54,items:['سردين علبتين مصفّاة',RICE,SALAD,'بدون زيت زيتون، السردين فيه زيته']};
+  return {cal:885,pro:60,items:['دجاج مطبوخ 180 جم',RICE,SALAD,OIL]};
+}
+function dinnerOf(v){
+  if(v==='free')return {cal:0,pro:0,items:['كل اللي تبيه بدون حساب وبدون ذنب','وجبة وحدة بالأسبوع ما تكسر الخطة، الذنب هو اللي يكسرها']};
+  if(v==='tuna')return {cal:490,pro:70,items:['تونة بالماء 3 علب مصفّاة',SALAD,OIL]};
+  if(v==='sardine')return {cal:450,pro:46,items:['سردين علبتين مصفّاة',SALAD,'بدون زيت زيتون']};
+  return {cal:500,pro:63,items:['دجاج مطبوخ 200 جم',SALAD,OIL]};
+}
+var PRE={cal:PRECAL,pro:1,items:['2 تمرات مع قهوة أو شاي، قبل الحصة بساعة','لا تروح الحصة وأنت صايم']};
+var POST={cal:POSTCAL,pro:POSTPRO,items:['شوفان 40 جم (وزن جاف) مع 250 مل حليب قليل الدسم','بعد الحصة مباشرة']};
+
+var TIPS=[
+ 'زن نفسك بنفس الظروف كل صباح، وراقب متوسط الأسبوع وليس رقم اليوم.',
+ 'السلطة الكبيرة تشبعك بسعرات قليلة. زد الخس والورق الأخضر إذا جعت.',
+ 'ملعقة زيت الزيتون فيها حوالي 120 سعرة. الصبّ بدون قياس يضيف 300 سعرة بدون ما تحس.',
+ 'وزن العيش مطبوخ مو نيّ. اطبخ كمية وزنها بميزان المطبخ مرة وحدة.',
+ 'النوم 7 إلى 8 ساعات يحمي عضلك ويقلل جوعك. لو تختار بين ساعة نوم وساعة تمرين، اختر النوم.',
+ 'إذا جعت بعد العشا: كوب حليب قليل الدسم أو خيار وجزر أحسن من الأكل الزايد.',
+ 'غيّر التوابل بدل ما تمل: ليمون، ثوم، كمون، بهارات، صلصة حارة. وبدّل الطبخ بين مشوي ومسلوق وفرن.',
+ 'المشي بعد المغرب يخدم مزاجك بقدر ما يخدم جسمك، وأخف عليك من حر النهار.',
+ 'التونة 3 مرات بالأسبوع كحد أقصى بسبب الزئبق. السردين أفضل منها وزئبقه أقل.',
+ 'الوزن ما ينزل بخط مستقيم. الثبات أسبوع لا يعني أنك وقفت.'
+];
+
+/* ---------- day view ---------- */
+function view(k){
+  var dow=parse(k).getDay(), d=S.days[k]||{};
+  var boot=d.boot!==undefined?d.boot:S.bootDays.indexOf(dow)>-1;
+  var lv=d.lv||SCHED[dow][0], dv=d.dv||SCHED[dow][1];
+  var done=d.done||{};
+  var meals=[
+    {k:'breakfast',icon:'🍳',name:'الفطور',c:BREAKFAST},
+    {k:'lunch',icon:'🍗',name:'الغداء',c:lunchOf(lv),vk:'lv',cur:lv,opts:['chicken','tuna','sardine']},
+    {k:'dinner',icon:'🌙',name:'العشاء',c:dinnerOf(dv),vk:'dv',cur:dv,opts:['chicken','tuna','sardine','free']}
+  ];
+  var extra=boot?[{k:'pre',icon:'☕',name:'قبل الحصة',c:PRE},{k:'post',icon:'💪',name:'بعد الحصة',c:POST}]:[];
+  var cal=0,pro=0;
+  meals.concat(extra).forEach(function(m){if(done[m.k]){cal+=m.c.cal;pro+=m.c.pro;}});
+  return {dow:dow,d:d,boot:boot,done:done,meals:meals,extra:extra,cal:cal,pro:pro,
+    calT:CAL+(boot?POSTCAL:0),proT:PRO+(boot?POSTPRO:0),water:d.water||0,walk:!!d.walk,sleep:!!d.sleep};
+}
+
+/* ---------- pieces ---------- */
+var CHECK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+function gaugeSVG(val,target){
+  var cx=150,cy=150,R=108,p=Math.max(0,Math.min(1.08,val/target));
+  function pt(q,r){var a=Math.PI*(1-q);return [cx+r*Math.cos(a),cy-r*Math.sin(a)];}
+  var ticks='',i,a,b;
+  for(i=0;i<=10;i++){
+    var mj=(i%5===0);
+    a=pt(i/10,R+10);b=pt(i/10,R+(mj?24:17));
+    ticks+='<line class="tick'+(mj?' mj':'')+'" x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'"/>';
+  }
+  var q=Math.min(p,1), e=pt(q,R), out='';
+  out+='<path class="g-track" d="M '+(cx-R)+' '+cy+' A '+R+' '+R+' 0 0 1 '+(cx+R)+' '+cy+'"/>';
+  if(q>0.001)out+='<path class="g-fill" d="M '+(cx-R)+' '+cy+' A '+R+' '+R+' 0 0 1 '+e[0].toFixed(1)+' '+e[1].toFixed(1)+'"/>';
+  if(p>1){var s=pt(1,R),f=pt(p,R);out+='<path class="g-over" d="M '+s[0].toFixed(1)+' '+s[1].toFixed(1)+' A '+R+' '+R+' 0 0 1 '+f[0].toFixed(1)+' '+f[1].toFixed(1)+'"/>';}
+  var n=pt(p,R-26);
+  out+=ticks;
+  out+='<line class="needle" x1="'+cx+'" y1="'+cy+'" x2="'+n[0].toFixed(1)+'" y2="'+n[1].toFixed(1)+'"/>';
+  out+='<circle class="hub" cx="'+cx+'" cy="'+cy+'" r="9"/><circle class="hub2" cx="'+cx+'" cy="'+cy+'" r="3.5"/>';
+  out+='<text class="gtxt" x="'+(cx-R)+'" y="'+(cy+24)+'" text-anchor="middle">0</text>';
+  out+='<text class="gtxt" x="'+(cx+R)+'" y="'+(cy+24)+'" text-anchor="middle">'+n0(target)+'</text>';
+  return '<svg viewBox="0 0 300 176" role="img" aria-label="عداد السعرات">'+out+'</svg>';
+}
+function segBar(val,target){
+  var on=Math.min(10,Math.round(val/target*10)),h='',i;
+  for(i=0;i<10;i++)h+='<i class="'+(i<on?'on':'')+'"></i>';
+  return '<div class="seg10">'+h+'</div>';
+}
+function chipsFor(m){
+  if(!m.opts)return '';
+  return '<div class="chips">'+m.opts.map(function(o){
+    return '<button class="chip'+(m.cur===o?' on':'')+'" data-act="variant" data-vk="'+m.vk+'" data-v="'+o+'" aria-pressed="'+(m.cur===o)+'">'+PN[o]+'</button>';
+  }).join('')+'</div>';
+}
+function stopHTML(m,done){
+  var mac=m.c.cal?('<span>'+m.c.cal+' سعرة</span><em>'+m.c.pro+' جم بروتين</em>'):'<span>بدون حساب</span>';
+  return '<div class="stop'+(done?' done':'')+'">'+
+    '<button class="dot" data-act="toggle" data-key="'+m.k+'" aria-pressed="'+done+'" aria-label="تم: '+m.name+'">'+CHECK+'</button>'+
+    '<div class="shead"><span class="sname">'+m.icon+' '+m.name+'</span><span class="smac">'+mac+'</span></div>'+
+    '<ul>'+m.c.items.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>'+chipsFor(m)+'</div>';
+}
+function toggleRow(act,title,sub,on){
+  return '<button class="trow" data-act="'+act+'" role="switch" aria-checked="'+on+'"><span class="t"><b>'+title+'</b><small>'+sub+'</small></span><span class="sw'+(on?' on':'')+'"></span></button>';
+}
+
+/* ---------- weight stats ---------- */
+function sortedW(){return S.weights.slice().sort(function(a,b){return a.d<b.d?-1:(a.d>b.d?1:0);});}
+function avg(a){return a.length?a.reduce(function(s,x){return s+x.kg;},0)/a.length:null;}
+function wstats(){
+  var ws=sortedW();
+  if(!ws.length)return null;
+  var last=ws[ws.length-1],first=ws[0],ref=parse(last.d).getTime(),DAY=864e5;
+  function inR(lo,hi){return ws.filter(function(x){var t=parse(x.d).getTime();return t>ref-hi*DAY&&t<=ref-lo*DAY;});}
+  return {ws:ws,last:last,first:first,a1:avg(inR(0,7)),a0:avg(inR(7,14))};
+}
+
+/* ---------- header ---------- */
+var sub='today', cur=iso(new Date()), resetArmed=false, resetTimer=null;
+var SUBS=[['today','اليوم'],['week','الأسبوع'],['weight','الوزن'],['guide','الدليل']];
+
+function headHTML(){
+  var st=wstats(),today=iso(new Date()),n=diffDays(START,today)+1;
+  var planDay=n>=1?('اليوم '+n):'قريباً';
+  var curW=st?st.last.kg.toFixed(1)+' كجم':'--';
+  var left=st?Math.max(0,st.last.kg-GOAL).toFixed(1)+' كجم':'--';
+  return '<div class="head"><div class="title">صحتي</div><div class="subtitle">نزول دهون مع الحفاظ على العضل</div></div>'+
+    '<div class="strip"><div><b>'+planDay+'</b><small>من الخطة</small></div>'+
+    '<div><b>'+curW+'</b><small>الوزن الحالي</small></div>'+
+    '<div><b>'+left+'</b><small>باقي للهدف الأول</small></div></div>'+
+    '<div class="seg">'+SUBS.map(function(t){return '<button data-act="sub" data-sub="'+t[0]+'" class="'+(sub===t[0]?'on':'')+'">'+t[1]+'</button>';}).join('')+'</div>';
+}
+
+/* ---------- today ---------- */
+function todayHTML(){
+  var V=view(cur),today=iso(new Date()),isToday=(cur===today);
+  var rem=V.calT-V.cal, over=rem<0;
+  var stops=V.meals.map(function(m){return stopHTML(m,!!V.done[m.k]);}).join('');
+  var extraHTML=V.extra.length?('<p class="grp">أيام البوت كامب: وجبتين إضافيتين حول الحصة</p><div class="route">'+V.extra.map(function(m){return stopHTML(m,!!V.done[m.k]);}).join('')+'</div>'):'';
+  var cups='',i;
+  for(i=0;i<CUPS;i++)cups+='<button class="'+(i<V.water?'on':'')+'" style="height:'+(38+i*5)+'%" data-act="water" data-i="'+i+'" aria-label="كوب '+(i+1)+'"></button>';
+  var tip=TIPS[(Math.max(0,diffDays(START,cur)))%TIPS.length];
+  return ''+
+  '<div class="daynav"><button class="nb" data-act="day" data-n="-1">→ السابق</button>'+
+    '<div class="lbl"><b>'+AR_DAYS[V.dow]+(isToday?'<span class="badge">اليوم</span>':'')+'</b><small>'+fmtDate(cur)+'</small></div>'+
+    '<button class="nb" data-act="day" data-n="1">التالي ←</button></div>'+
+  (isToday?'':'<button class="back" data-act="gotoday">الرجوع لليوم</button>')+
+  '<div class="card gauge">'+gaugeSVG(V.cal,V.calT)+
+    '<div class="big">'+n0(Math.abs(rem))+'</div>'+
+    '<div class="bigcap'+(over?' over':'')+'">'+(over?'سعرة فوق هدف اليوم':'سعرة متبقية من '+n0(V.calT))+'</div>'+
+    '<div class="prot"><div class="prow"><span>البروتين</span><span><b>'+Math.round(V.pro)+'</b> من '+V.proT+' جم</span></div>'+segBar(V.pro,V.proT)+'</div></div>'+
+  '<div class="card"><h2>محطات اليوم<span>اضغط الدائرة عند ما تخلص الوجبة</span></h2>'+
+  toggleRow('boot','اليوم فيه بوت كامب','يضيف وجبة قبل الحصة وبعدها',V.boot)+
+  '<div class="route">'+stops+'</div>'+extraHTML+'</div>'+
+  '<div class="card"><h2>خزان الماء<span>الهدف 3 لتر</span></h2>'+
+  '<div class="tank">'+cups+'</div>'+
+  '<div class="tcap"><span><b>'+V.water+'</b> من '+CUPS+' كوب</span><span>'+(V.water*0.25).toFixed(2).replace(/\.?0+$/,'')+' لتر</span></div></div>'+
+  '<div class="card"><h2>عادات اليوم</h2>'+
+  toggleRow('walk','مشي من نص ساعة إلى ساعة','بعد المغرب أخف عليك من الحر',V.walk)+
+  toggleRow('sleep','نوم 7 إلى 8 ساعات','أهم من ساعة تمرين زايدة',V.sleep)+'</div>'+
+  '<div class="tip"><b>نصيحة:</b> '+tip+'</div>';
+}
+
+/* ---------- week ---------- */
+function shopping(){
+  var t={eggs:0,oats:0,milk:0,rice:0,bread:0,chicken:0,tuna:0,sard:0,oil:0,tt:0,st:0,boot:0},dow;
+  for(dow=0;dow<7;dow++){
+    t.eggs+=3;t.oats+=50;t.milk+=250;t.bread+=1;t.rice+=300;
+    var l=SCHED[dow][0],dn=SCHED[dow][1];
+    if(l==='chicken'){t.chicken+=180;t.oil+=1;}else if(l==='tuna'){t.tuna+=3;t.tt++;t.oil+=1;}else if(l==='sardine'){t.sard+=2;t.st++;}
+    if(dn==='chicken'){t.chicken+=200;t.oil+=1;}else if(dn==='tuna'){t.tuna+=3;t.tt++;t.oil+=1;}else if(dn==='sardine'){t.sard+=2;t.st++;}
+    if(S.bootDays.indexOf(dow)>-1){t.oats+=40;t.milk+=250;t.boot++;}
+  }
+  return t;
+}
+function weekHTML(){
+  var tdow=parse(iso(new Date())).getDay();
+  var rows=WEEK_ORDER.map(function(dow){
+    var l=SCHED[dow][0],d=SCHED[dow][1],on=S.bootDays.indexOf(dow)>-1;
+    return '<div class="stage'+(dow===tdow?' now':'')+'"><div class="sday">'+AR_DAYS[dow]+'</div>'+
+      '<div class="smeals"><span>الغداء: <b>'+PN[l]+'</b></span><span>العشاء: <b>'+PN[d]+'</b></span></div>'+
+      '<button class="chip'+(on?' on':'')+'" data-act="bootday" data-dow="'+dow+'" aria-pressed="'+on+'">بوت كامب</button></div>';
+  }).join('');
+  var t=shopping(), oilMl=t.oil*15;
+  return ''+
+  '<div class="card"><h2>مسار الأسبوع<span>يبدأ من السبت</span></h2>'+rows+
+  '<p class="muted">اختر أيام البوت كامب اللي تحضرها، وتنضاف وجباتها تلقائياً بالجدول وقائمة المشتريات. الفطور ثابت كل يوم. الجمعة عشاء وجبة حرة. وتقدر تبدل أي وجبة من صفحة اليوم.</p></div>'+
+  '<div class="card"><h2>قائمة مشتريات الأسبوع<span>تتعدل حسب أيام البوت كامب</span></h2>'+
+  '<ul class="list">'+
+    '<li><span>دجاج (مطبوخ)</span><span>'+n0(t.chicken)+' جم (حوالي '+(t.chicken/0.75/1000).toFixed(1)+' كجم نيّ)</span></li>'+
+    '<li><span>تونة بالماء</span><span>'+t.tuna+' علب ('+t.tt+' مرات)</span></li>'+
+    '<li><span>سردين</span><span>'+t.sard+' علب ('+t.st+' مرات)</span></li>'+
+    '<li><span>بيض</span><span>'+t.eggs+' بيضة</span></li>'+
+    '<li><span>شوفان</span><span>'+n0(t.oats)+' جم</span></li>'+
+    '<li><span>حليب قليل الدسم</span><span>'+(t.milk/1000).toFixed(2).replace(/\.?0+$/,'')+' لتر</span></li>'+
+    '<li><span>عيش أبيض (نيّ)</span><span>'+n0(t.rice/3)+' جم</span></li>'+
+    '<li><span>خبز</span><span>'+t.bread+' شرايح</span></li>'+
+    '<li><span>زيت زيتون</span><span>'+t.oil+' ملاعق (حوالي '+oilMl+' مل)</span></li>'+
+    '<li><span>جزر وطماطم وخيار</span><span>يومياً</span></li>'+
+    '<li><span>ليمون وخل</span><span>حسب الحاجة</span></li>'+
+  '</ul>'+
+  '<p class="muted">الكميات تقريبية. التونة والسردين اشتريهم بالماء، وصفّهم قبل الأكل.</p></div>';
+}
+
+/* ---------- weight ---------- */
+function chartHTML(ws){
+  var W=320,H=176,pl=34,pr=12,pt=14,pb=26;
+  var vals=ws.map(function(x){return x.kg;}).concat([GOAL]);
+  var lo=Math.min.apply(null,vals)-1,hi=Math.max.apply(null,vals)+1;
+  var times=ws.map(function(x){return parse(x.d).getTime();});
+  var t0=Math.min.apply(null,times),t1=Math.max.apply(null,times);
+  function X(t){return t1===t0?(pl+(W-pl-pr)/2):pl+(t-t0)/(t1-t0)*(W-pl-pr);}
+  function Y(v){return pt+(hi-v)/(hi-lo)*(H-pt-pb);}
+  var g='',i;
+  for(i=0;i<4;i++){
+    var v=lo+(hi-lo)*i/3,y=Y(v);
+    g+='<line class="gl" x1="'+pl+'" y1="'+y.toFixed(1)+'" x2="'+(W-pr)+'" y2="'+y.toFixed(1)+'"/><text class="ax" x="'+(pl-6)+'" y="'+(y+4).toFixed(1)+'" text-anchor="end">'+Math.round(v)+'</text>';
+  }
+  var gy=Y(GOAL);
+  g+='<line class="gy" x1="'+pl+'" y1="'+gy.toFixed(1)+'" x2="'+(W-pr)+'" y2="'+gy.toFixed(1)+'"/><text class="ax" x="'+(W-pr)+'" y="'+(gy-5).toFixed(1)+'" text-anchor="end" style="fill:var(--accent)">الهدف '+GOAL+'</text>';
+  var pts=ws.map(function(x){return X(parse(x.d).getTime()).toFixed(1)+','+Y(x.kg).toFixed(1);});
+  if(ws.length>1)g+='<polyline class="wl" points="'+pts.join(' ')+'"/>';
+  ws.forEach(function(x,idx){var p=pts[idx].split(',');g+='<circle class="wp" cx="'+p[0]+'" cy="'+p[1]+'" r="4.5"/>';});
+  var fd=parse(ws[0].d),ld=parse(ws[ws.length-1].d);
+  g+='<text class="ax" x="'+pl+'" y="'+(H-6)+'" text-anchor="start">'+fd.getDate()+'/'+(fd.getMonth()+1)+'</text>';
+  if(ws.length>1)g+='<text class="ax" x="'+(W-pr)+'" y="'+(H-6)+'" text-anchor="end">'+ld.getDate()+'/'+(ld.getMonth()+1)+'</text>';
+  return '<div class="chart"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="منحنى الوزن">'+g+'</svg></div>';
+}
+function verdictHTML(st){
+  if(st.a1===null||st.a0===null)return '<div class="verdict">سجّل وزنك 3 مرات بالأسبوع على الأقل، وبعد أسبوعين أحسب لك سرعة النزول من متوسط الأسبوعين. أول أسبوعين النزول يكون أكبر بسبب الماء، فلا تتحمس ولا تنصدم.</div>';
+  var loss=st.a0-st.a1, l=loss.toFixed(2);
+  if(loss>1.2)return '<div class="verdict warn">نزلت '+l+' كجم عن الأسبوع الماضي، وهذا أسرع من اللازم وقد يكلفك عضل. زد 150 إلى 200 سعرة (عيش أو شوفان) وراقب أداءك بالتمرين.</div>';
+  if(loss<0.5)return '<div class="verdict warn">نزول متوسطك '+l+' كجم عن الأسبوع الماضي، أقل من المتوقع. لا تستعجل. إذا استمر أسبوعين زد المشي أو نزّل 150 سعرة (قلل العيش أول شي).</div>';
+  return '<div class="verdict">نزلت '+l+' كجم عن الأسبوع الماضي، وهذا داخل النطاق المطلوب من 0.5 إلى 1.2 كجم. كمّل بنفس الخطة.</div>';
+}
+function weightHTML(){
+  var st=wstats(), body='';
+  if(st){
+    var change=st.last.kg-st.first.kg;
+    var prog=Math.max(0,Math.min(1,(st.first.kg-st.last.kg)/(st.first.kg-GOAL)));
+    body+=chartHTML(st.ws);
+    body+='<ul class="list" style="margin-top:12px">'+
+      '<li><span>الوزن الحالي</span><span>'+st.last.kg.toFixed(1)+' كجم</span></li>'+
+      '<li><span>الفرق منذ أول تسجيل</span><span>'+(change<=0?'':'+')+change.toFixed(1)+' كجم</span></li>'+
+      '<li><span>متوسط آخر 7 أيام</span><span>'+(st.a1!==null?st.a1.toFixed(1)+' كجم':'--')+'</span></li></ul>';
+    body+='<div style="margin-top:14px;display:flex;justify-content:space-between;font-size:13.5px"><span>الهدف الأول: نزول 10 كجم</span><b>'+Math.round(prog*100)+'%</b></div><div class="progress"><i style="width:'+(prog*100).toFixed(1)+'%"></i></div>';
+    body+=verdictHTML(st);
+  }
+  var list=st?st.ws.slice().reverse().map(function(x){
+    return '<div class="ent"><span>'+fmtDate(x.d)+(x.w?' - خصر '+x.w+' سم':'')+'</span><b>'+x.kg.toFixed(1)+' كجم</b><button class="x" data-act="delw" data-id="'+x.id+'">حذف</button></div>';
+  }).join(''):'';
+  return ''+
+  '<div class="card"><h2>سجّل وزنك</h2><div class="wform">'+
+    '<div><label for="hl-wkg">الوزن (كجم)</label><input id="hl-wkg" type="number" inputmode="decimal" step="0.1" min="30" max="300" placeholder="121.4"></div>'+
+    '<div><label for="hl-wwa">الخصر (سم) اختياري</label><input id="hl-wwa" type="number" inputmode="decimal" step="0.5" min="30" max="250" placeholder="كل أسبوعين"></div>'+
+    '<div class="full"><label for="hl-wdt">التاريخ</label><input id="hl-wdt" type="date" value="'+iso(new Date())+'"></div>'+
+    '<div class="full"><button class="btn" data-act="savew">حفظ الوزن</button><div class="msg" id="hl-wmsg" role="status"></div></div>'+
+  '</div></div>'+
+  '<div class="card"><h2>المسار نحو الهدف</h2>'+body+'</div>'+
+  '<div class="card"><h2>السجل</h2>'+list+'</div>';
+}
+
+/* ---------- guide ---------- */
+function guideHTML(){
+  function acc(t,inner,open){return '<details class="acc"'+(open?' open':'')+'><summary>'+t+'</summary><div class="in">'+inner+'</div></details>';}
+  return '<div class="card"><h2>دليل الخطة</h2>'+
+  acc('قبل ما تبدأ',
+   '<p>مؤشر كتلة جسمك 40 وهذا يعتبر سمنة من الدرجة الثالثة، فاحتياطك الصحي أهم من السرعة.</p><ul><li>سوّ فحص دم شامل (سكر، دهون، ضغط) قبل ما ترفع شدة البوت كامب.</li><li>خبّر المدرب بوزنك من أول حصة.</li><li>أول أسبوعين خفف القفز والجري لحماية الركب والكاحل، وابدأ بالمشي وزد تدريجياً.</li></ul><p>هذا الدليل مبني على دراسات عامة وليس بديلاً عن طبيبك.</p>',true)+
+  acc('أرقامك اليومية',
+   '<ul><li><em>2000 سعرة</em> بالأيام العادية. ويزيد 260 سعرة بأيام البوت كامب (شوفان وحليب بعد الحصة).</li><li><em>155 جم بروتين</em> أو أكثر.</li><li>ماء 3 لترات على الأقل.</li><li>نوم 7 إلى 8 ساعات.</li><li>نزول متوقع 0.7 إلى 1 كجم بالأسبوع، وأكثر بأول أسبوعين بسبب الماء.</li></ul><p>احتياجك التقريبي 2900 إلى 3100 سعرة مع النادي والمشي، والعجز حوالي 900 إلى 1000 سعرة. ما أنصح بأقل من 1800 سعرة.</p>')+
+  acc('قبل الحصة وبعدها',
+   '<ul><li><em>قبل الحصة بساعة:</em> 2 إلى 3 تمرات مع قهوة أو شاي. كربوهيدرات سريعة بدون ثقل على المعدة.</li><li><em>بعد الحصة:</em> الشوفان مع الحليب لدعم التعافي وحماية العضل.</li><li><em>الكافيين:</em> كوب أو كوبين قبل التمرين يرفع الأداء. لا تشربه بعد العصر عشان النوم.</li><li><em>الملح والماء:</em> الحر والعرق يستنزفون الصوديوم. لا تحذف الملح كلياً بأيام التمرين، وإذا حسيت بدوخة أو صداع بعد الحصة زد الملح شوي بالسلطة.</li><li><em>الكرياتين (اختياري):</em> 3 إلى 5 جم يومياً من ماركة موثوقة، مع الماء.</li></ul>')+
+  acc('التونة والسردين والملح',
+   '<ul><li>التونة 3 مرات بالأسبوع كحد أقصى بسبب الزئبق، وخذها بالماء.</li><li>السردين أفضل منها: غني بالأوميغا 3 وزئبقه أقل. صفّ الزيت إذا كان بالزيت.</li><li>المعلبات فيها صوديوم عالي، فخفف الملح بالسلطة وصفّ العلب.</li><li>ملعقة زيت الزيتون فيها حوالي 120 سعرة. قِسها.</li></ul>')+
+  acc('الصحة النفسية والاستمرار',
+   '<ul><li><em>المرونة أفضل من الصرامة:</em> الدراسات تربط الحمية المتشددة بنوبات أكل زايد ومزاج أسوأ. لهذا فيه وجبة حرة وحدة بالأسبوع بدون حساب.</li><li>إذا الميزان يتعبك نفسياً، زن 3 مرات بالأسبوع بدل كل يوم، وتابع الخصر والملابس.</li><li>المشي بالهواء الطلق يحسن المزاج ويقلل القلق.</li><li>الملل سبب أكيد للانهيار: غيّر التوابل وطريقة الطبخ بنفس الأكل.</li></ul>')+
+  acc('علامات تنبه لازم تعدل الخطة',
+   '<p>إذا استمر أكثر من أسبوع أي من هذي:</p><ul><li>تعب مستمر أو ضعف واضح بالتمرين</li><li>عصبية زايدة أو مزاج نازل</li><li>أرق</li><li>تفكير مستمر بالأكل يسيطر على يومك</li></ul><p>زد 150 إلى 200 سعرة (عيش أو شوفان). وبعد 8 إلى 10 أسابيع إذا حسيت بإرهاق عام، خذ أسبوعين على سعرات الصيانة (حوالي 2900). الاستراحة جزء من الخطة وليست فشل.</p><p>وإذا مزاجك نزل بشكل واضح أو تفكيرك بالأكل والوزن صار مقلق، تكلم مع طبيب أو أخصائي نفسي أو تغذية.</p>')+
+  acc('ليش هذي الأرقام: المراجع',
+   '<ul><li>غارثي وزملاؤه (2011): نزول 0.7% من الوزن بالأسبوع حافظ على العضل عند الرياضيين أفضل من 1.4%.</li><li>لونغلاند وزملاؤه (2016): بروتين 2.4 جم/كجم مع عجز كبير وتمرين قوي أعطى عضل أكثر ودهون أقل من 1.2 جم/كجم.</li><li>هيلمز وزملاؤه (2014): 2.3 إلى 3.1 جم بروتين لكل كجم من الكتلة الخالية من الدهون أثناء العجز.</li><li>ميفلن وسانت جيور (1990): المعادلة الأدق لتقدير الحرق الأساسي.</li><li>دراسة ماتادور، بيرن وزملاؤه (2018): النزول المتقطع مع فترات صيانة حافظ على نتائج أفضل.</li></ul><p>هذي تقديرات عامة. الأرقام الفعلية عندك تتضح بمتابعة الوزن.</p>')+
+  '</div>'+
+  '<div class="card"><h2>بيانات صحتي</h2><p class="muted" style="margin-top:0">محفوظة على هذا الجهاز فقط، وما تأثر على باقي أقسام كشكولي.</p>'+
+  '<div style="margin-top:12px"><button class="btn ghost" data-act="reset">'+(resetArmed?'اضغط مرة ثانية للتأكيد':'مسح بيانات صحتي وبدء من جديد')+'</button></div></div>';
+}
+
+/* ---------- render ---------- */
+function scroller(){return document.scrollingElement||document.documentElement;}
+function mount(html){
+  /* نضيف البادئة hl- لكل كلاس قبل الإدراج، عشان ما تتعارض مع كلاسات التطبيق (card, row, btn, pill ...) */
+  var t=document.createElement('template');
+  t.innerHTML=html;
+  t.content.querySelectorAll('[class]').forEach(function(el){
+    el.setAttribute('class',el.getAttribute('class').split(/\s+/).filter(Boolean).map(function(c){return 'hl-'+c;}).join(' '));
+  });
+  root.textContent='';
+  root.appendChild(t.content);
+}
+function render(){
+  var se=scroller(), y=se.scrollTop, by=document.body.scrollTop;
+  var body=sub==='today'?todayHTML():sub==='week'?weekHTML():sub==='weight'?weightHTML():guideHTML();
+  mount(headHTML()+body);
+  se.scrollTop=y; document.body.scrollTop=by;
+}
+
+/* ---------- actions ---------- */
+function saveWeight(){
+  var kgEl=document.getElementById('hl-wkg'),waEl=document.getElementById('hl-wwa'),dtEl=document.getElementById('hl-wdt'),msg=document.getElementById('hl-wmsg');
+  if(!kgEl)return;
+  var kg=parseFloat(String(kgEl.value).replace(',','.'));
+  if(!(kg>=30&&kg<=300)){msg.textContent='اكتب وزن صحيح بين 30 و300 كجم.';return;}
+  var d=dtEl.value||iso(new Date());
+  var w=parseFloat(String(waEl.value).replace(',','.'));
+  var entry={id:'w'+Date.now().toString(36)+Math.floor(Math.random()*1000),d:d,kg:Math.round(kg*10)/10,w:(w>=30&&w<=250)?w:null};
+  S.weights=S.weights.filter(function(x){return x.d!==d;});
+  S.weights.push(entry);
+  save();render();
+}
+
+root.addEventListener('click',function(e){
+  var t=e.target.closest('[data-act]');
+  if(!t||!root.contains(t))return;
+  var a=t.getAttribute('data-act'),ds=t.dataset,dd;
+  if(a==='sub'){sub=ds.sub;render();return;}
+  if(a==='day'){cur=addDays(cur,parseInt(ds.n,10));render();return;}
+  if(a==='gotoday'){cur=iso(new Date());render();return;}
+  if(a==='toggle'){dd=D(cur);dd.done=dd.done||{};dd.done[ds.key]=!dd.done[ds.key];save();render();return;}
+  if(a==='variant'){dd=D(cur);dd[ds.vk]=ds.v;save();render();return;}
+  if(a==='boot'){dd=D(cur);dd.boot=!view(cur).boot;save();render();return;}
+  if(a==='water'){dd=D(cur);var i=parseInt(ds.i,10);dd.water=(dd.water===i+1)?i:i+1;save();render();return;}
+  if(a==='walk'){dd=D(cur);dd.walk=!dd.walk;save();render();return;}
+  if(a==='sleep'){dd=D(cur);dd.sleep=!dd.sleep;save();render();return;}
+  if(a==='bootday'){
+    var dow=parseInt(ds.dow,10),ix=S.bootDays.indexOf(dow);
+    if(ix>-1)S.bootDays.splice(ix,1);else S.bootDays.push(dow);
+    save();render();return;
+  }
+  if(a==='savew'){saveWeight();return;}
+  if(a==='delw'){S.weights=S.weights.filter(function(x){return x.id!==ds.id;});save();render();return;}
+  if(a==='reset'){
+    if(!resetArmed){
+      resetArmed=true;render();
+      clearTimeout(resetTimer);resetTimer=setTimeout(function(){resetArmed=false;if(sub==='guide')render();},4000);
+    }else{
+      resetArmed=false;clearTimeout(resetTimer);S=defaults();save();cur=iso(new Date());sub='today';render();
+    }
+  }
+});
+root.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target&&e.target.tagName==='INPUT'&&e.target.closest('.hl-wform')){e.preventDefault();saveWeight();}
+});
+
+/* يستدعيها showTab كل ما تفتح التبويب: يرجع لتاريخ اليوم ويحدّث العرض */
+window.healthRender=function(){cur=iso(new Date());render();};
+render();
+})();
+
 init();
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
