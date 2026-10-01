@@ -749,6 +749,18 @@
   #tab-health .hl-bgram{width:90px; background:var(--card2); border:1px solid var(--border); color:var(--text); border-radius:10px; padding:7px 10px; font-size:13.5px; text-align:center;}
   #tab-health .hl-bresult{font-size:12.5px; color:var(--muted); margin-top:6px;}
   #tab-health .hl-bresult b{color:var(--text);}
+  #tab-health .hl-cmac{font-size:12px; color:var(--accent2); margin-top:4px;}
+  #tab-health .hl-clist{list-style:none; margin:8px 0 0; padding:0; display:flex; flex-direction:column; gap:6px;}
+  #tab-health .hl-citem{display:flex; align-items:center; justify-content:space-between; gap:8px; background:var(--card2); border:1px solid var(--border); border-radius:10px; padding:7px 10px; font-size:12.5px;}
+  #tab-health .hl-citem span{flex:1; color:var(--text);}
+  #tab-health .hl-citem b{color:var(--muted); font-weight:600; white-space:nowrap;}
+  #tab-health .hl-citem .hl-xdel{background:transparent; border:none; color:var(--bad); font-size:12px; padding:2px 4px; flex-shrink:0;}
+  #tab-health .hl-addrow{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;}
+  #tab-health .hl-addrow .hl-cname{flex:1 1 120px; min-width:90px;}
+  #tab-health .hl-addrow .hl-ccal{width:70px;}
+  #tab-health .hl-addrow .hl-cpro{width:110px;}
+  #tab-health .hl-addrow input{background:var(--card2); border:1px solid var(--border); color:var(--text); border-radius:10px; padding:7px 10px; font-size:12.5px;}
+  #tab-health .hl-addrow .hl-addbtn{background:var(--accent2); color:#08111f; border:none; border-radius:10px; padding:7px 14px; font-size:12.5px; font-weight:700; flex-shrink:0;}
   #tab-health .hl-muted .hl-over{color:var(--bad); font-weight:700;}
   #tab-health .hl-grp{font-size:12.5px; color:var(--accent2); margin:14px 0 0;}
 
@@ -4903,19 +4915,26 @@ var TIPS=[
 ];
 
 /* ---------- day view ---------- */
+function ctot(arr){var c=0,p=0;(arr||[]).forEach(function(x){c+=x.cal||0;p+=x.pro||0;});return {cal:c,pro:p};}
 function view(k){
   var dow=parse(k).getDay(), d=S.days[k]||{};
   var boot=d.boot!==undefined?d.boot:S.bootDays.indexOf(dow)>-1;
   var lv=d.lv||SCHED[dow][0], dv=d.dv||SCHED[dow][1];
   var done=d.done||{};
+  var custom=d.custom||{};
   var meals=[
-    {k:'breakfast',icon:'🍳',name:'الفطور',c:BREAKFAST},
-    {k:'lunch',icon:'🍗',name:'الغداء',c:lunchOf(lv),vk:'lv',cur:lv,opts:['chicken','tuna','sardine']},
-    {k:'dinner',icon:'🌙',name:'العشاء',c:dinnerOf(dv),vk:'dv',cur:dv,opts:['chicken','tuna','sardine','free']}
+    {k:'breakfast',icon:'🍳',name:'الفطور',c:BREAKFAST,custom:custom.breakfast||[]},
+    {k:'lunch',icon:'🍗',name:'الغداء',c:lunchOf(lv),vk:'lv',cur:lv,opts:['chicken','tuna','sardine'],custom:custom.lunch||[]},
+    {k:'dinner',icon:'🌙',name:'العشاء',c:dinnerOf(dv),vk:'dv',cur:dv,opts:['chicken','tuna','sardine','free'],custom:custom.dinner||[]},
+    {k:'snack',icon:'🍪',name:'سناك وإضافات',c:{cal:0,pro:0,items:[]},custom:custom.snack||[]}
   ];
-  var extra=boot?[{k:'pre',icon:'☕',name:'قبل الحصة',c:PRE},{k:'post',icon:'💪',name:'بعد الحصة',c:POST}]:[];
+  meals.forEach(function(m){m.ctot=ctot(m.custom);});
+  var extra=boot?[{k:'pre',icon:'☕',name:'قبل الحصة',c:PRE,custom:[],ctot:{cal:0,pro:0}},{k:'post',icon:'💪',name:'بعد الحصة',c:POST,custom:[],ctot:{cal:0,pro:0}}]:[];
   var cal=0,pro=0;
-  meals.concat(extra).forEach(function(m){if(done[m.k]){cal+=m.c.cal;pro+=m.c.pro;}});
+  meals.concat(extra).forEach(function(m){
+    if(done[m.k]){cal+=m.c.cal;pro+=m.c.pro;}
+    cal+=m.ctot.cal;pro+=m.ctot.pro;
+  });
   return {dow:dow,d:d,boot:boot,done:done,meals:meals,extra:extra,cal:cal,pro:pro,
     calT:CAL+(boot?POSTCAL:0),proT:PRO+(boot?POSTPRO:0),water:d.water||0,walk:!!d.walk,sleep:!!d.sleep};
 }
@@ -4955,12 +4974,26 @@ function chipsFor(m){
     return '<button class="chip'+(m.cur===o?' on':'')+'" data-act="variant" data-vk="'+m.vk+'" data-v="'+o+'" aria-pressed="'+(m.cur===o)+'">'+PN[o]+'</button>';
   }).join('')+'</div>';
 }
+function customListHTML(m){
+  var rows=(m.custom||[]).map(function(x){
+    return '<li class="citem"><span>'+x.name+'</span><b>'+n0(x.cal)+' سعرة'+(x.pro?('، '+n0(x.pro)+'ج بروتين'):'')+'</b><button class="xdel" data-act="delcustom" data-meal="'+m.k+'" data-id="'+x.id+'">حذف</button></li>';
+  }).join('');
+  return (rows?('<ul class="clist">'+rows+'</ul>'):'')+
+    '<div class="addrow">'+
+      '<input type="text" class="cname" id="cname-'+m.k+'" placeholder="اسم الأكلة" maxlength="40">'+
+      '<input type="number" class="ccal" id="ccal-'+m.k+'" placeholder="سعرة" inputmode="numeric" min="0" max="5000">'+
+      '<input type="number" class="cpro" id="cpro-'+m.k+'" placeholder="بروتين (اختياري)" inputmode="numeric" min="0" max="500">'+
+      '<button class="addbtn" data-act="addcustom" data-meal="'+m.k+'">إضافة</button>'+
+    '</div>';
+}
 function stopHTML(m,done){
   var mac=m.c.cal?('<span>'+m.c.cal+' سعرة</span><em>'+m.c.pro+' جم بروتين</em>'):'<span>بدون حساب</span>';
+  var ctotHTML=(m.ctot&&m.ctot.cal)?('<div class="cmac">+<b>'+n0(m.ctot.cal)+'</b> سعرة مضافة'+(m.ctot.pro?('، <b>'+n0(m.ctot.pro)+'</b>ج بروتين'):'')+'</div>'):'';
   return '<div class="stop'+(done?' done':'')+'">'+
     '<button class="dot" data-act="toggle" data-key="'+m.k+'" aria-pressed="'+done+'" aria-label="تم: '+m.name+'">'+CHECK+'</button>'+
     '<div class="shead"><span class="sname">'+m.icon+' '+m.name+'</span><span class="smac">'+mac+'</span></div>'+
-    '<ul>'+m.c.items.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>'+chipsFor(m)+'</div>';
+    (m.c.items&&m.c.items.length?('<ul>'+m.c.items.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>'):'')+
+    chipsFor(m)+ctotHTML+customListHTML(m)+'</div>';
 }
 function toggleRow(act,title,sub,on){
   return '<button class="trow" data-act="'+act+'" role="switch" aria-checked="'+on+'"><span class="t"><b>'+title+'</b><small>'+sub+'</small></span><span class="sw'+(on?' on':'')+'"></span></button>';
@@ -5294,6 +5327,20 @@ function render(){
 }
 
 /* ---------- actions ---------- */
+function addCustomItem(mealKey){
+  var nameEl=document.getElementById('cname-'+mealKey),calEl=document.getElementById('ccal-'+mealKey),proEl=document.getElementById('cpro-'+mealKey);
+  if(!calEl)return;
+  var cal=parseFloat(String(calEl.value).replace(',','.'));
+  if(!(cal>0&&cal<=5000))return;
+  var name=(nameEl&&nameEl.value.trim())||'أكلة';
+  var pro=parseFloat(String((proEl&&proEl.value)||'').replace(',','.'));
+  if(!(pro>=0&&pro<=500))pro=0;
+  var dd=D(cur);
+  dd.custom=dd.custom||{breakfast:[],lunch:[],dinner:[],snack:[]};
+  if(!dd.custom[mealKey])dd.custom[mealKey]=[];
+  dd.custom[mealKey].push({id:'c'+Date.now().toString(36)+Math.floor(Math.random()*1000),name:name,cal:Math.round(cal),pro:Math.round(pro)});
+  save();render();
+}
 function saveGoal(){
   var kgEl=document.getElementById('hl-gkg'),lbEl=document.getElementById('hl-glabel'),msg=document.getElementById('hl-gmsg');
   if(!kgEl)return;
@@ -5349,6 +5396,12 @@ root.addEventListener('click',function(e){
   if(a==='delw'){S.weights=S.weights.filter(function(x){return x.id!==ds.id;});save();render();return;}
   if(a==='addgoal'){saveGoal();return;}
   if(a==='delgoal'){S.goals=(S.goals||[]).filter(function(x){return x.id!==ds.id;});save();render();return;}
+  if(a==='addcustom'){addCustomItem(ds.meal);return;}
+  if(a==='delcustom'){
+    var dd2=D(cur);
+    if(dd2.custom&&dd2.custom[ds.meal]){dd2.custom[ds.meal]=dd2.custom[ds.meal].filter(function(x){return x.id!==ds.id;});save();render();}
+    return;
+  }
   if(a==='reset'){
     if(!resetArmed){
       resetArmed=true;render();
@@ -5367,6 +5420,11 @@ root.addEventListener('input',function(e){
   }
 });
 root.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target&&e.target.tagName==='INPUT'&&e.target.closest('.hl-addrow')){
+    e.preventDefault();
+    addCustomItem(e.target.dataset.meal||e.target.id.split('-')[1]);
+    return;
+  }
   if(e.key==='Enter'&&e.target&&e.target.tagName==='INPUT'&&e.target.closest('.hl-wform')){
     e.preventDefault();
     if(e.target.id==='hl-gkg'||e.target.id==='hl-glabel'){saveGoal();}else{saveWeight();}
