@@ -1285,6 +1285,24 @@ body:has(#tab-radar.active){overflow:hidden;}
 .sb-gl dd{margin:0; color:#D6D4DF;}
 @media (prefers-reduced-motion:reduce){.sb-rot,.sb-tw .star,.sb-c{animation:none!important;} .sb-l[open] .sb-con .lines{animation:none; stroke-dashoffset:0;}}
 
+/* ================= بوصلة القبلة: سجادة الصلاة ================= */
+.compass.rugc{width:300px; height:330px; border-radius:0; background:none; border:0; box-shadow:none; margin-bottom:4px; overflow:visible;}
+.compass.rugc .tick,.compass.rugc .dirlabel,.compass.rugc .center-dot{display:none;}
+.compass.rugc .arrow{transition:transform .8s cubic-bezier(.25,1.2,.4,1);}
+.compass.rugc .rug{position:absolute; left:-75px; top:-125px; width:150px; height:250px; filter:drop-shadow(0 18px 18px rgba(0,0,0,.6)); transition:filter .4s;}
+.compass.rugc.ok .rug{filter:drop-shadow(0 0 24px rgba(244,184,96,.45)) drop-shadow(0 18px 18px rgba(0,0,0,.6));}
+.compass.rugc .rug-floor{position:absolute; left:50%; top:50%; width:290px; height:290px; margin:-145px; border-radius:50%;
+  background:radial-gradient(circle, rgba(244,184,96,.07), transparent 65%); border:1px dashed rgba(244,184,96,.12);}
+.compass.rugc .rug-k{position:absolute; left:50%; top:-14px; width:56px; height:56px; margin-left:-28px; opacity:0; transform:translateY(10px);
+  transition:opacity .4s, transform .5s cubic-bezier(.3,1.35,.5,1); z-index:3;}
+.compass.rugc .rug-k svg{width:100%; height:100%;}
+.compass.rugc.ok .rug-k{opacity:1; transform:none; filter:drop-shadow(0 0 14px rgba(255,214,140,.7));}
+.rug-msg{text-align:center; margin:2px 0 12px;}
+.rug-msg b{display:block; font-size:17px; font-weight:500; transition:color .25s;}
+.rug-msg small{display:block; font-size:12.5px; color:var(--muted); margin-top:3px;}
+.compass.rugc.ok + .rug-msg b{color:var(--accent);}
+@media (prefers-reduced-motion:reduce){.compass.rugc .arrow,.compass.rugc .rug-k{transition:none;}}
+
 </style>
 </head>
 <body>
@@ -1335,7 +1353,7 @@ body:has(#tab-radar.active){overflow:hidden;}
       <div class="obs-st"><div class="k"><svg id="twWIco" viewBox="0 0 24 24" fill="currentColor" style="transition:transform 1s cubic-bezier(.22,1,.36,1)"><path d="M12 2l6 19-6-4-6 4z"/></svg>الرياح</div><div class="v"><span id="twWind">—</span><small>كم/س</small></div><div class="s" id="twWDir">—</div></div>
     </div>
 
-    <div class="obs-h3">٢٤ ساعة <span>الحرارة · احتمال المطر</span></div>
+    <div class="obs-h3">24 ساعة <span>الحرارة · احتمال المطر</span></div>
     <div class="obs-chart"><svg id="twHc" viewBox="0 0 340 120"></svg></div>
 
     <div class="obs-h3">الأسبوع</div>
@@ -1349,7 +1367,7 @@ body:has(#tab-radar.active){overflow:hidden;}
     <div class="home-shortcuts-grid">
       <button class="home-shortcut-btn" onclick="goToTab('tab-sun')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg></span>القمر والشمس</button>
       <button class="home-shortcut-btn" onclick="openSunAR()"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 0 1 4 4h-8a4 4 0 0 1 4-4z"/><path d="M12 3.6v2M6.2 7.8l1.4 1.4M17.8 7.8l-1.4 1.4"/><path d="M2.5 16h19"/><path d="M6 19h2M11 19h2M16 19h2"/></svg></span>كاميرا الشروق</button>
-      <button class="home-shortcut-btn" onclick="goToTab('tab-qibla')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8-4 8 4v9l-8 4-8-4V8z"/><path d="M4 8l8 4 8-4"/><path d="M12 12v9"/></svg></span>القبلة</button>
+      <button class="home-shortcut-btn" onclick="goToTab('tab-prayer');setTimeout(function(){var q=document.getElementById('qCompass');if(q)q.scrollIntoView({block:'center',behavior:'smooth'})},350)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8-4 8 4v9l-8 4-8-4V8z"/><path d="M4 8l8 4 8-4"/><path d="M12 12v9"/></svg></span>القبلة</button>
       <button class="home-shortcut-btn" onclick="goToTab('tab-prayer')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8v2"/><path d="M9 7.2a3 3 0 0 1 6 0v1.8H9V7.2z"/><path d="M4 21v-5.5A3 3 0 0 1 7 12"/><path d="M20 21v-5.5a3 3 0 0 0-3-3.5"/><path d="M9 9h6v2.5a6 6 0 0 1-6 0V9z"/><path d="M3 21h18"/></svg></span>الصلاة</button>
       <button class="home-shortcut-btn" onclick="goToTab('tab-car')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l1.5-5a2 2 0 0 1 2-1.5h9l3 3.5H21a1 1 0 0 1 1 1V16"/><circle cx="7" cy="17.3" r="1.7"/><circle cx="17" cy="17.3" r="1.7"/><path d="M8.5 9.5V6h4l2 3.5"/></svg></span>سيارتي</button>
       <button class="home-shortcut-btn" onclick="goToTab('tab-storage')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.2-3.5h13.6l2.2 3.5"/><path d="M3 7.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7.5z"/><path d="M9.5 11.5h5"/></svg></span>مخزني</button>
@@ -1639,11 +1657,11 @@ body:has(#tab-radar.active){overflow:hidden;}
   <!-- ===== النجوم من الصفر ===== -->
   <div class="card sg sb">
     <h2><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/></svg></span> النجوم من الصفر</h2>
-    <p class="sg-lead">ما تعرف شي عن النجوم؟ عادي! هذي <b>٧ دروس قصيرة</b>، كل درس دقيقة. اضغط على أي درس يفتح لك.</p>
+    <p class="sg-lead">ما تعرف شي عن النجوم؟ عادي! هذي <b>7 دروس قصيرة</b>، كل درس دقيقة. اضغط على أي درس يفتح لك.</p>
     <div class="sb-prog"><i id="sbBar"></i></div>
 
     <details class="sb-l" data-l="1">
-      <summary><span class="n">١</span><span><b>شنو هو النجم؟</b><small>شمس بعيدة وايد</small></span></summary>
+      <summary><span class="n">1</span><span><b>شنو هو النجم؟</b><small>شمس بعيدة وايد</small></span></summary>
       <div class="sb-c">
         <svg class="sb-art" viewBox="0 0 320 110" aria-hidden="true">
           <circle cx="60" cy="55" r="34" fill="url(#sbSun)"/><text x="60" y="104" class="t">شمسنا (قريبة)</text>
@@ -1652,12 +1670,12 @@ body:has(#tab-radar.active){overflow:hidden;}
           <defs><radialGradient id="sbSun"><stop offset="0" stop-color="#FFF6D8"/><stop offset=".6" stop-color="#FFC45E"/><stop offset="1" stop-color="#FF9A3D"/></radialGradient></defs>
         </svg>
         <p>كل نجم تشوفه بالليل هو <b>شمس</b> مثل شمسنا بالضبط، بس بعيد بشكل ما يتخيله العقل، عشان كذا يبين لك نقطة صغيرة.</p>
-        <p class="sb-fact">💡 ضو أقرب نجم لنا (بعد الشمس) ياخذ أكثر من ٤ سنين عشان يوصلنا. يعني اللي تشوفه الليلة هو ضوه من ٤ سنين!</p>
+        <p class="sb-fact">💡 ضو أقرب نجم لنا (بعد الشمس) ياخذ أكثر من 4 سنين عشان يوصلنا. يعني اللي تشوفه الليلة هو ضوه من 4 سنين!</p>
       </div>
     </details>
 
     <details class="sb-l" data-l="2">
-      <summary><span class="n">٢</span><span><b>ليش النجوم تتحرك بالليل؟</b><small>الأرض هي اللي تدور</small></span></summary>
+      <summary><span class="n">2</span><span><b>ليش النجوم تتحرك بالليل؟</b><small>الأرض هي اللي تدور</small></span></summary>
       <div class="sb-c">
         <div class="sb-trail" aria-hidden="true"><div class="sb-rot"><i style="--r:30px;--a:20deg"></i><i style="--r:52px;--a:140deg"></i><i style="--r:74px;--a:250deg"></i><i style="--r:96px;--a:60deg"></i><i style="--r:118px;--a:200deg"></i><i style="--r:64px;--a:320deg"></i><i style="--r:108px;--a:300deg"></i></div><b class="pol">★<small>الجدي</small></b></div>
         <p>النجوم <b>ما تتحرك</b> فعلياً — الأرض هي اللي تدور حول نفسها مرة كل يوم. عشان كذا تحس السما كلها تلف ببطء.</p>
@@ -1666,7 +1684,7 @@ body:has(#tab-radar.active){overflow:hidden;}
     </details>
 
     <details class="sb-l" data-l="3">
-      <summary><span class="n">٣</span><span><b>ليش نجوم الصيف غير الشتا؟</b><small>نطالع جهة ثانية من الفضاء</small></span></summary>
+      <summary><span class="n">3</span><span><b>ليش نجوم الصيف غير الشتا؟</b><small>نطالع جهة ثانية من الفضاء</small></span></summary>
       <div class="sb-c">
         <svg class="sb-art" viewBox="0 0 320 130" aria-hidden="true">
           <circle cx="160" cy="65" r="14" fill="url(#sbSun)"/>
@@ -1677,12 +1695,12 @@ body:has(#tab-radar.active){overflow:hidden;}
           <defs><marker id="sbA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F4B860"/></marker></defs>
         </svg>
         <p>الأرض تلف حول الشمس مرة كل سنة. بالليل نكون نطالع <b>عكس جهة الشمس</b>، فكل موسم نشوف جزء مختلف من الفضاء.</p>
-        <p class="sb-fact">💡 مثال: «الجبار» و«الشعرى» نجوم شتوية، و«العقرب» و«مثلث الصيف» صيفية. وكل ليلة النجم يطلع أبكر بـ ٤ دقايق تقريباً.</p>
+        <p class="sb-fact">💡 مثال: «الجبار» و«الشعرى» نجوم شتوية، و«العقرب» و«مثلث الصيف» صيفية. وكل ليلة النجم يطلع أبكر بـ 4 دقايق تقريباً.</p>
       </div>
     </details>
 
     <details class="sb-l" data-l="4">
-      <summary><span class="n">٤</span><span><b>شنو الكوكبة؟</b><small>صلّ النقاط وتطلع صورة</small></span></summary>
+      <summary><span class="n">4</span><span><b>شنو الكوكبة؟</b><small>صلّ النقاط وتطلع صورة</small></span></summary>
       <div class="sb-c">
         <svg class="sb-art sb-con" viewBox="0 0 320 120" aria-hidden="true">
           <g class="dots"><circle cx="40" cy="80" r="3"/><circle cx="80" cy="64" r="3"/><circle cx="118" cy="70" r="3"/><circle cx="140" cy="40" r="3"/><circle cx="186" cy="34" r="3"/><circle cx="196" cy="66" r="3"/><circle cx="150" cy="78" r="3"/></g>
@@ -1690,26 +1708,26 @@ body:has(#tab-radar.active){overflow:hidden;}
           <text x="260" y="58" class="t">= بنات نعش</text><text x="260" y="76" class="t s">(شكل مغرفة)</text>
         </svg>
         <p>زمان الناس شافوا مجموعات نجوم وتخيلوا منها أشكال: أسد، عقرب، صياد… مثل لعبة «وصّل النقاط». هذي نسميها <b>كوكبة</b>.</p>
-        <p>أسهل كوكبة تبدأ فيها: <b>بنات نعش</b> (شكل مغرفة) بالشمال، و<b>الجبار</b> (٣ نجوم بخط مستقيم) بالشتا.</p>
+        <p>أسهل كوكبة تبدأ فيها: <b>بنات نعش</b> (شكل مغرفة) بالشمال، و<b>الجبار</b> (3 نجوم بخط مستقيم) بالشتا.</p>
       </div>
     </details>
 
     <details class="sb-l" data-l="5">
-      <summary><span class="n">٥</span><span><b>قيس السما بيدك</b><small>ما تحتاج أي جهاز</small></span></summary>
+      <summary><span class="n">5</span><span><b>قيس السما بيدك</b><small>ما تحتاج أي جهاز</small></span></summary>
       <div class="sb-c">
         <div class="sb-hands">
-          <div><span>🤙</span><b>١°</b><small>عرض إصبعك الصغير</small></div>
-          <div><span>🤟</span><b>٥°</b><small>٣ أصابع</small></div>
-          <div><span>✊</span><b>١٠°</b><small>قبضة يدك</small></div>
-          <div><span>🖐️</span><b>٢٠°</b><small>الشبر كامل</small></div>
+          <div><span>🤙</span><b>1°</b><small>عرض إصبعك الصغير</small></div>
+          <div><span>🤟</span><b>5°</b><small>3 أصابع</small></div>
+          <div><span>✊</span><b>10°</b><small>قبضة يدك</small></div>
+          <div><span>🖐️</span><b>20°</b><small>الشبر كامل</small></div>
         </div>
-        <p>مدّ يدك لآخرها قدام عيونك. من الأفق لفوق راسك = <b>٩٠°</b> (تقريباً ٩ قبضات).</p>
-        <p class="sb-fact">💡 لما التطبيق يقولك «الجدي على ارتفاع ٢٩°»، يعني ٣ قبضات فوق الأفق بالشمال.</p>
+        <p>مدّ يدك لآخرها قدام عيونك. من الأفق لفوق راسك = <b>90°</b> (تقريباً 9 قبضات).</p>
+        <p class="sb-fact">💡 لما التطبيق يقولك «الجدي على ارتفاع 29°»، يعني 3 قبضات فوق الأفق بالشمال.</p>
       </div>
     </details>
 
     <details class="sb-l" data-l="6">
-      <summary><span class="n">٦</span><span><b>ليش النجم يرمش والكوكب لا؟</b><small>الهوا هو السبب</small></span></summary>
+      <summary><span class="n">6</span><span><b>ليش النجم يرمش والكوكب لا؟</b><small>الهوا هو السبب</small></span></summary>
       <div class="sb-c">
         <div class="sb-tw" aria-hidden="true"><span class="star">✦<small>نجم: يرمش</small></span><span class="planet">●<small>كوكب: ثابت</small></span></div>
         <p>ضو النجم يجي من نقطة صغيرة جداً، والهوا فوقنا يتحرك ويرجّف الضو، فتحسه <b>يرمش</b>.</p>
@@ -1718,12 +1736,12 @@ body:has(#tab-radar.active){overflow:hidden;}
     </details>
 
     <details class="sb-l" data-l="7">
-      <summary><span class="n">٧</span><span><b>أول ليلة لك — خطوة بخطوة</b><small>طبّق اللي تعلمته</small></span></summary>
+      <summary><span class="n">7</span><span><b>أول ليلة لك — خطوة بخطوة</b><small>طبّق اللي تعلمته</small></span></summary>
       <div class="sb-c">
         <ol class="sb-steps">
           <li><b>اختار الوقت:</b> بعد المغرب بساعة على الأقل، والأفضل ليلة ما فيها قمر كامل.</li>
           <li><b>ابعد عن الأنوار:</b> سطح البيت أو البر. كل ما كان أظلم، شفت نجوم أكثر.</li>
-          <li><b>خل عيونك ترتاح:</b> ٢٠ دقيقة بالظلام بدون ما تطالع شاشة قوية.</li>
+          <li><b>خل عيونك ترتاح:</b> 20 دقيقة بالظلام بدون ما تطالع شاشة قوية.</li>
           <li><b>اعرف الشمال:</b> من بوصلة الجوال، أو دوّر على الجدي (الدرس الجاي تحت).</li>
           <li><b>ابدأ بالألمع:</b> افتح «سماء الليلة» تحت، واضغط على ألمع نجم تشوفه.</li>
           <li><b>كل ليلة نجم جديد:</b> لا تحاول تحفظ كل شي مرة وحدة 🙂</li>
@@ -1737,7 +1755,7 @@ body:has(#tab-radar.active){overflow:hidden;}
       <summary>📖 كلمات بتمر عليك</summary>
       <dl>
         <dt>الأفق</dt><dd>الخط اللي تلتقي فيه السما بالأرض.</dd>
-        <dt>الارتفاع</dt><dd>كم النجم عالي فوق الأفق: ٠° على الأفق، ٩٠° فوق راسك.</dd>
+        <dt>الارتفاع</dt><dd>كم النجم عالي فوق الأفق: 0° على الأفق، 90° فوق راسك.</dd>
         <dt>الاتجاه</dt><dd>الجهة اللي تطالعها: شمال، شرق، جنوب، غرب.</dd>
         <dt>الكوكبة</dt><dd>مجموعة نجوم تسوي شكل.</dd>
         <dt>العنقود</dt><dd>نجوم متجمعة قريبة من بعض، مثل الثريا.</dd>
@@ -1768,7 +1786,7 @@ body:has(#tab-radar.active){overflow:hidden;}
   <div class="card sg">
     <h2><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.3 8.7l-2.4 4.6-4.6 2.4 2.4-4.6 4.6-2.4z" fill="currentColor" stroke="none"/></svg></span> كيف تعرف الشمال بالنجوم؟</h2>
     <div class="sg-steps" id="sgSteps">
-      <button class="on" data-s="1">١ · بنات نعش</button><button data-s="2">٢ · الجدي</button><button data-s="3">٣ · ذات الكرسي</button>
+      <button class="on" data-s="1">1 · بنات نعش</button><button data-s="2">2 · الجدي</button><button data-s="3">3 · ذات الكرسي</button>
     </div>
     <div class="sg-north">
       <svg id="sgNorth" viewBox="0 0 340 220" aria-hidden="true">
@@ -1781,7 +1799,7 @@ body:has(#tab-radar.active){overflow:hidden;}
         <g class="sg-n-pointer">
           <path class="ptr" d="M272 152 L246 34"/>
           <circle class="pol" cx="244" cy="28" r="5.5"/><text x="244" y="14" class="nm big">الجدي ★ الشمال</text>
-          <text x="300" y="80" class="dim">مدّ الخط ٥ مرات</text>
+          <text x="300" y="80" class="dim">مدّ الخط 5 مرات</text>
         </g>
         <g class="sg-n-cas">
           <path class="cl" d="M28 92 L52 70 L76 92 L98 66 L124 78"/>
@@ -1796,7 +1814,7 @@ body:has(#tab-radar.active){overflow:hidden;}
       <div><b>الشرق والغرب</b>نجم «المنطقة» (أول نجم بحزام الجبار) يطلع من الشرق بالضبط ويغيب بالغرب بالضبط.</div>
       <div><b>الجنوب</b>«سهيل» نجم لامع واطي على الأفق الجنوبي، وطلوعه آخر أغسطس بشارة إن الحر بيكسر.</div>
       <div><b>كوكب ولا نجم؟</b>النجم يرمش، والكوكب نوره ثابت. إذا شفت نقطة لامعة ثابتة وما هي بالخريطة، غالباً هي الزهرة أو المشتري.</div>
-      <div><b>عشان تشوف أكثر</b>ابعد عن أنوار المدينة، وخل عيونك ٢٠ دقيقة بالظلام، واستخدم ضو أحمر بدل شاشة الجوال القوية.</div>
+      <div><b>عشان تشوف أكثر</b>ابعد عن أنوار المدينة، وخل عيونك 20 دقيقة بالظلام، واستخدم ضو أحمر بدل شاشة الجوال القوية.</div>
     </div>
   </div>
 </div>
@@ -1824,6 +1842,11 @@ body:has(#tab-radar.active){overflow:hidden;}
 
 <!-- TAB 3: QIBLA -->
 <div class="tab" id="tab-qibla">
+
+</div>
+
+<!-- TAB 4: PRAYER -->
+<div class="tab" id="tab-prayer">
   <div class="card">
     <h2><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8-4 8 4v9l-8 4-8-4V8z"/><path d="M4 8l8 4 8-4"/><path d="M12 12v9"/><path d="M4 9.2l8 4 8-4" opacity="0.001"/></svg></span> اتجاه القبلة</h2>
     <div class="compass-wrap">
@@ -1834,12 +1857,8 @@ body:has(#tab-radar.active){overflow:hidden;}
     </div>
     <div class="row"><span class="label">اتجاه القبلة من الشمال</span><span class="val" id="q-bearing">--°</span></div>
     <div class="row"><span class="label">المسافة إلى مكة المكرمة</span><span class="val" id="q-dist">-- كم</span></div>
-    <div class="note">وجّه أعلى الجوال (خط ١٢) نحو السهم الذهبي. لدقة أعلى، ابتعد عن المعادن والأجهزة الإلكترونية، وقم بمعايرة البوصلة برسم شكل ٨ بالهواء إذا طلب النظام ذلك.</div>
+    <div class="note">وجّه أعلى الجوال (خط 12) نحو السهم الذهبي. لدقة أعلى، ابتعد عن المعادن والأجهزة الإلكترونية، وقم بمعايرة البوصلة برسم شكل 8 بالهواء إذا طلب النظام ذلك.</div>
   </div>
-</div>
-
-<!-- TAB 4: PRAYER -->
-<div class="tab" id="tab-prayer">
   <div class="card">
     <h2><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8v2"/><path d="M9 7.2a3 3 0 0 1 6 0v1.8H9V7.2z"/><path d="M4 21v-5.5A3 3 0 0 1 7 12"/><path d="M20 21v-5.5a3 3 0 0 0-3-3.5"/><path d="M9 9h6v2.5a6 6 0 0 1-6 0V9z"/><path d="M3 21h18"/><path d="M10.5 21v-3.5h3V21"/></svg></span> مواعيد الصلاة اليوم</h2>
     <div class="prayer-row" data-p="fajr"><span class="pname">الفجر</span><span class="ptime" id="p-fajr">--:--</span></div>
@@ -1891,7 +1910,7 @@ body:has(#tab-radar.active){overflow:hidden;}
     <div class="note">الشروق/الغروب والشفق (المدني/الملاحي/الفلكي) والساعة الذهبية: معادلات الشمس الفلكية القياسية (خوارزميات Jean Meeus، "Astronomical Algorithms")، نفس الأساس الذي تعتمده حاسبة NOAA الشمسية ومكتبة SunCalc.js مفتوحة المصدر.</div>
     <div class="note" style="margin-top:8px;">اتجاه وارتفاع درب التبانة: إحداثيات مركز المجرة Sgr A* الفلكية القياسية (J2000: RA 17h45m40.04s، Dec -29°00′28.1″)، محوّلة لإحداثيات أفقية (ارتفاع/أزيموث) عبر معادلات علم الفلك الكروي القياسية (الزمن النجمي المحلي).</div>
     <div class="note" style="margin-top:8px;">اتجاه القبلة: معادلة الجيب الكروي لأقصر مسار (Great-circle bearing)، بإحداثيات الكعبة المشرّفة 21.4225°N, 39.8262°E.</div>
-    <div class="note" style="margin-top:8px;">أوقات الصلاة: خوارزمية PrayTimes.org المعتمدة عالميًا، بمعايير أم القرى الافتراضية (فجر 18.5°، عشاء = مغرب + ٩٠ دقيقة)، قابلة للتعديل بالكامل من الإعدادات أعلاه لمطابقة تقويم أوقاف بلدك.</div>
+    <div class="note" style="margin-top:8px;">أوقات الصلاة: خوارزمية PrayTimes.org المعتمدة عالميًا، بمعايير أم القرى الافتراضية (فجر 18.5°، عشاء = مغرب + 90 دقيقة)، قابلة للتعديل بالكامل من الإعدادات أعلاه لمطابقة تقويم أوقاف بلدك.</div>
     <div class="note" style="margin-top:8px;">دقة كل الحسابات تقريبية (فرق دقيقة إلى دقيقتين مقارنة بمصادر رسمية معتمدة). لمواقيت رسمية دقيقة 100% راجع الجهة الدينية بمنطقتك.</div>
   </div>
 </div>
@@ -2057,7 +2076,7 @@ body:has(#tab-radar.active){overflow:hidden;}
       <h2><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l5-10 5 10"/><path d="M6.5 10h5"/><path d="M14 19l3-7 3 7"/></svg></span> المسافة والوصول</h2>
       <div class="row"><span class="label">المسافة من موقعك الحالي</span><span class="val" id="clocDistance">--</span></div>
       <div class="row"><span class="label">الوقت التقديري بالسيارة</span><span class="val" id="clocEta">--</span></div>
-      <div class="note">تقدير تقريبي بخط مستقيم بمتوسط سرعة ٧٠ كم/س — وليس توجيهًا فعليًا عبر الطرق. للوقت الدقيق حسب الطريق والزحمة اضغط الزر تحت.</div>
+      <div class="note">تقدير تقريبي بخط مستقيم بمتوسط سرعة 70 كم/س — وليس توجيهًا فعليًا عبر الطرق. للوقت الدقيق حسب الطريق والزحمة اضغط الزر تحت.</div>
       <button class="btn gold" style="margin-top:10px;" onclick="openClocDirections()"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg> فتح التوجيه الفعلي بخرائط قوقل</button>
     </div>
     <div class="card">
@@ -2345,7 +2364,6 @@ body:has(#tab-radar.active){overflow:hidden;}
   <button class="tabbtn" data-tab="tab-radar" onclick="showTab('tab-radar',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6.4-6.4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>رادار الطقس</button>
   <button class="tabbtn" data-tab="tab-sun" onclick="showTab('tab-sun',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg></span>القمر والشمس</button>
   <button class="tabbtn" data-tab="tab-mw" onclick="showTab('tab-mw',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="currentColor" stroke="none"><path d="M12 2.5c.5 3.4 1.4 5.3 3 7 1.7 1.6 3.6 2.5 7 3-3.4.5-5.3 1.4-7 3-1.6 1.7-2.5 3.6-3 7-.5-3.4-1.4-5.3-3-7-1.7-1.6-3.6-2.5-7-3 3.4-.5 5.3-1.4 7-3 1.6-1.7 2.5-3.6 3-7z"/></svg></span>المجرة</button>
-  <button class="tabbtn" data-tab="tab-qibla" onclick="showTab('tab-qibla',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8-4 8 4v9l-8 4-8-4V8z"/><path d="M4 8l8 4 8-4"/><path d="M12 12v9"/><path d="M4 9.2l8 4 8-4" opacity="0.001"/></svg></span>القبلة</button>
   <button class="tabbtn" data-tab="tab-prayer" onclick="showTab('tab-prayer',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8v2"/><path d="M9 7.2a3 3 0 0 1 6 0v1.8H9V7.2z"/><path d="M4 21v-5.5A3 3 0 0 1 7 12"/><path d="M20 21v-5.5a3 3 0 0 0-3-3.5"/><path d="M9 9h6v2.5a6 6 0 0 1-6 0V9z"/><path d="M3 21h18"/><path d="M10.5 21v-3.5h3V21"/></svg></span>الصلاة</button>
   <button class="tabbtn" data-tab="tab-car" onclick="showTab('tab-car',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l1.5-5a2 2 0 0 1 2-1.5h9l3 3.5H21a1 1 0 0 1 1 1V16"/><path d="M3 16h1.5M20.5 16h1.5"/><circle cx="7" cy="17.3" r="1.7"/><circle cx="17" cy="17.3" r="1.7"/><path d="M8.5 9.5V6h4l2 3.5"/></svg></span>سيارتي</button>
   <button class="tabbtn" data-tab="tab-storage" onclick="showTab('tab-storage',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.2-3.5h13.6l2.2 3.5"/><path d="M3 7.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7.5z"/><path d="M9.5 11.5h5"/></svg></span>مخزني</button>
@@ -2804,11 +2822,11 @@ function renderSunAR(){
   const sr = window.__lastSunrise, ss = window.__lastSunset;
   if(sr){
     const p = getSunPosition(sr, LOC.lat, LOC.lng);
-    riseEl.textContent = sr.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) + ' · ' + p.azimuth.toFixed(0) + '°';
+    riseEl.textContent = sr.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) + ' · ' + p.azimuth.toFixed(0) + '°';
   } else { riseEl.textContent = '--'; }
   if(ss){
     const p = getSunPosition(ss, LOC.lat, LOC.lng);
-    setEl.textContent = ss.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) + ' · ' + p.azimuth.toFixed(0) + '°';
+    setEl.textContent = ss.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) + ' · ' + p.azimuth.toFixed(0) + '°';
   } else { setEl.textContent = '--'; }
 }
 let sunArActive = false, sunArStream = null, sunArRafId = null, sunArBetaRef = null;
@@ -2935,7 +2953,7 @@ function sunArLoop(ts){
     if(sunArRiseCache.time !== srTime){
       const p = getSunPosition(sr, LOC.lat, LOC.lng);
       sunArRiseCache = {time:srTime, az:p.azimuth, alt:p.altitude};
-      document.getElementById('sunArRiseLabel').textContent = 'شروق · '+sr.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('sunArRiseLabel').textContent = 'شروق · '+sr.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'});
     }
     riseRes = positionSunArTarget('sunArTargetRise', sunArRiseCache.az, sunArRiseCache.alt, heading, elevation);
   }
@@ -2944,7 +2962,7 @@ function sunArLoop(ts){
     if(sunArSetCache.time !== ssTime){
       const p = getSunPosition(ss, LOC.lat, LOC.lng);
       sunArSetCache = {time:ssTime, az:p.azimuth, alt:p.altitude};
-      document.getElementById('sunArSetLabel').textContent = 'غروب · '+ss.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('sunArSetLabel').textContent = 'غروب · '+ss.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'});
     }
     setRes = positionSunArTarget('sunArTargetSet', sunArSetCache.az, sunArSetCache.alt, heading, elevation);
   }
@@ -3114,13 +3132,13 @@ function renderSun(now){
   for(const k in vals){
     const d = vals[k];
     const el = document.getElementById('s-'+k);
-    if(el) el.textContent = d ? d.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : '—';
+    if(el) el.textContent = d ? d.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) : '—';
   }
   if(openPhaseId && vals[openPhaseId]) previewPhaseOnArc(vals[openPhaseId]);
   const pos = getSunPosition(now, LOC.lat, LOC.lng);
   const srEl = document.getElementById('s-sunriseTime'), ssEl = document.getElementById('s-sunsetTime');
-  if(srEl) srEl.textContent = t.sunrise ? t.sunrise.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : '--:--';
-  if(ssEl) ssEl.textContent = t.sunset ? t.sunset.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : '--:--';
+  if(srEl) srEl.textContent = t.sunrise ? t.sunrise.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) : '--:--';
+  if(ssEl) ssEl.textContent = t.sunset ? t.sunset.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) : '--:--';
   let tomorrowTimes = null;
   const getTomorrowTimes = ()=>{
     if(!tomorrowTimes){
@@ -3141,8 +3159,8 @@ function updateSunArc(now, sunrise, sunset){
   const lblRise = document.getElementById('arcSunrise');
   const lblSet = document.getElementById('arcSunset');
   if(!sunrise || !sunset){ group.setAttribute('opacity','0'); return; }
-  lblRise.textContent = sunrise.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
-  lblSet.textContent = sunset.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
+  lblRise.textContent = sunrise.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'});
+  lblSet.textContent = sunset.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'});
   const total = sunset - sunrise;
   let t = (now - sunrise) / total; // 0..1 across daylight, can exceed range at night
   // The arc path is an exact semicircle: center (150,120), radius 130, spanning
@@ -3193,12 +3211,12 @@ function renderMW(now){
 
   const wEl = document.getElementById('mw-window');
   if(windows.length===0){
-    wEl.innerHTML = '<div class="pill off">غير مرئي خلال ٣٠ ساعة القادمة من موقعك الحالي</div>';
+    wEl.innerHTML = '<div class="pill off">غير مرئي خلال 30 ساعة القادمة من موقعك الحالي</div>';
   } else {
     wEl.innerHTML = windows.map(w=>{
-      const s = w.start.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
-      const e = w.end.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'});
-      const p = w.peakTime ? w.peakTime.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : '--';
+      const s = w.start.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'});
+      const e = w.end.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'});
+      const p = w.peakTime ? w.peakTime.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) : '--';
       return '<div class="row"><span class="label">من '+s+' إلى '+e+'</span><span class="val">الذروة '+p+' ('+w.peakAlt.toFixed(0)+'°)</span></div>';
     }).join('');
   }
@@ -3210,7 +3228,7 @@ function renderQibla(){
   const dist = haversineKm(LOC.lat, LOC.lng, MECCA.lat, MECCA.lng);
   window.__qBearing = b;
   animateNumberTo(document.getElementById('q-bearing'), 'q-bearing', b, 1, '°');
-  document.getElementById('q-dist').textContent = Math.round(dist).toLocaleString('ar')+' كم';
+  document.getElementById('q-dist').textContent = Math.round(dist).toLocaleString('ar-u-nu-latn')+' كم';
   updateCompassArrows();
 }
 
@@ -3330,7 +3348,7 @@ function exportICS(){
       const dt = new Date(d); dt.setMinutes(min);
       const dtEnd = new Date(dt.getTime()+15*60000);
       const fmt = x => x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0')+'T'+String(x.getHours()).padStart(2,'0')+String(x.getMinutes()).padStart(2,'0')+'00';
-      ics += 'BEGIN:VEVENT\r\nUID:'+key+day+Date.now()+'@rihalah\r\nDTSTART:'+fmt(dt)+'\r\nDTEND:'+fmt(dtEnd)+'\r\nSUMMARY:صلاة '+names[key]+'\r\nBEGIN:VALARM\r\nTRIGGER:-PT5M\r\nACTION:DISPLAY\r\nDESCRIPTION:صلاة '+names[key]+' بعد ٥ دقائق\r\nEND:VALARM\r\nEND:VEVENT\r\n';
+      ics += 'BEGIN:VEVENT\r\nUID:'+key+day+Date.now()+'@rihalah\r\nDTSTART:'+fmt(dt)+'\r\nDTEND:'+fmt(dtEnd)+'\r\nSUMMARY:صلاة '+names[key]+'\r\nBEGIN:VALARM\r\nTRIGGER:-PT5M\r\nACTION:DISPLAY\r\nDESCRIPTION:صلاة '+names[key]+' بعد 5 دقائق\r\nEND:VALARM\r\nEND:VEVENT\r\n';
     }
   }
   ics += 'END:VCALENDAR';
@@ -3525,7 +3543,7 @@ function updateOilNextChangePreview(){
   const mileage = parseFloat(document.getElementById('oilf-mileage').value) || 0;
   const interval = parseFloat(document.getElementById('oilf-interval').value) || 0;
   const el = document.getElementById('oilf-next-preview');
-  if(mileage > 0 && interval > 0){ el.value = Math.round(mileage + interval).toLocaleString('ar') + ' كم'; }
+  if(mileage > 0 && interval > 0){ el.value = Math.round(mileage + interval).toLocaleString('ar-u-nu-latn') + ' كم'; }
   else { el.value = '--'; }
 }
 function renderOilEntries(){
@@ -3545,8 +3563,8 @@ function renderOilEntries(){
     const nextDue = (entry.mileage && entry.interval) ? (Number(entry.mileage)+Number(entry.interval)) : null;
     const reminderDue = entry.reminderDate && isReminderDue(entry.reminderDate);
     info.innerHTML = '<div class="oil-entry-title">'+(entry.oilType||'--')+' <span class="oil-entry-visc">'+(entry.viscosity||'')+'</span></div>'+
-      '<div class="oil-entry-sub">'+(entry.liters?entry.liters+' لتر':'')+(entry.mileage?' · '+Number(entry.mileage).toLocaleString('ar')+' كم':'')+'</div>'+
-      (nextDue ? '<div class="oil-entry-sub" style="color:var(--accent2);">وقت تبديل الزيت القادم: '+nextDue.toLocaleString('ar')+' كم</div>' : '') +
+      '<div class="oil-entry-sub">'+(entry.liters?entry.liters+' لتر':'')+(entry.mileage?' · '+Number(entry.mileage).toLocaleString('ar-u-nu-latn')+' كم':'')+'</div>'+
+      (nextDue ? '<div class="oil-entry-sub" style="color:var(--accent2);">وقت تبديل الزيت القادم: '+nextDue.toLocaleString('ar-u-nu-latn')+' كم</div>' : '') +
       (entry.reminderDate ? '<div class="oil-entry-sub oil-reminder-line" style="color:'+(reminderDue?'var(--bad)':'var(--accent2)')+';font-weight:'+(reminderDue?'700':'400')+';"><span class="oil-reminder-ic">'+ICONS['bell']+'</span>'+(reminderDue?'مستحق — ':'تذكير: ')+formatReminderDate(entry.reminderDate)+'</div>' : '') +
       '<div class="oil-entry-sub">'+(entry.place||'')+(entry.date?' · '+entry.date:'')+'</div>';
     const del = document.createElement('button'); del.className='del'; del.innerHTML = ICONS['x'];
@@ -3634,7 +3652,7 @@ function saveOilForm(){
   } else {
     sec.entries.push({
       id:'oe_'+Date.now(), oilType:oilType, viscosity:viscosity, liters:liters, mileage:mileage, interval:interval, place:place,
-      photo: pendingOilPhoto, date: new Date().toLocaleDateString('ar-KW'),
+      photo: pendingOilPhoto, date: new Date().toLocaleDateString('ar-KW-u-nu-latn'),
       reminderDate: reminderDate || '', reminderNotified:false
     });
   }
@@ -3651,7 +3669,7 @@ function formatReminderDate(dateStr){
   if(!dateStr) return '';
   const d = new Date(dateStr+'T00:00:00');
   if(isNaN(d.getTime())) return '';
-  return d.toLocaleDateString('ar-KW', {weekday:'long', day:'numeric', month:'long'});
+  return d.toLocaleDateString('ar-KW-u-nu-latn', {weekday:'long', day:'numeric', month:'long'});
 }
 function isReminderDue(dateStr){
   if(!dateStr) return false;
@@ -3922,8 +3940,8 @@ function updateHomeClock(){
   const dEl = document.getElementById('homeClockDate');
   if(!tEl) return;
   const now = new Date();
-  tEl.textContent = now.toLocaleTimeString('ar-KW', {hour:'2-digit', minute:'2-digit'});
-  dEl.textContent = now.toLocaleDateString('ar-KW', {weekday:'long', day:'numeric', month:'long'});
+  tEl.textContent = now.toLocaleTimeString('ar-KW-u-nu-latn', {hour:'2-digit', minute:'2-digit'});
+  dEl.textContent = now.toLocaleDateString('ar-KW-u-nu-latn', {weekday:'long', day:'numeric', month:'long'});
 }
 function loadHomeNotes(){
   try{ homeNotes = JSON.parse(localStorage.getItem('rihala_notes')||'[]'); }catch(e){ homeNotes = []; }
@@ -3932,7 +3950,7 @@ function loadHomeNotes(){
 function saveHomeNotesStore(){ localStorage.setItem('rihala_notes', JSON.stringify(homeNotes)); }
 function formatNoteDateTime(ts){
   const d = new Date(ts);
-  return d.toLocaleDateString('ar-KW', {day:'numeric', month:'long', year:'numeric'}) + ' · ' + d.toLocaleTimeString('ar-KW', {hour:'2-digit', minute:'2-digit'});
+  return d.toLocaleDateString('ar-KW-u-nu-latn', {day:'numeric', month:'long', year:'numeric'}) + ' · ' + d.toLocaleTimeString('ar-KW-u-nu-latn', {hour:'2-digit', minute:'2-digit'});
 }
 function renderHomeNotes(){
   const list = document.getElementById('homeNotesList');
@@ -5412,8 +5430,8 @@ function renderMoon(now){
   }
   const rs = getMoonRiseSet(now, LOC.lat, LOC.lng);
   const riseEl = document.getElementById('moonRiseTime'), setEl = document.getElementById('moonSetTime');
-  if(riseEl) riseEl.textContent = rs.rise ? rs.rise.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : 'لا يوجد اليوم';
-  if(setEl) setEl.textContent = rs.set ? rs.set.toLocaleTimeString('ar-KW',{hour:'2-digit',minute:'2-digit'}) : 'لا يوجد اليوم';
+  if(riseEl) riseEl.textContent = rs.rise ? rs.rise.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) : 'لا يوجد اليوم';
+  if(setEl) setEl.textContent = rs.set ? rs.set.toLocaleTimeString('ar-KW-u-nu-latn',{hour:'2-digit',minute:'2-digit'}) : 'لا يوجد اليوم';
 }
 function renderMoonInstant(){
   const shadowEl = document.getElementById('moonShadowCircle');
@@ -5881,7 +5899,7 @@ var METHODS=[
 ];
 function idamBase100(id,cut){ return IDAM_BASE[cut?(id+'_'+cut):id]; }
 var BSIDES=[
- {id:'rice',name:'أرز أبيض مطبوخ',unit:'١٠٠غ',kcal:130,pro:2.7,max:3},
+ {id:'rice',name:'أرز أبيض مطبوخ',unit:'100غ',kcal:130,pro:2.7,max:3},
  {id:'salad',name:'سلطة كبيرة',unit:'حصة',kcal:50,pro:2,max:2},
  {id:'oil',name:'زيت زيتون',unit:'ملعقة كبيرة',kcal:120,pro:0,max:3},
  {id:'bread',name:'خبز أبيض',unit:'شريحة',kcal:80,pro:3,max:4},
@@ -6287,7 +6305,7 @@ window.WX = (function(){
     if(isNaN(v)) return ['خارج النطاق', 'المنطقة غير مغطاة'];
     if(layer === 'precip') return [v < .1 ? 'لا هطول' : v.toFixed(1) + ' مم', 'الأمطار (ساعة)'];
     if(layer === 'wind'){ const d = sample('wind_direction_10m', lat, lng, tIdx); return [Math.round(v) + ' كم/س', 'رياح من ' + ['الشمال','الشمال الشرقي','الشرق','الجنوب الشرقي','الجنوب','الجنوب الغربي','الغرب','الشمال الغربي'][Math.round(d / 45) % 8]]; }
-    if(layer === 'temp') return [Math.round(v) + '°', 'الحرارة على ارتفاع ٢م'];
+    if(layer === 'temp') return [Math.round(v) + '°', 'الحرارة على ارتفاع 2م'];
     return [Math.round(v) + '%', 'غطاء الغيوم'];
   }
   function setPin(ll){
@@ -6631,6 +6649,7 @@ window.WX = (function(){
     if(id === 'tab-radar') setTimeout(openRadarTab, 30);
     else if(RMAP && window.WX) WX.pause();
     if(id === 'tab-sun') syncSunBtn();
+    if(id === 'tab-prayer'){ try{ if(!compassEnabled) enableCompass(); if(typeof updateCompassArrows === 'function') updateCompassArrows(); }catch(e){} }
   };
 
   addEventListener('resize', syncTabbar);
@@ -6648,7 +6667,7 @@ window.WX = (function(){
   const R = Math.PI / 180;
   // [المفتاح, الاسم العربي, الإنجليزي, RA ساعات, Dec درجات, القدر, اللون, وصف بسيط]
   const STARS = [
-    ['polaris','الجدي','Polaris',2.530,89.264,1.98,'w','نجم الشمال. ثابت تقريباً بمكانه طول الليل وكل السما تدور حوله. مو ألمع نجم، بس إذا لقيته عرفت الشمال. ارتفاعه فوق الأفق يساوي خط عرضك (بالكويت حوالي ٢٩°).'],
+    ['polaris','الجدي','Polaris',2.530,89.264,1.98,'w','نجم الشمال. ثابت تقريباً بمكانه طول الليل وكل السما تدور حوله. مو ألمع نجم، بس إذا لقيته عرفت الشمال. ارتفاعه فوق الأفق يساوي خط عرضك (بالكويت حوالي 29°).'],
     ['sirius','الشعرى اليمانية','Sirius',6.752,-16.716,-1.46,'w','ألمع نجم بالسما كلها. تلقاه إذا مديت خط حزام الجبار لتحت يسار. يبين بأمسيات الشتا.'],
     ['canopus','سهيل','Canopus',6.399,-52.696,-0.74,'y','ثاني ألمع نجم. يبين واطي على الأفق الجنوبي، وطلوعه آخر أغسطس عند أهل الخليج بشارة إن الحر بيكسر.'],
     ['arcturus','السماك الرامح','Arcturus',14.261,19.182,-0.05,'y','نجم برتقالي لامع. تبع قوس ذيل بنات نعش وبتوصل له. يبين بالربيع والصيف.'],
@@ -6666,9 +6685,9 @@ window.WX = (function(){
     ['fomalhaut','فم الحوت','Fomalhaut',22.961,-29.622,1.16,'w','نجم لامع وحيد واطي بالجنوب بليالي الخريف.'],
     ['deneb','ذنب الدجاجة','Deneb',20.690,45.280,1.25,'w','ذيل كوكبة الدجاجة. ركن من «مثلث الصيف» ووسط درب التبانة.'],
     ['regulus','قلب الأسد','Regulus',10.139,11.967,1.36,'w','قلب كوكبة الأسد. تحته نجوم على شكل علامة استفهام مقلوبة (منجل الأسد).'],
-    ['pleiades','الثريا','Pleiades',3.791,24.105,1.60,'w','عنقود صغير من ٦–٧ نجوم متقاربة مثل حبات العنب. معروفة عند العرب ومرتبطة بمواسم المطر والبرد.'],
+    ['pleiades','الثريا','Pleiades',3.791,24.105,1.60,'w','عنقود صغير من 6–7 نجوم متقاربة مثل حبات العنب. معروفة عند العرب ومرتبطة بمواسم المطر والبرد.'],
     ['dubhe','الدب','Dubhe',11.062,61.751,1.79,'y','واحد من «الدليلين» بطرف بنات نعش. الخط من المراق للدب يوصلك للجدي.'],
-    ['merak','المراق','Merak',11.031,56.382,2.37,'w','الدليل الثاني. خط المراق ← الدب مدّه ٥ مرات توصل للجدي.'],
+    ['merak','المراق','Merak',11.031,56.382,2.37,'w','الدليل الثاني. خط المراق ← الدب مدّه 5 مرات توصل للجدي.'],
     ['phecda','الفخذ','Phecda',11.897,53.695,2.44,'w','ركن من مغرفة بنات نعش.'],
     ['megrez','المغرز','Megrez',12.257,57.033,3.31,'w','وين يركب الذيل على المغرفة.'],
     ['alioth','الجون','Alioth',12.900,55.960,1.77,'w','أول نجم بذيل بنات نعش.'],
@@ -6780,11 +6799,11 @@ window.WX = (function(){
   $('sgTime').addEventListener('input', e => { offset = +e.target.value; draw(); });
   $('sgNow').addEventListener('click', () => { offset = 0; $('sgTime').value = 0; draw(); });
 
-  /* ---------- كيف تعرف الشمال: ٣ خطوات ---------- */
+  /* ---------- كيف تعرف الشمال: 3 خطوات ---------- */
   const STEP = {
-    1:'دوّر على <b>بنات نعش الكبرى</b>: ٧ نجوم شكلها مثل المغرفة أو القدر بيده. تبين بالجهة الشمالية، وأوضح شي بالربيع والصيف.',
-    2:'خذ النجمين اللي بطرف المغرفة (<b>المراق</b> ثم <b>الدب</b>)، ومدّ الخط بينهم لفوق تقريباً ٥ مرات. بتوصل لنجم وحيد متوسط اللمعان: هذا <b>الجدي</b>، وتحته بالضبط هو الشمال.',
-    3:'إذا بنات نعش واطية أو مخفية (أمسيات الخريف والشتا)، دوّر على <b>ذات الكرسي</b>: ٥ نجوم شكلها حرف W، دايماً على الجهة الثانية من الجدي. النجم الوسطاني يأشر عليه.'
+    1:'دوّر على <b>بنات نعش الكبرى</b>: 7 نجوم شكلها مثل المغرفة أو القدر بيده. تبين بالجهة الشمالية، وأوضح شي بالربيع والصيف.',
+    2:'خذ النجمين اللي بطرف المغرفة (<b>المراق</b> ثم <b>الدب</b>)، ومدّ الخط بينهم لفوق تقريباً 5 مرات. بتوصل لنجم وحيد متوسط اللمعان: هذا <b>الجدي</b>، وتحته بالضبط هو الشمال.',
+    3:'إذا بنات نعش واطية أو مخفية (أمسيات الخريف والشتا)، دوّر على <b>ذات الكرسي</b>: 5 نجوم شكلها حرف W، دايماً على الجهة الثانية من الجدي. النجم الوسطاني يأشر عليه.'
   };
   function step(n){
     document.querySelectorAll('#sgSteps button').forEach(b => b.classList.toggle('on', +b.dataset.s === n));
@@ -6823,7 +6842,7 @@ window.WX = (function(){
     ['النجوم اللي نشوفها بالليل هي…', ['ثقوب بالسما', 'شموس بعيدة وايد', 'كواكب صغيرة'], 1, 'صح! كل نجم شمس مثل شمسنا بس بعيد جداً.'],
     ['ليش نحس النجوم تتحرك بالليل؟', ['لأن الأرض تدور حول نفسها', 'لأن الرياح تحركها', 'لأن النجوم تمشي بسرعة'], 0, 'بالضبط، الأرض تدور فتحس السما كلها تلف.'],
     ['شفت نقطة لامعة وما ترمش أبد، غالباً هي…', ['نجم', 'كوكب', 'قمر صناعي دايماً'], 1, 'صح، الكوكب نوره ثابت والنجم يرمش.'],
-    ['قبضة يدك وأنت ماد يدك تغطي تقريباً…', ['١ درجة', '١٠ درجات', '٩٠ درجة'], 1, 'ممتاز! القبضة تقريباً ١٠ درجات.']
+    ['قبضة يدك وأنت ماد يدك تغطي تقريباً…', ['1 درجة', '10 درجات', '90 درجة'], 1, 'ممتاز! القبضة تقريباً 10 درجات.']
   ];
   let qi = 0, score = 0;
   function show(){
@@ -6863,7 +6882,7 @@ window.WX = (function(){
     '</svg>';
   function dress(el){
     el.classList.add('mwc');
-    // تدريج دقيق كل ٥ درجات + حلقة داخلية
+    // تدريج دقيق كل 5 درجات + حلقة داخلية
     let ring = '<svg class="mwc-ring" viewBox="0 0 230 230" aria-hidden="true"><circle cx="115" cy="115" r="104" fill="none" stroke="rgba(255,255,255,.07)"/><circle cx="115" cy="115" r="76" fill="none" stroke="rgba(255,255,255,.05)" stroke-dasharray="1 5"/>';
     for(let a = 0; a < 360; a += 5){ if(a % 15 === 0) continue; ring += '<line x1="115" y1="12" x2="115" y2="17" stroke="rgba(255,255,255,.18)" transform="rotate(' + a + ' 115 115)"/>'; }
     [30, 60, 120, 150, 210, 240, 300, 330].forEach(a => ring += '<text x="115" y="34" transform="rotate(' + a + ' 115 115)">' + a + '</text>');
@@ -6891,6 +6910,43 @@ window.WX = (function(){
   }
   const mc = document.getElementById('mwCompass'); if(mc && mc.querySelector('.tick') && !mc.classList.contains('mwc')) dress(mc);
   setInterval(syncBelow, 2000); syncBelow();
+})();
+
+/* ================= بوصلة القبلة: سجادة الصلاة ================= */
+(function(){
+  if(typeof buildCompassDial !== 'function' || typeof setArrow !== 'function') return;
+  const RUG = '<svg class="rug" viewBox="0 0 150 250" aria-hidden="true"><defs><linearGradient id="rugg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A2234"/><stop offset="1" stop-color="#4E1424"/></linearGradient>' +
+    '<pattern id="rugp" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M7 0 L14 7 L7 14 L0 7Z" fill="none" stroke="rgba(244,184,96,.35)" stroke-width=".8"/></pattern></defs>' +
+    '<g stroke="rgba(236,220,190,.7)" stroke-width="1">' + Array.from({length:12}, (_, i) => '<line x1="' + (16 + i * 10.5) + '" y1="238" x2="' + (16 + i * 10.5) + '" y2="249"/>').join('') + '</g>' +
+    '<rect x="8" y="6" width="134" height="232" rx="6" fill="url(#rugg)"/><rect x="16" y="14" width="118" height="216" rx="3" fill="none" stroke="#F4B860" stroke-width="1.2"/><rect x="22" y="20" width="106" height="204" fill="url(#rugp)" opacity=".7"/>' +
+    '<path d="M30 220 V78 C30 48 52 32 75 22 C98 32 120 48 120 78 V220 Z" fill="#3A0F1B" stroke="#F4B860" stroke-width="1.4"/><path d="M75 46 l5 10 -5 10 -5 -10z" fill="#F4B860"/>' +
+    '<circle cx="75" cy="160" r="20" fill="none" stroke="rgba(244,184,96,.55)"/><circle cx="75" cy="160" r="6" fill="#F4B860" opacity=".8"/></svg>';
+  const KAABA = '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="kbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9B8"/><stop offset=".55" stop-color="#F4B860"/><stop offset="1" stop-color="#C9802F"/></linearGradient></defs>' +
+    '<path d="M10 20 L32 10 L54 20 V46 L32 56 L10 46 Z" fill="#0A0A0C" stroke="#3A3A40"/><path d="M10 20 L32 30 L54 20" fill="none" stroke="#2A2A30"/><path d="M10 27 L32 37 L54 27" fill="none" stroke="url(#kbg)" stroke-width="3"/><path d="M38 42 v9 l6 -2.7 v-9z" fill="url(#kbg)"/></svg>';
+  function dress(el){
+    el.classList.add('rugc');
+    const arrow = el.querySelector('.arrow'); if(arrow) arrow.innerHTML = RUG;
+    el.insertAdjacentHTML('afterbegin', '<span class="rug-floor"></span><span class="rug-k">' + KAABA + '</span>');
+    if(!document.getElementById('rugMsg')) el.insertAdjacentHTML('afterend', '<div class="rug-msg" id="rugMsg"><b></b><small></small></div>');
+  }
+  const _b = buildCompassDial;
+  window.buildCompassDial = buildCompassDial = function(el){ const fresh = el && !el.querySelector('.tick'); _b(el); if(fresh && el.id === 'qCompass') dress(el); };
+  let wasOk = false;
+  function state(bearing){
+    const el = document.getElementById('qCompass'), m = document.getElementById('rugMsg'); if(!el || !m) return;
+    const b = m.querySelector('b'), s = m.querySelector('small');
+    if(!compassEnabled){ el.classList.remove('ok'); b.textContent = 'فعّل البوصلة الحية'; s.textContent = 'وبتلف السجادة معك وتوريك شلون تفرشها'; wasOk = false; return; }
+    let d = ((bearing - deviceHeading) % 360 + 360) % 360; if(d > 180) d -= 360;
+    const ok = Math.abs(d) < 3; el.classList.toggle('ok', ok);
+    b.textContent = ok ? 'متجه للقبلة ✓' : 'لف ' + Math.round(Math.abs(d)) + '° ' + (d > 0 ? 'يمين ←' : '→ يسار');
+    s.textContent = ok ? 'افرش سجادتك بنفس هالاتجاه' : 'لين يصير راس السجادة لفوق';
+    if(ok && !wasOk && navigator.vibrate) navigator.vibrate(20); wasOk = ok;
+  }
+  const _s = setArrow;
+  window.setArrow = setArrow = function(el, bearing){ _s(el, bearing); if(el && el.id === 'qCompass') state(bearing); };
+  const q = document.getElementById('qCompass');
+  if(q && q.querySelector('.tick') && !q.classList.contains('rugc')) dress(q);
+  if(window.__qBearing !== undefined && q) setArrow(q, window.__qBearing);
 })();
 
 </script>
