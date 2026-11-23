@@ -1,4 +1,7 @@
-const CACHE_NAME = 'rihala-cache-v14';
+const CACHE_NAME = 'rihala-cache-v15';
+// كاش منفصل لأداة إزالة الخلفية ونماذجها، ما ينمسح مع تحديث التطبيق عشان تشتغل بدون نت
+const MODELS_CACHE = 'kashkoli-models-v1';
+const MODEL_HOSTS = ['cdn.jsdelivr.net', 'staticimgly.com'];
 const APP_SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png', './favicon-16.png', './favicon.ico'];
 
 self.addEventListener('install', function(event){
@@ -13,7 +16,7 @@ self.addEventListener('install', function(event){
 self.addEventListener('activate', function(event){
   event.waitUntil(
     caches.keys().then(function(keys){
-      return Promise.all(keys.filter(function(k){ return k !== CACHE_NAME; }).map(function(k){ return caches.delete(k); }));
+      return Promise.all(keys.filter(function(k){ return k !== CACHE_NAME && k !== MODELS_CACHE; }).map(function(k){ return caches.delete(k); }));
     })
   );
   self.clients.claim();
@@ -28,6 +31,21 @@ self.addEventListener('fetch', function(event){
   if(req.method !== 'GET') return;
   let url;
   try { url = new URL(req.url); } catch(e){ return; }
+  if(MODEL_HOSTS.indexOf(url.hostname) !== -1){
+    // cache-first: الملفات ثابتة بالإصدار، أول مرة تنزل وبعدها من الجهاز
+    event.respondWith(
+      caches.open(MODELS_CACHE).then(function(cache){
+        return cache.match(req).then(function(hit){
+          if(hit) return hit;
+          return fetch(req).then(function(resp){
+            if(resp && (resp.status === 200 || resp.type === 'opaque')) cache.put(req, resp.clone());
+            return resp;
+          });
+        });
+      })
+    );
+    return;
+  }
   if(url.origin !== self.location.origin) return;
 
   event.respondWith(

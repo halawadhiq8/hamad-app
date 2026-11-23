@@ -1368,6 +1368,55 @@ body:has(#tab-radar.active){overflow:hidden;}
 .bgr-clean input:checked + span::after{transform:translateX(-16px);}
 .bgr-clean small{width:100%; font-size:11.5px; color:var(--muted); margin-right:48px;}
 
+/* ================= رادار كاميرا الشروق والغروب ================= */
+.sr-wrap{--sr:210px; position:absolute; left:50%; bottom:calc(118px + env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:6; display:flex; flex-direction:column; align-items:center;}
+.sr-wrap[hidden],.sr-show[hidden],.sr-sheet[hidden]{display:none!important;}
+.sr-lub{width:0; height:0; border:10px solid transparent; border-bottom:0; border-top:15px solid #F4B860; margin-bottom:-5px; position:relative; z-index:2; filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));}
+.sr-dial{position:relative; width:var(--sr); height:var(--sr); will-change:transform;}
+.sr-dial img{width:100%; height:100%; display:block; pointer-events:none;}
+.sr-mk{position:absolute; left:50%; top:50%; width:34px; height:34px; border-radius:50%; background:rgba(8,10,16,.72); display:grid; place-items:center;
+  box-shadow:0 0 0 1.5px currentColor, 0 4px 10px rgba(0,0,0,.5); transition:box-shadow .25s;}
+.sr-mk.rise{color:#FFD36B;} .sr-mk.set{color:#FF7A3D;}
+.sr-mk svg{width:24px; height:24px;}
+.sr-mk.hit{box-shadow:0 0 0 2px currentColor, 0 0 18px 4px currentColor;}
+.sr-pick,.sr-show{position:absolute; width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,.18); background:rgba(8,10,16,.62);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); color:#fff; display:grid; place-items:center; padding:0;}
+.sr-pick{left:calc(100% + 6px); bottom:8px;}
+.sr-show{z-index:6; left:16px; bottom:calc(130px + env(safe-area-inset-bottom));}
+.sr-pick svg,.sr-show svg{width:20px; height:20px;}
+.sr-sheet{position:absolute; left:10px; right:10px; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:8; padding:14px; border-radius:24px;
+  background:rgba(10,12,18,.94); border:1px solid rgba(255,255,255,.1); animation:srIn .35s cubic-bezier(.3,1.25,.5,1);}
+@keyframes srIn{from{opacity:0; transform:translateY(16px);}}
+.sr-sh-h{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; color:#fff;}
+.sr-sh-h b{font-weight:500; font-size:15px;}
+.sr-sh-h button{width:30px; height:30px; border-radius:50%; border:0; background:rgba(255,255,255,.08); color:#fff;}
+.sr-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+.sr-grid button{display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 4px; border-radius:16px; border:1.5px solid transparent; background:rgba(255,255,255,.04); color:#cfd2dc; font:inherit; font-size:11.5px;}
+.sr-grid button img{width:62px; height:62px;}
+.sr-grid button.on{border-color:#F4B860; color:#fff; background:rgba(244,184,96,.1);}
+.sr-grid .off i{width:62px; height:62px; border-radius:50%; border:1.5px dashed rgba(255,255,255,.3); display:block;}
+.ar-kind{position:absolute; top:-44px; left:50%; width:38px; height:38px; margin-left:-19px; border-radius:50%; background:rgba(8,10,16,.66);
+  display:grid; place-items:center; box-shadow:0 0 0 1.5px currentColor;}
+.ar-kind.rise{color:#FFD36B;} .ar-kind.set{color:#FF7A3D;}
+.ar-kind svg{width:26px; height:26px;}
+@media (prefers-reduced-motion:reduce){.sr-sheet{animation:none;}}
+
+/* ================= مسار الشمس بالكاميرا ================= */
+.sp-ov{position:absolute; inset:0; width:100%; height:100%; z-index:2; pointer-events:none; overflow:visible;}
+.sp-ov text{font-family:"Readex Pro",system-ui,sans-serif; font-size:11.5px; fill:#fff; paint-order:stroke; stroke:rgba(0,0,0,.55); stroke-width:3px;}
+.sp-ov text.b{font-weight:600;}
+.sp-ov text.am{font-family:Amiri,serif; font-weight:700; font-size:10px; fill:#3A250C; stroke:none;}
+.sr-sheet{max-height:74vh; overflow-y:auto;}
+.sr-sec{font-size:12px; color:#9aa0b3; margin:12px 2px 8px;}
+.sr-sh-h + .sr-sec{margin-top:0;}
+.sp-grid button svg{display:block; margin:6px 0;}
+.sp-grid .off i{width:62px; height:40px; border-radius:10px;}
+.bgr-off{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:10px; padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.035); font-size:12.5px; color:var(--muted);}
+.bgr-off .btn{width:auto; margin:0; padding:8px 12px; font-size:12.5px;}
+.bgr-off.ok{color:var(--good);}
+.bgr-savehint{grid-column:1/-1; font-size:11.5px; color:var(--muted); text-align:center; margin:-2px 0 2px;}
+#bgrShare[hidden],#bgrOffBtn[hidden],#bgrSaveHint[hidden]{display:none!important}
+
 </style>
 </head>
 <body>
@@ -1495,7 +1544,7 @@ body:has(#tab-radar.active){overflow:hidden;}
       <button data-m="isnet">أعلى دقة<small>176 ميقا</small></button>
     </div>
     <label class="bgr-clean"><input type="checkbox" id="bgrClean" checked><span></span>تنظيف البقايا<small>يشيل الظلال الخفيفة اللي تبقى من الخلفية</small></label>
-    <p class="bgr-note">أول مرة بس ينزل «عقل» الإزالة حسب الحجم فوق، وبعدها يشتغل حتى بدون نت.</p>
+    <div class="bgr-off" id="bgrOff"><span id="bgrOffTxt">نزّل الأداة عشان تشتغل بدون نت</span><button class="btn secondary" id="bgrOffBtn">تحميل للاستخدام بدون نت</button></div>
 
     <div class="bgr-work" id="bgrWork" hidden>
       <div class="bgr-stage" id="bgrStage">
@@ -1518,6 +1567,7 @@ body:has(#tab-radar.active){overflow:hidden;}
         <div class="bgr-meta" id="bgrMeta"></div>
         <div class="bgr-acts">
           <button class="btn" id="bgrSave">حفظ الصورة PNG</button>
+          <p class="bgr-savehint" id="bgrSaveHint" hidden>بتطلع قائمة الآيفون، اختر منها «حفظ الصورة» وبتنحفظ بألبوم الصور.</p>
           <button class="btn secondary" id="bgrShare">مشاركة</button>
           <button class="btn secondary" id="bgrNew">صورة جديدة</button>
         </div>
@@ -7141,7 +7191,7 @@ window.WX = (function(){
       try{ out = await lib.removeBackground(blob, opts(navigator.gpu ? 'gpu' : 'cpu')); }
       catch(err){ if(!navigator.gpu) throw err; status('جاري إزالة الخلفية…', .85); out = await lib.removeBackground(blob, opts('cpu')); }
       raw = await loadBitmap(out); cut = clean ? cleanUp(raw) : raw;
-      finish(t0);
+      finish(t0); offlineState();
     }catch(e){
       console.warn(e);
       status('صار خطأ: ' + (e && e.message && /fetch|network|Failed/i.test(e.message) ? 'تأكد من النت أول مرة عشان ينزل عقل الإزالة.' : 'جرب «سريع» أو صورة أصغر.'), 1, true);
@@ -7170,6 +7220,42 @@ window.WX = (function(){
     x.putImageData(id, 0, 0); return c;
   }
 
+  /* ---------- بدون نت: نحمّل الأداة والنموذج مرة وحدة (يخزنهم service worker) ---------- */
+  const DATA = 'https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/';
+  // الملفات اللازمة للنموذج المختار + محرك التشغيل (العادي وكرت الشاشة)
+  async function needed(){
+    const r = await fetch(DATA + 'resources.json'); const j = await r.json();
+    return Object.keys(j).filter(k => k === '/models/' + model || k.startsWith('/onnxruntime-web/')).flatMap(k => j[k].chunks.map(c => DATA + c.name));
+  }
+  async function offlineState(){
+    try{
+      if(!('caches' in window)) return;
+      const c = await caches.open('kashkoli-models-v1');
+      if(!(await c.match(DATA + 'resources.json')) || !(await c.match(LIB))) throw 0;
+      const urls = await needed(), have = new Set((await c.keys()).map(r => r.url));
+      const ok = urls.every(u => have.has(u));
+      $('bgrOff').classList.toggle('ok', ok);
+      $('bgrOffTxt').textContent = ok ? 'جاهز يشتغل بدون نت ✓' : 'نزّل الأداة عشان تشتغل بدون نت';
+      $('bgrOffBtn').hidden = ok;
+    }catch(e){ $('bgrOff').classList.remove('ok'); $('bgrOffTxt').textContent = 'نزّل الأداة عشان تشتغل بدون نت'; $('bgrOffBtn').hidden = false; }
+  }
+  $('bgrOffBtn').onclick = async () => {
+    const b = $('bgrOffBtn'); b.disabled = true; b.textContent = 'جاري التحميل…';
+    try{
+      if(!lib) lib = await import(LIB);
+      const urls = await needed(); let done = 0;
+      // كل ملف يمر على service worker وينحفظ بالجهاز
+      for(let i = 0; i < urls.length; i += 4){
+        await Promise.all(urls.slice(i, i + 4).map(u => fetch(u).then(r => { if(!r.ok) throw 0; return r.arrayBuffer(); })));
+        done = Math.min(urls.length, i + 4); b.textContent = 'جاري التحميل… ' + Math.round(done / urls.length * 100) + '%';
+      }
+      b.textContent = 'تم';
+    }catch(e){ b.textContent = 'تعذّر، تأكد من النت'; }
+    b.disabled = false; setTimeout(offlineState, 600);
+  };
+  qBtns.forEach(b => b.addEventListener('click', () => setTimeout(offlineState, 50)));
+  offlineState();
+
   /* ---------- الرسم مع الخلفية المختارة ---------- */
   function draw(){
     if(!cut) return;
@@ -7179,6 +7265,7 @@ window.WX = (function(){
     else if(bg !== 'none'){ x.fillStyle = bg; x.fillRect(0, 0, c.width, c.height); }
     x.drawImage(cut, 0, 0, c.width, c.height);
     $('bgrAfter').classList.toggle('chk', bg === 'none');
+    if(typeof prepare === 'function') prepare();
   }
   document.querySelectorAll('#bgrBgs [data-bg]').forEach(b => b.onclick = () => { bg = b.dataset.bg; mark(b); draw(); });
   $('bgrColor').oninput = e => { bg = e.target.value; mark($('bgrColor').parentElement); draw(); };
@@ -7200,19 +7287,203 @@ window.WX = (function(){
   stage.addEventListener('pointerup', () => drag = false);
   function move(e){ const r = stage.getBoundingClientRect(); setPos((e.clientX - r.left) / r.width * 100); }
 
-  /* ---------- حفظ ومشاركة ---------- */
-  const fileOf = () => new Promise(res => $('bgrOut').toBlob(b => res(new File([b], srcName + '-kashkoli.png', {type:'image/png'})), 'image/png'));
-  $('bgrSave').onclick = async () => {
-    const f = await fileOf(), u = URL.createObjectURL(f), a = document.createElement('a');
-    a.href = u; a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000);
+  /* ---------- الحفظ بألبوم الصور ----------
+     المتصفح ما يقدر يكتب على ألبوم الصور مباشرة. الطريقة المسموحة بالآيفون: قائمة المشاركة وفيها «حفظ الصورة».
+     نجهّز الملف مسبقاً عشان الضغطة تفتح القائمة على طول (الآيفون يرفضها لو تأخرت). */
+  let ready = null, readyTimer = 0;
+  const prepare = () => { clearTimeout(readyTimer); ready = null; readyTimer = setTimeout(() => $('bgrOut').toBlob(b => { if(b) ready = new File([b], srcName + '-kashkoli.png', {type:'image/png'}); }, 'image/png'), 120); };
+  const canShareFiles = () => { try{ return !!(navigator.canShare && navigator.canShare({files:[new File([new Blob(['x'])], 'x.png', {type:'image/png'})]})); }catch(e){ return false; } };
+  const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+  const useShare = mobile && canShareFiles();
+  $('bgrSave').textContent = useShare ? 'حفظ بألبوم الصور' : 'حفظ الصورة PNG';
+  if(useShare) $('bgrSaveHint').hidden = false;
+  function download(f){ const u = URL.createObjectURL(f), a = document.createElement('a'); a.href = u; a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); }
+  $('bgrSave').onclick = () => {
+    if(!ready){ $('bgrOut').toBlob(b => { if(b) download(new File([b], srcName + '-kashkoli.png', {type:'image/png'})); }, 'image/png'); return; }
+    if(useShare) navigator.share({files:[ready]}).catch(() => {});
+    else download(ready);
   };
-  $('bgrShare').onclick = async () => {
-    const f = await fileOf();
-    if(navigator.canShare && navigator.canShare({files:[f]})){ try{ await navigator.share({files:[f], title:'صورة بدون خلفية'}); }catch(e){} }
-    else $('bgrSave').click();
-  };
-  if(!(navigator.canShare)) $('bgrShare').hidden = true;
+  $('bgrShare').hidden = true;
   $('bgrNew').onclick = () => $('bgrFile').click();
+})();
+
+/* ================= كاميرا الشروق والغروب: رادار بأداة تختارها + أشكال للشروق والغروب ================= */
+(function(){
+  const ov = document.getElementById('sunArOverlay'); if(!ov) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const INST = [
+    ['1-astrolabe','الأسطرلاب'], ['2-desert-sun-compass','بوصلة الشمس'], ['3-silver-pocket-compass','الفضية'], ['4-marine-walnut','البحرية'],
+    ['5-stone-sundial','المزولة'], ['6-aviation-heading','الطيارة'], ['7-orienteering','الكشافة'], ['8-smoked-glass','الزجاجية']
+  ];
+  // شكل الشروق: نص شمس فوق الأفق وسهم لفوق · شكل الغروب: نص شمس وسهم لتحت
+  const ICON = {
+    rise:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 21a9 9 0 0 1 18 0Z" fill="#FFD36B"/><path d="M3 22.5h26" stroke="#FFE9B0" stroke-width="2.2" stroke-linecap="round"/><path d="M16 3v8M12.5 6.5 16 3l3.5 3.5" fill="none" stroke="#FFD36B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 14.5l2.2 1.4M26.5 14.5l-2.2 1.4" stroke="#FFD36B" stroke-width="2" stroke-linecap="round"/><path d="M8 27h16" stroke="#FFE9B0" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>',
+    set:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 21a9 9 0 0 1 18 0Z" fill="#FF7A3D"/><path d="M3 22.5h26" stroke="#FFC09A" stroke-width="2.2" stroke-linecap="round"/><path d="M16 11V3M12.5 7.5 16 11l3.5-3.5" fill="none" stroke="#FF7A3D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 14.5l2.2 1.4M26.5 14.5l-2.2 1.4" stroke="#FF7A3D" stroke-width="2" stroke-linecap="round"/><path d="M8 27h16" stroke="#FFC09A" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>'
+  };
+  let choice = 0, hidden = false;
+  try{ const v = localStorage.getItem('sun_radar_inst'); if(v === 'off') hidden = true; else if(v !== null && INST[+v]) choice = +v; }catch(e){}
+
+  /* ---------- الأشكال على أهداف الكاميرا ---------- */
+  [['sunArTargetRise','rise'], ['sunArTargetSet','set']].forEach(([id, k]) => { const t = document.getElementById(id); if(t && !t.querySelector('.ar-kind')) t.insertAdjacentHTML('afterbegin', '<span class="ar-kind ' + k + '">' + ICON[k] + '</span>'); });
+  [['sunArArrowRise','rise'], ['sunArArrowSet','set']].forEach(([id, k]) => { const b = document.querySelector('#' + id + ' .ar-edge-badge svg'); if(b) b.outerHTML = ICON[k]; });
+
+  /* ---------- الرادار ---------- */
+  ov.insertAdjacentHTML('beforeend',
+    '<div class="sr-wrap" id="srWrap"><span class="sr-lub"></span><div class="sr-dial" id="srDial"><img id="srImg" alt=""><div class="sr-mk rise" id="srRise">' + ICON.rise + '</div><div class="sr-mk set" id="srSet">' + ICON.set + '</div></div>' +
+    '<button class="sr-pick" id="srPick" aria-label="غيّر شكل الرادار"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2"/><path d="M12 12l3-5" stroke-width="2.2"/></svg></button></div>' +
+    '<div class="sr-sheet" id="srSheet" hidden><div class="sr-sh-h"><b>الرادار والمسار</b><button id="srClose" aria-label="إغلاق">✕</button></div><div class="sr-sec">شكل الرادار</div><div class="sr-grid sr-insts">' +
+    INST.map(([f, n], i) => '<button data-i="' + i + '"><img src="instruments/' + f + '.webp" alt="" loading="lazy"><span>' + n + '</span></button>').join('') +
+    '<button data-i="off" class="off"><i></i><span>بدون رادار</span></button></div></div>');
+  const wrap = document.getElementById('srWrap'), dial = document.getElementById('srDial'), sheet = document.getElementById('srSheet');
+  function apply(){
+    wrap.hidden = hidden; const sh = document.getElementById('srShow'); if(sh) sh.hidden = !hidden;
+    if(!hidden) document.getElementById('srImg').src = 'instruments/' + INST[choice][0] + '.webp';
+    sheet.querySelectorAll('.sr-insts [data-i]').forEach(b => b.classList.toggle('on', hidden ? b.dataset.i === 'off' : +b.dataset.i === choice && b.dataset.i !== 'off'));
+  }
+  document.getElementById('srPick').onclick = () => { sheet.hidden = false; };
+  document.getElementById('srClose').onclick = () => { sheet.hidden = true; };
+  sheet.querySelector('.sr-insts').onclick = e => {
+    const b = e.target.closest('[data-i]'); if(!b) return;
+    if(b.dataset.i === 'off'){ hidden = true; } else { hidden = false; choice = +b.dataset.i; }
+    try{ localStorage.setItem('sun_radar_inst', hidden ? 'off' : String(choice)); }catch(_){}
+    apply(); sheet.hidden = true;
+  };
+  // زر يرجّع الرادار لو كان مخفي
+  ov.insertAdjacentHTML('beforeend', '<button class="sr-show" id="srShow" aria-label="أظهر الرادار"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 12l3-5" stroke-width="2.2"/></svg></button>');
+  document.getElementById('srShow').onclick = () => { sheet.hidden = false; };
+  apply();
+
+  /* ---------- الحركة: القرص يلف مع البوصلة بنعومة ---------- */
+  function azOf(cache, date){
+    if(cache && cache.time) return cache.az;
+    if(date && typeof getSunPosition === 'function') return getSunPosition(date, LOC.lat, LOC.lng).azimuth;
+    return null;
+  }
+  let rot = null, raf = 0;
+  function place(el, az){
+    if(az == null){ el.style.display = 'none'; return; }
+    el.style.display = ''; el.style.transform = 'translate(-50%,-50%) rotate(' + az + 'deg) translateY(calc(var(--sr) * -.4)) rotate(' + (-az) + 'deg)';
+    el._az = az;
+  }
+  function loop(){
+    if(!ov.classList.contains('show')){ raf = 0; rot = null; return; }
+    const target = -(typeof deviceHeading === 'number' ? deviceHeading : 0);
+    if(rot === null || reduce) rot = target; else { let d = ((target - rot) % 360 + 540) % 360 - 180; rot += d * .18; }
+    dial.style.transform = 'rotate(' + rot.toFixed(2) + 'deg)';
+    const rAz = azOf(typeof sunArRiseCache !== 'undefined' ? sunArRiseCache : null, window.__lastSunrise);
+    const sAz = azOf(typeof sunArSetCache !== 'undefined' ? sunArSetCache : null, window.__lastSunset);
+    place(document.getElementById('srRise'), rAz); place(document.getElementById('srSet'), sAz);
+    // الأيقونة تبقى معدولة مهما لف القرص
+    [['srRise', rAz], ['srSet', sAz]].forEach(([id, az]) => { if(az == null) return; const el = document.getElementById(id); el.querySelector('svg').style.transform = 'rotate(' + (-rot).toFixed(2) + 'deg)'; });
+    // توهج لما الهدف يكون قدامك
+    const h = typeof deviceHeading === 'number' ? deviceHeading : 0, near = az => az != null && Math.abs(((az - h) % 360 + 540) % 360 - 180) < 6;
+    document.getElementById('srRise').classList.toggle('hit', near(rAz)); document.getElementById('srSet').classList.toggle('hit', near(sAz));
+    raf = requestAnimationFrame(loop);
+  }
+  new MutationObserver(() => { if(ov.classList.contains('show') && !raf){ sheet.hidden = true; raf = requestAnimationFrame(loop); } }).observe(ov, {attributes:true, attributeFilter:['class']});
+})();
+
+/* ================= كاميرا الشروق والغروب: مسار الشمس اليومي (6 أشكال تختار بينها) ================= */
+(function(){
+  const ov = document.getElementById('sunArOverlay'); if(!ov || typeof getSunPosition !== 'function') return;
+  ov.insertAdjacentHTML('afterbegin', '<svg class="sp-ov" id="spOv" aria-hidden="true"></svg>');
+  const svg = document.getElementById('spOv');
+  const STY = [['hours','خط الساعات'], ['ribbon','الشريط المتدرج'], ['beads','خرز الوقت'], ['photo','مسار المصوّر'], ['ghost','الشموس الشبحية'], ['simple','القوس البسيط']];
+  let style = 'hours';
+  try{ const v = localStorage.getItem('sun_path_style'); if(v) style = v; }catch(e){}
+
+  /* ---------- المسار لليوم ---------- */
+  let day = null;
+  function build(){
+    const now = new Date(), key = now.toDateString(); if(day && day.key === key && day.lat === LOC.lat) return day;
+    const base = new Date(now); base.setHours(0, 0, 0, 0); const P = [];
+    for(let m = 3 * 60; m <= 21 * 60; m += 2){ const t = base.getTime() + m * 6e4, p = getSunPosition(new Date(t), LOC.lat, LOC.lng); P.push({t, az:p.azimuth, alt:p.altitude}); }
+    const cross = (a, b) => { const f = (-.833 - a.alt) / (b.alt - a.alt); return {t:a.t + (b.t - a.t) * f, az:a.az + (b.az - a.az) * f, alt:-.833}; };
+    let R, S; for(let i = 1; i < P.length; i++){ if(!R && P[i - 1].alt < -.833 && P[i].alt >= -.833) R = cross(P[i - 1], P[i]); if(P[i - 1].alt >= -.833 && P[i].alt < -.833) S = cross(P[i - 1], P[i]); }
+    if(!R || !S) return null;
+    const D = P.filter(p => p.t > R.t && p.t < S.t); D.unshift(R); D.push(S);
+    const noon = D.reduce((m, p) => p.alt > m.alt ? p : m, D[0]);
+    day = {key, lat:LOC.lat, P, D, R, S, noon, base:base.getTime()}; return day;
+  }
+  const at = t => { const p = getSunPosition(new Date(t), LOC.lat, LOC.lng); return {t, az:p.azimuth, alt:p.altitude}; };
+  const fmt = t => new Date(t).toLocaleTimeString('ar-KW-u-nu-latn', {hour:'numeric', minute:'2-digit'});
+  const hr = t => { const h = new Date(t).getHours(); return ((h % 12) || 12) + (h < 12 ? 'ص' : h === 12 ? 'ظ' : 'م'); };
+  function marks(step){ const d = build(), out = []; for(let m = 0; m < 24 * 60; m += step){ const t = d.base + m * 6e4; if(t > d.R.t + 4 * 6e4 && t < d.S.t - 4 * 6e4) out.push(at(t)); } return out; }
+
+  /* ---------- الإسقاط على الشاشة (نفس حساب أهداف الكاميرا) ---------- */
+  let H = 0, E = 0, W = 0, Hh = 0;
+  const dAz = (a, b) => ((a - b) % 360 + 540) % 360 - 180;
+  const vis = p => Math.abs(dAz(p.az, H)) < 80;
+  const pr = p => ({x:W / 2 + dAz(p.az, H) / AR_HFOV * W, y:Hh / 2 - (p.alt - E) / AR_VFOV * Hh});
+  function line(pts){ let d = '', pen = false; pts.forEach(p => { if(!vis(p)){ pen = false; return; } const q = pr(p); d += (pen ? 'L' : 'M') + q.x.toFixed(1) + ' ' + q.y.toFixed(1) + ' '; pen = true; }); return d; }
+  const T = (x, y, txt, o = '') => '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" ' + o + '>' + txt + '</text>';
+  function nowSun(r){
+    const d = build(), n = Date.now(); if(n < d.R.t || n > d.S.t) return '';
+    const p = at(n); if(!vis(p)) return ''; const q = pr(p);
+    return '<g transform="translate(' + q.x.toFixed(1) + ' ' + q.y.toFixed(1) + ')"><circle r="' + (r * 2.4) + '" fill="rgba(255,236,190,.18)"/><circle r="' + r + '" fill="#FFF3D6" stroke="#FFC24A" stroke-width="2"/>' + T(0, -r - 9, 'الحين ' + fmt(n) + '  ' + Math.round(p.alt) + '°', 'text-anchor="middle" class="b"') + '</g>';
+  }
+
+  const DRAW = {
+    hours(d){ let s = '<path d="' + line(d.D) + '" fill="none" stroke="rgba(255,236,190,.85)" stroke-width="2" stroke-dasharray="7 6"/>';
+      marks(60).forEach(p => { if(!vis(p)) return; const q = pr(p); s += '<circle cx="' + q.x + '" cy="' + q.y + '" r="4" fill="#FFE9B0"/>' + T(q.x + 8, q.y - 8, hr(p.t)); }); return s + nowSun(11); },
+    ribbon(d){ let s = ''; for(let i = 1; i < d.D.length; i++){ const a = d.D[i - 1], b = d.D[i]; if(!vis(a) || !vis(b)) continue; const f = (a.t - d.R.t) / (d.S.t - d.R.t), c = f < .15 ? '#FFC24A' : f < .3 ? '#FFE08A' : f < .7 ? '#FFF6E0' : f < .85 ? '#FFC07A' : '#FF6A3A', A = pr(a), B = pr(b);
+        s += '<line x1="' + A.x + '" y1="' + A.y + '" x2="' + B.x + '" y2="' + B.y + '" stroke="' + c + '" stroke-width="10" stroke-linecap="round" opacity=".45" filter="url(#spBlur)"/><line x1="' + A.x + '" y1="' + A.y + '" x2="' + B.x + '" y2="' + B.y + '" stroke="' + c + '" stroke-width="2.5" stroke-linecap="round"/>'; }
+      return s + nowSun(11); },
+    beads(d){ let s = '<path d="' + line(d.D) + '" fill="none" stroke="rgba(255,236,190,.35)" stroke-width="1"/>'; const n = Date.now();
+      marks(30).forEach(p => { if(!vis(p)) return; const q = pr(p), big = new Date(p.t).getMinutes() === 0, h = new Date(p.t).getHours();
+        s += '<circle cx="' + q.x + '" cy="' + q.y + '" r="' + (big ? 9 : 4) + '" fill="' + (p.t < n ? 'rgba(255,233,176,.45)' : '#FFE9B0') + '" stroke="rgba(0,0,0,.35)"/>' + (big ? T(q.x, q.y + 4, (h % 12) || 12, 'text-anchor="middle" class="am"') : ''); });
+      return s + nowSun(11); },
+    photo(d){ let s = '<path d="' + line(d.D) + '" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.4"/>';
+      const ext = d.P.filter(p => p.alt > -6 && p.t > d.R.t - 36e5 && p.t < d.S.t + 36e5);
+      const seg = (f, c) => { const pts = ext.filter(f); if(pts.length > 1) s += '<path d="' + line(pts) + '" fill="none" stroke="' + c + '" stroke-width="5" stroke-linecap="round"/>'; return pts; };
+      const lab = (pts, txt, c, dx, dy, a) => { if(!pts.length) return; const p = pts[Math.floor(pts.length / 2)]; if(!vis(p)) return; const q = pr(p); s += T(q.x + dx, q.y + dy, txt + ' ' + fmt(pts[0].t) + '–' + fmt(pts[pts.length - 1].t), 'text-anchor="' + a + '" fill="' + c + '"'); };
+      lab(seg(p => p.alt >= -.8 && p.alt <= 6 && p.t < d.noon.t, '#F2C14E'), 'الذهبية', '#F2C14E', 14, -6, 'end');
+      lab(seg(p => p.alt >= -.8 && p.alt <= 6 && p.t > d.noon.t, '#F2C14E'), 'الذهبية', '#F2C14E', -14, -6, 'start');
+      lab(seg(p => p.alt < -.8 && p.t < d.noon.t, '#6FA8FF'), 'الزرقاء', '#9CC2FF', 18, 22, 'end');
+      lab(seg(p => p.alt < -.8 && p.t > d.noon.t, '#6FA8FF'), 'الزرقاء', '#9CC2FF', -18, 22, 'start');
+      return s + nowSun(9); },
+    ghost(d){ let s = ''; marks(60).forEach(p => { if(!vis(p)) return; const q = pr(p); s += '<circle cx="' + q.x + '" cy="' + q.y + '" r="13" fill="url(#spSun)" opacity=".55"/>' + T(q.x, q.y + 26, hr(p.t), 'text-anchor="middle"'); }); return s + nowSun(12); },
+    simple(d){ let s = '<path d="' + line(d.D) + '" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.3"/>';
+      if(vis(d.noon)){ const q = pr(d.noon); s += '<line x1="' + q.x + '" y1="' + (q.y - 8) + '" x2="' + q.x + '" y2="' + (q.y + 8) + '" stroke="#fff" stroke-width="1.5"/>' + T(q.x, q.y - 14, 'الظهر ' + fmt(d.noon.t) + '  ' + Math.round(d.noon.alt) + '°', 'text-anchor="middle"'); }
+      return s + nowSun(8); }
+  };
+  const DEFS = '<defs><filter id="spBlur"><feGaussianBlur stdDeviation="3"/></filter><radialGradient id="spSun"><stop offset="0" stop-color="#FFFBEF"/><stop offset=".6" stop-color="#FFE3A6"/><stop offset="1" stop-color="#FFC24A" stop-opacity="0"/></radialGradient></defs>';
+
+  /* ---------- الاختيار من نفس لوحة الرادار ---------- */
+  const sheet = document.getElementById('srSheet');
+  if(sheet){
+    const THUMB = {
+      hours:'<path d="M6 40 Q40 -4 74 40" fill="none" stroke="#FFE9B0" stroke-width="2" stroke-dasharray="5 4"/><circle cx="23" cy="20" r="3" fill="#FFE9B0"/><circle cx="40" cy="11" r="3" fill="#FFE9B0"/><circle cx="57" cy="20" r="3" fill="#FFE9B0"/>',
+      ribbon:'<defs><linearGradient id="tg1"><stop offset="0" stop-color="#FFC24A"/><stop offset=".5" stop-color="#FFF6E0"/><stop offset="1" stop-color="#FF6A3A"/></linearGradient></defs><path d="M6 40 Q40 -4 74 40" fill="none" stroke="url(#tg1)" stroke-width="5" stroke-linecap="round"/>',
+      beads:'<path d="M6 40 Q40 -4 74 40" fill="none" stroke="rgba(255,233,176,.4)"/>' + [[12, 31, 4], [23, 20, 6], [33, 13, 3], [40, 11, 6], [47, 13, 3], [57, 20, 6], [68, 31, 4]].map(([x, y, r]) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#FFE9B0"/>').join(''),
+      photo:'<path d="M6 40 Q40 -4 74 40" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.4"/><path d="M6 40 Q10 33 15 28" stroke="#F2C14E" stroke-width="4" fill="none"/><path d="M65 28 Q70 33 74 40" stroke="#F2C14E" stroke-width="4" fill="none"/>',
+      ghost:[[12, 31], [26, 17], [40, 11], [54, 17], [68, 31]].map(([x, y]) => '<circle cx="' + x + '" cy="' + y + '" r="6" fill="#FFE3A6" opacity=".55"/>').join(''),
+      simple:'<path d="M6 40 Q40 -4 74 40" fill="none" stroke="#fff" stroke-width="1.2"/><line x1="40" y1="6" x2="40" y2="16" stroke="#fff"/>'
+    };
+    sheet.insertAdjacentHTML('beforeend', '<div class="sr-sec">مسار الشمس</div><div class="sr-grid sp-grid">' +
+      STY.map(([k, n]) => '<button data-p="' + k + '"><svg viewBox="0 0 80 44" width="72" height="40">' + THUMB[k] + '</svg><span>' + n + '</span></button>').join('') +
+      '<button data-p="off" class="off"><i></i><span>بدون مسار</span></button></div>');
+    const g = sheet.querySelector('.sp-grid');
+    const mark = () => g.querySelectorAll('[data-p]').forEach(b => b.classList.toggle('on', b.dataset.p === style));
+    g.onclick = e => { const b = e.target.closest('[data-p]'); if(!b) return; style = b.dataset.p; try{ localStorage.setItem('sun_path_style', style); }catch(_){} mark(); sheet.hidden = true; };
+    mark();
+  }
+
+  /* ---------- الرسم ---------- */
+  let raf = 0, last = 0, key = '';
+  function loop(ts){
+    if(!ov.classList.contains('show')){ raf = 0; key = ''; svg.innerHTML = ''; return; }
+    raf = requestAnimationFrame(loop); if(ts - last < 33) return; last = ts;
+    W = innerWidth; Hh = innerHeight; svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
+    H = typeof deviceHeading === 'number' ? deviceHeading : 0;
+    const beta = window.__deviceBeta !== undefined ? window.__deviceBeta : 90; E = (typeof sunArBetaRef === 'number' ? sunArBetaRef : beta) - beta;
+    // نعيد الرسم بس لما يتغير شي فعلاً (حركة الجوال أو الدقيقة أو الشكل)
+    const k = style + '|' + H.toFixed(1) + '|' + E.toFixed(1) + '|' + W + 'x' + Hh + '|' + Math.floor(Date.now() / 30000);
+    if(k === key) return; key = k;
+    const d = build(); if(!d || style === 'off' || !DRAW[style]){ svg.innerHTML = ''; return; }
+    svg.innerHTML = DEFS + DRAW[style](d);
+  }
+  new MutationObserver(() => { if(ov.classList.contains('show') && !raf) raf = requestAnimationFrame(loop); }).observe(ov, {attributes:true, attributeFilter:['class']});
 })();
 
 </script>
