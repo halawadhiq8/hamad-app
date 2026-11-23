@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rihala-cache-v17';
+const CACHE_NAME = 'rihala-cache-v18';
 // كاش منفصل لأداة إزالة الخلفية ونماذجها، ما ينمسح مع تحديث التطبيق عشان تشتغل بدون نت
 const MODELS_CACHE = 'kashkoli-models-v1';
 const MODEL_HOSTS = ['cdn.jsdelivr.net', 'staticimgly.com'];
@@ -16,7 +16,7 @@ self.addEventListener('install', function(event){
 self.addEventListener('activate', function(event){
   event.waitUntil(
     caches.keys().then(function(keys){
-      return Promise.all(keys.filter(function(k){ return k !== CACHE_NAME && k !== MODELS_CACHE; }).map(function(k){ return caches.delete(k); }));
+      return Promise.all(keys.filter(function(k){ return k !== CACHE_NAME && k.indexOf('kashkoli-') !== 0; }).map(function(k){ return caches.delete(k); }));
     })
   );
   self.clients.claim();

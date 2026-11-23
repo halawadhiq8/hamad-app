@@ -1416,6 +1416,28 @@ body:has(#tab-radar.active){overflow:hidden;}
 .bgr-off.ok{color:var(--good);}
 .bgr-savehint{grid-column:1/-1; font-size:11.5px; color:var(--muted); text-align:center; margin:-2px 0 2px;}
 #bgrShare[hidden],#bgrOffBtn[hidden],#bgrSaveHint[hidden]{display:none!important}
+/* توقعات 15 يوم */
+.wx-15{position:absolute; z-index:520; top:calc(74px + env(safe-area-inset-top)); right:16px; height:52px; min-width:52px; padding:0 10px; border-radius:16px; border:1px solid var(--border); background:var(--obs-glass); color:var(--text); font:inherit;
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.1;}
+.wx-15 b{font-size:17px; font-weight:600; color:var(--accent);} .wx-15 span{font-size:10.5px; color:var(--muted);}
+.wx-15:active{transform:scale(.96);}
+.wxd-loc{margin:-6px 2px 10px; font-size:12px; color:var(--muted);}
+.wxd-load{padding:30px 0; text-align:center; color:var(--muted); font-size:13px;}
+.wxd-list{display:flex; flex-direction:column;}
+.wxd-row{display:grid; grid-template-columns:52px 30px 1fr 22px; align-items:center; gap:8px; padding:10px 2px; border:0; border-top:1px solid rgba(255,255,255,.06); background:none; color:var(--text); font:inherit; text-align:right; width:100%;}
+.wxd-row:active{background:rgba(255,255,255,.04);}
+.wxd-day b{display:block; font-size:13.5px; font-weight:500;} .wxd-day small{font-size:11px; color:var(--muted);}
+.wxd-ic{width:28px; height:28px;}
+.wxd-t{display:flex; align-items:center; gap:8px; font-size:14px;}
+.wxd-t span{width:28px; text-align:center; font-weight:500;} .wxd-t .lo{color:var(--muted); font-weight:400;}
+.wxd-t i{flex:1; height:5px; border-radius:3px; background:rgba(255,255,255,.08); position:relative;}
+.wxd-t em{position:absolute; top:0; bottom:0; border-radius:3px; background:linear-gradient(to left,#F2A23A,#5DB8E8);}
+.wxd-meta{display:flex; flex-wrap:wrap; gap:4px 10px; margin-top:5px; font-size:11px; color:var(--muted);}
+.wxd-meta .r{color:#6FB2FF;} .wxd-meta .bad{color:#F0A37A;}
+.wxd-c{display:flex; flex-direction:column; gap:3px; align-items:center;}
+.wxd-c i{width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.12);}
+.wxd-c.h i{background:#7DDB8E;} .wxd-c.m i:nth-child(n+2){background:#E8C14A;} .wxd-c.l i:nth-child(3){background:#F07A5A;}
+.wxd-note{font-size:11.5px; color:var(--muted); line-height:1.7; margin:12px 2px 2px;}
 
 /* ================= صحتي: أسود + ليموني على نفس الصورة المرجعية ================= */
 #tab-health{background:#000;}
@@ -5956,9 +5978,12 @@ if('serviceWorker' in navigator){
    البيانات: Open-Meteo (GFS / ECMWF / ICON) على شبكة نقاط فوق المنطقة، والرادار الحي من RainViewer */
 window.WX = (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const G = {lat0:10, lon0:32, step:2, nLat:16, nLon:16};           // 10..40N × 32..62E
+  // 16..37N × 35..59.5E كل 1.5 درجة = 255 نقطة (Open-Meteo يحسب كل نقطة طلب، وحده 600 بالدقيقة)
+  const G = {lat0:16, lon0:35, step:1.5, nLat:15, nLon:17};
   const pad = n => String(n).padStart(2,'0');
   const MODELS = [['icon_seamless','ICON'],['ecmwf_ifs025','ECMWF'],['gfs_seamless','GFS']];
+  // كم يوم يغطي كل نموذج (ICON أقصر، ECMWF الأدق لأسبوعين)
+  const DAYS = {icon_seamless:8, ecmwf_ifs025:14, gfs_seamless:14};
   const LAYERS = {
     precip:{ar:'هطول الأمطار', unit:'مم/س', key:'precipitation', legend:[0,.5,1,2,4,7,10,20],
       stops:[[0.1,[110,168,255,0]],[0.25,[110,168,255,.75]],[0.5,[76,141,245,.85]],[1,[59,193,201,.9]],[2,[94,211,107,.9]],[4,[232,224,74,.92]],[7,[244,155,45,.92]],[10,[232,71,58,.95]],[20,[198,42,134,.95]],[40,[155,75,224,.95]]]},
@@ -5992,28 +6017,39 @@ window.WX = (function(){
     ['طهران',35.69,51.39,1],['شيراز',29.59,52.58,1],['الأحواز',31.32,48.67,2],['عمّان',31.95,35.93,1],['دمشق',33.51,36.29,1],
     ['جدة',21.49,39.19,1],['مكة',21.42,39.83,2],['المدينة',24.47,39.61,1],['حائل',27.52,41.69,1],['تبوك',28.38,36.57,1],
     ['بريدة',26.33,43.97,2],['حفر الباطن',28.43,45.96,2],['الموصل',36.34,43.13,1],['أصفهان',32.65,51.67,1],['كرمان',30.28,57.08,2],
-    ['صلالة',17.02,54.09,1],['صنعاء',15.37,44.19,1],['أبها',18.22,42.50,2],['الطائف',21.27,40.42,2],['النجف',32.00,44.33,2]
+    ['صلالة',17.02,54.09,1],['أبها',18.22,42.50,2],['الطائف',21.27,40.42,2],['النجف',32.00,44.33,2]
   ];
 
   let map, root, data = null, times = [], tIdx = 0, layer = 'precip', model = 'gfs_seamless';
   let fieldCv, partCv, cityLayer, pinMarker = null, playing = false, playTimer = 0, radar = null, satLayer = null, showParticles = true, showValues = true, showCities = true, showCross = false, clickPin = true;
 
   /* ---------- البيانات ---------- */
+  // كاش التوقعات بتخزين منفصل (Cache Storage) عشان ما يزاحم بيانات التطبيق في localStorage
+  const WXC = 'kashkoli-wx-v1';
+  try{ Object.keys(localStorage).filter(k => k.startsWith('wxgrid') || k.startsWith('wxdays_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
+  async function cGet(k, maxAge){ try{ const r = await (await caches.open(WXC)).match('/__wx/' + k); if(!r) return null; const c = await r.json(); return Date.now() - c.at < maxAge ? c.d : null; }catch(e){ return null; } }
+  function cSet(k, d){ try{ caches.open(WXC).then(c => c.put('/__wx/' + k, new Response(JSON.stringify({at:Date.now(), d}), {headers:{'Content-Type':'application/json'}}))); }catch(e){} }
   async function fetchModel(m){
-    const ck = 'wxgrid_' + m;
-    try{ const c = JSON.parse(localStorage.getItem(ck) || 'null'); if(c && Date.now() - c.at < 2 * 36e5) return c.d; }catch(e){}
+    const ck = 'grid_' + m, hit = await cGet(ck, 3 * 36e5); if(hit) return uv(hit);
     const lats = [], lons = [];
     for(let i = 0; i < G.nLat; i++) for(let j = 0; j < G.nLon; j++){ lats.push(G.lat0 + i * G.step); lons.push(G.lon0 + j * G.step); }
     const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lats.join(',') + '&longitude=' + lons.join(',') +
-      '&hourly=temperature_2m,precipitation,wind_speed_10m,wind_direction_10m,cloud_cover&forecast_days=3&timezone=GMT&models=' + m;
+      '&hourly=temperature_2m,precipitation,wind_speed_10m,wind_direction_10m,cloud_cover&forecast_days=' + DAYS[m] + '&temporal_resolution=hourly_3&timezone=GMT&models=' + m;
     const arr = await fetch(url).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); });
-    const H = arr[0].hourly.time.length, keys = ['temperature_2m','precipitation','wind_speed_10m','wind_direction_10m','cloud_cover'];
+    let H = arr[0].hourly.time.length; const keys = ['temperature_2m','precipitation','wind_speed_10m','wind_direction_10m','cloud_cover'];
+    while(H > 1 && arr[0].hourly.temperature_2m[H - 1] == null) H--;
+    arr.forEach(p => Object.keys(p.hourly).forEach(k => p.hourly[k] = p.hourly[k].slice(0, H)));
     const d = {time:arr[0].hourly.time};
-    keys.forEach(k => { d[k] = new Float32Array(H * arr.length); arr.forEach((p, n) => p.hourly[k].forEach((v, h) => d[k][h * arr.length + n] = v == null ? NaN : v)); d[k] = Array.from(d[k]); });
+    keys.forEach(k => { const f = k === 'precipitation' ? 1 / 3 : 1; d[k] = new Float32Array(H * arr.length); arr.forEach((p, n) => p.hourly[k].forEach((v, h) => d[k][h * arr.length + n] = v == null ? NaN : Math.round(v * f * 10) / 10)); d[k] = Array.from(d[k]); });
     // u/v من السرعة والاتجاه (الاتجاه = من وين تهب)
+    cSet(ck, d);
+    return uv(d);
+  }
+
+  // u/v من السرعة والاتجاه (الاتجاه = من وين تهب)
+  function uv(d){
     d.u = d.wind_speed_10m.map((s, i) => -s * Math.sin(d.wind_direction_10m[i] * Math.PI / 180));
     d.v = d.wind_speed_10m.map((s, i) => -s * Math.cos(d.wind_direction_10m[i] * Math.PI / 180));
-    try{ localStorage.setItem(ck, JSON.stringify({at:Date.now(), d})); }catch(e){ try{ Object.keys(localStorage).filter(k => k.startsWith('wxgrid_') && k !== ck).forEach(k => localStorage.removeItem(k)); localStorage.setItem(ck, JSON.stringify({at:Date.now(), d})); }catch(_){} }
     return d;
   }
 
@@ -6135,7 +6171,8 @@ window.WX = (function(){
     times.forEach((t, i) => {
       const d = new Date(t + 'Z'), hh = d.getHours();
       const f = i / (times.length - 1);
-      if(hh === 0 && f < .88) html += '<span class="day" style="right:' + (f * 100) + '%">' + d.toLocaleDateString('ar-KW-u-nu-latn', {weekday:'long'}) + '</span>';
+      const long = times.length > 40, every = times.length > 80 ? 3 : 1, di = Math.round((d - new Date(times[0] + 'Z')) / 864e5);
+      if(hh === 0 && f < .9 && di % every === 0) html += '<span class="day" style="right:' + (f * 100) + '%">' + (long ? d.getDate() + '/' + (d.getMonth() + 1) : d.toLocaleDateString('ar-KW-u-nu-latn', {weekday:'long'})) + '</span>';
     });
     tr.innerHTML = html + '<em class="now" style="right:' + (nowIdx() / (times.length - 1) * 100) + '%"></em>';
   }
@@ -6144,7 +6181,7 @@ window.WX = (function(){
     if(!times.length) return; const f = tIdx / (times.length - 1);
     $('.wx-thumb').style.right = (f * 100) + '%';
     const d = tLocal(tIdx), h = d.getHours();
-    $('.wx-bubble').textContent = (h % 12 || 12) + ':00 ' + (h < 12 ? 'صباحاً' : 'مساءً') + ' · ' + d.toLocaleDateString('ar-KW-u-nu-latn', {weekday:'short'});
+    $('.wx-bubble').textContent = d.toLocaleDateString('ar-KW-u-nu-latn', {weekday:'long'}) + ' ' + d.getDate() + '/' + (d.getMonth() + 1) + '، ' + (h % 12 || 12) + ' ' + (h < 12 ? 'ص' : 'م');
   }
   let rafField = 0;
   function setTime(t, fast){
@@ -6156,7 +6193,7 @@ window.WX = (function(){
     clearInterval(playTimer);
     if(!on){ setTime(Math.round(tIdx)); return; }
     if(layer === 'radar'){ playTimer = setInterval(() => radar && radar.show((radar.idx + 1) % radar.frames.length), 600); return; }
-    playTimer = setInterval(() => { let t = tIdx + .25; if(t > times.length - 1) t = nowIdx(); setTime(t, true); if(Math.abs(t - Math.round(t)) < .01) drawCities(); }, 90);
+    playTimer = setInterval(() => { let t = tIdx + (times.length > 60 ? .12 : .25); if(t > times.length - 1) t = nowIdx(); setTime(t, true); if(Math.abs(t - Math.round(t)) < .01) drawCities(); }, 90);
   }
 
   /* ---------- الرادار الحي ---------- */
@@ -6224,6 +6261,8 @@ window.WX = (function(){
           <button class="wx-ov on" data-o="pin">${svgI('tap')}النقطة عند النقر</button>
         </div>
       </div>
+      <button class="wx-15" aria-label="توقعات 16 يوم"><b>16</b><span>يوم</span></button>
+      <div class="wx-panel wx-days" hidden></div>
       <div class="wx-crosshair" hidden>${svgI('cross')}<span></span></div>
       <div class="wx-bottom">
         <div class="wx-models">${MODELS.map(([m, n]) => `<button data-m="${m}">${n}</button>`).join('')}</div>
@@ -6231,7 +6270,8 @@ window.WX = (function(){
         <div class="wx-legend"></div>
       </div>
       <div class="wx-load"><i></i></div>`);
-    $('.wx-cur').onclick = () => { const p = $('.wx-panel'); p.hidden = !p.hidden; if(!p.hidden) renderThumbs(); };
+    $('.wx-cur').onclick = () => { const p = $('.wx-panel'); p.hidden = !p.hidden; $('.wx-days').hidden = true; if(!p.hidden) renderThumbs(); };
+    $('.wx-15').onclick = () => { const p = $('.wx-days'); if(!p.hidden){ p.hidden = true; return; } openDays(); };
     $('.wx-x').onclick = () => $('.wx-panel').hidden = true;
     root.querySelectorAll('.wx-lay').forEach(b => b.onclick = () => { setLayer(b.dataset.k); $('.wx-panel').hidden = true; });
     root.querySelectorAll('.wx-models button').forEach(b => b.onclick = () => setModel(b.dataset.m));
@@ -6319,6 +6359,74 @@ window.WX = (function(){
         }
       }
       put(k, cv);
+    });
+  }
+
+  /* ---------- توقعات 15 يوم لنقطة: النماذج الثلاثة مع بعض + الغبار ---------- */
+  const WC = c => c <= 1 ? 'sun' : c <= 2 ? 'part' : c <= 3 ? 'cloud' : c <= 48 ? 'fog' : c <= 57 ? 'drz' : c <= 67 || (c >= 80 && c <= 82) ? 'rain' : c <= 77 || c === 85 || c === 86 ? 'snow' : 'storm';
+  const WCN = {sun:'صافي', part:'غائم جزئياً', cloud:'غائم', fog:'ضباب', drz:'رذاذ', rain:'أمطار', snow:'ثلج', storm:'رعدية'};
+  const WI = {
+    sun:'<circle cx="12" cy="12" r="4.2" fill="#FFC94A"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="#FFC94A" stroke-width="1.8" stroke-linecap="round"/>',
+    part:'<circle cx="9" cy="9" r="3.6" fill="#FFC94A"/><path d="M8 19h9a3.5 3.5 0 0 0 .3-7 5 5 0 0 0-9.3 1.3A2.9 2.9 0 0 0 8 19Z" fill="#C9D3E6"/>',
+    cloud:'<path d="M7 18.5h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.4 1.6A3.2 3.2 0 0 0 7 18.5Z" fill="#AEB9CE"/>',
+    fog:'<path d="M4 9h16M6 13h12M4 17h16" stroke="#AEB9CE" stroke-width="2" stroke-linecap="round"/>',
+    drz:'<path d="M7 14.5h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.4 1.6A3.2 3.2 0 0 0 7 14.5Z" fill="#AEB9CE"/><path d="M9 18v1.5M13 18v1.5M17 18v1.5" stroke="#5AA2FF" stroke-width="1.8" stroke-linecap="round"/>',
+    rain:'<path d="M7 14h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.4 1.6A3.2 3.2 0 0 0 7 14Z" fill="#9AA7BF"/><path d="M8.5 17l-1 3M12.5 17l-1 3M16.5 17l-1 3" stroke="#5AA2FF" stroke-width="1.9" stroke-linecap="round"/>',
+    snow:'<path d="M7 14h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.4 1.6A3.2 3.2 0 0 0 7 14Z" fill="#C9D3E6"/><circle cx="9" cy="18.5" r="1" fill="#fff"/><circle cx="13" cy="19.5" r="1" fill="#fff"/><circle cx="17" cy="18.5" r="1" fill="#fff"/>',
+    storm:'<path d="M7 13.5h10a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.4 1.6A3.2 3.2 0 0 0 7 13.5Z" fill="#8792AA"/><path d="M12.5 14l-2.5 4h3l-1.5 3.5" fill="none" stroke="#FFC94A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
+  };
+  const DIRS = ['ش','ش ق','ق','ج ق','ج','ج غ','غ','ش غ'];
+  let daysAt = null;
+  async function fetchDays(lat, lon){
+    const k = 'days_' + lat.toFixed(2) + '_' + lon.toFixed(2), hit = await cGet(k, 2 * 36e5); if(hit) return hit;
+    const ms = MODELS.map(x => x[0]).join(',');
+    const [f, aq] = await Promise.all([
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon + '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&forecast_days=16&timezone=auto&models=' + ms).then(r => { if(!r.ok) throw 0; return r.json(); }),
+      fetch('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=' + lat + '&longitude=' + lon + '&hourly=dust&forecast_days=6&timezone=auto').then(r => r.json()).catch(() => null)
+    ]);
+    const dust = {};
+    if(aq && aq.hourly) aq.hourly.time.forEach((t, i) => { const dk = t.slice(0, 10), v = aq.hourly.dust[i]; if(v != null) dust[dk] = Math.max(dust[dk] || 0, v); });
+    const d = {daily:f.daily, dust};
+    cSet(k, d);
+    return d;
+  }
+  async function openDays(){
+    const pnl = $('.wx-days'); $('.wx-panel').hidden = true; pnl.hidden = false;
+    const ll = pinMarker ? pinMarker._ll : (window.LOC && LOC.lat ? {lat:LOC.lat, lng:LOC.lng} : {lat:29.37, lng:47.98});
+    const name = pinMarker ? 'النقطة اللي اخترتها' : (window.LOC && LOC.label) || 'الكويت';
+    pnl.innerHTML = '<div class="wx-ph"><b>' + svgI('temp','hi') + 'توقعات 16 يوم</b><button class="wx-x" aria-label="إغلاق">✕</button></div><p class="wxd-loc">' + name + '</p><div class="wxd-load">جاري التحميل…</div>';
+    pnl.querySelector('.wx-x').onclick = () => pnl.hidden = true;
+    let r; try{ r = await fetchDays(+ll.lat.toFixed(2), +ll.lng.toFixed(2)); }catch(e){ pnl.querySelector('.wxd-load').textContent = 'تعذر تحميل التوقعات، تأكد من النت'; return; }
+    const D = r.daily, pm = model, get = (key, m, i) => { const a = D[key + '_' + m]; return a ? a[i] : null; };
+    const rows = [];
+    D.time.forEach((t, i) => {
+      // النموذج المختار، وإذا خلص مداه ناخذ اللي بعده
+      const order = [pm].concat(MODELS.map(x => x[0]).filter(x => x !== pm)), m = order.find(x => get('temperature_2m_max', x, i) != null); if(!m) return;
+      const maxs = MODELS.map(x => get('temperature_2m_max', x[0], i)).filter(v => v != null), spread = Math.max(...maxs) - Math.min(...maxs);
+      const rains = MODELS.map(x => get('precipitation_sum', x[0], i)).filter(v => v != null), wet = rains.filter(v => v >= 1).length;
+      let prob = get('precipitation_probability_max', m, i); if(prob == null) prob = get('precipitation_probability_max', 'gfs_seamless', i);
+      rows.push({t, m, code:get('weather_code', m, i), hi:get('temperature_2m_max', m, i), lo:get('temperature_2m_min', m, i), rain:get('precipitation_sum', m, i) || 0, prob,
+        wind:get('wind_speed_10m_max', m, i), dir:get('wind_direction_10m_dominant', m, i), n:maxs.length, spread, wet, nr:rains.length, dust:r.dust[t]});
+    });
+    const lo = Math.min(...rows.map(x => x.lo)), hi = Math.max(...rows.map(x => x.hi)), today = (n => n.getFullYear() + '-' + pad(n.getMonth() + 1) + '-' + pad(n.getDate()))(new Date());
+    const conf = x => x.n < 2 ? ['—','نموذج واحد'] : x.spread <= 1.5 ? ['h','ثقة عالية'] : x.spread <= 3.5 ? ['m','ثقة متوسطة'] : ['l','ثقة منخفضة'];
+    pnl.innerHTML = '<div class="wx-ph"><b>' + svgI('temp','hi') + 'توقعات ' + rows.length + ' يوم</b><button class="wx-x" aria-label="إغلاق">✕</button></div>' +
+      '<p class="wxd-loc">' + name + '، النموذج الأساسي ' + MODELS.find(x => x[0] === pm)[1] + '</p>' +
+      '<div class="wxd-list">' + rows.map(x => { const d = new Date(x.t + 'T12:00'), w = WC(x.code), c = conf(x), L = (x.lo - lo) / (hi - lo || 1) * 100, R = (x.hi - lo) / (hi - lo || 1) * 100;
+        return '<button class="wxd-row" data-t="' + x.t + '"><div class="wxd-day"><b>' + (x.t === today ? 'اليوم' : d.toLocaleDateString('ar-KW-u-nu-latn', {weekday:'short'})) + '</b><small>' + d.toLocaleDateString('ar-KW-u-nu-latn', {day:'numeric', month:'short'}) + '</small></div>' +
+          '<svg class="wxd-ic" viewBox="0 0 24 24" aria-label="' + WCN[w] + '">' + WI[w] + '</svg>' +
+          '<div class="wxd-mid"><div class="wxd-t"><span class="lo">' + Math.round(x.lo) + '°</span><i><em style="right:' + L.toFixed(1) + '%;left:' + (100 - R).toFixed(1) + '%"></em></i><span>' + Math.round(x.hi) + '°</span></div>' +
+          '<div class="wxd-meta">' + (x.rain >= .2 ? '<span class="r">' + x.rain.toFixed(1) + ' مم' + (x.prob != null ? ' (' + x.prob + '%)' : '') + '</span>' : (x.prob ? '<span>مطر ' + x.prob + '%</span>' : '')) +
+          '<span>' + Math.round(x.wind) + ' كم/س ' + DIRS[Math.round((x.dir || 0) / 45) % 8] + '</span>' + (x.dust != null ? '<span class="' + (x.dust > 150 ? 'bad' : '') + '">غبار ' + Math.round(x.dust) + ' µg</span>' : '') + '</div></div>' +
+          '<span class="wxd-c ' + c[0] + '" title="' + c[1] + '"><i></i><i></i><i></i></span></button>'; }).join('') + '</div>' +
+      '<p class="wxd-note">النقاط الثلاث تبين مدى اتفاق النماذج (ECMWF وGFS وICON) على الحرارة: 3 نقاط يعني متفقين. بعد اليوم 10 التوقع تقريبي. الغبار متوفر لأول 5 أيام. اضغط على أي يوم يوديك له بالخريطة.</p>';
+    pnl.querySelector('.wx-x').onclick = () => pnl.hidden = true;
+    pnl.querySelectorAll('.wxd-row').forEach(b => b.onclick = () => {
+      // نروح للظهر بذاك اليوم على الخريطة
+      const target = new Date(b.dataset.t + 'T12:00').getTime(); let best = 0;
+      times.forEach((t, i) => { if(Math.abs(new Date(t + 'Z') - target) < Math.abs(new Date(times[best] + 'Z') - target)) best = i; });
+      if(layer === 'radar' || layer === 'sat') setLayer('precip');
+      play(false); setTime(best); pnl.hidden = true;
     });
   }
 
