@@ -1637,6 +1637,30 @@ body:has(#tab-radar.active){overflow:hidden;}
 @media (prefers-reduced-motion:reduce){.hp *, .hp-host *{animation:none !important; transition:none !important;}}
 #tab-health .hp{padding-left:0; padding-right:0;} #tab-health .hp-wnav{width:20px;}
 
+/* أزرار الوزن + المخطط */
+.hp-wacts{display:flex; gap:8px; margin-top:12px;}
+.hp-wacts button{flex:1; display:flex; align-items:center; justify-content:center; gap:6px; height:38px; border-radius:19px; background:var(--card2) !important; font-size:13px; font-weight:500;}
+.hp-wacts svg{width:16px; height:16px; color:var(--lime);}
+.hp-rng{flex-wrap:nowrap; margin:0 0 12px;}
+.hp-rng button{flex:1;}
+.hp-dates{margin-bottom:12px;}
+.hp-dates label{display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:#AEAEB2;}
+.hp-dates input{height:42px; border-radius:12px; border:0; background:var(--card2); color:#fff; padding:0 10px; font:inherit; font-size:14px; direction:ltr; text-align:right; width:100%;}
+.hp-chart{width:100%; height:auto; display:block; margin:4px 0 6px; overflow:visible;}
+.hp-chart text{font-size:10.5px; fill:#8E8E93; font-family:inherit;}
+.hp-chart text.g{fill:#FF6B2C; font-size:10.5px;}
+.hp-chart text.t1{fill:#fff; font-size:12px; font-weight:600;}
+.hp-chart text.t2{fill:#AEAEB2; font-size:9.5px;}
+.hp-chart circle[data-a]{cursor:pointer;}
+.hp-chart .ln.a{stroke-dasharray:1200; stroke-dashoffset:1200; animation:hpDraw 1s cubic-bezier(.3,.7,.3,1) forwards;}
+@keyframes hpDraw{to{stroke-dashoffset:0}}
+.hp-csum2 b{font-size:17px !important;}
+.hp-csum2 small{display:block; margin-top:2px;}
+.hp-cempty{padding:28px 12px; text-align:center; color:var(--mut); font-size:13.5px; line-height:1.7; background:#232325; border-radius:16px;}
+.hp-wl{max-height:220px; overflow:auto;}
+.hp-wl li button{width:28px; height:28px; display:grid; place-items:center; border-radius:50%; background:var(--card2) !important; color:var(--mut);}
+.hp-wl li button svg{width:13px; height:13px;}
+
 </style>
 </head>
 <body>
@@ -7190,6 +7214,8 @@ const I = {
   fire:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.6 2.5c.4 3-1.4 4.6-3 6.3C8 10.5 6.5 12.3 6.5 15a5.5 5.5 0 0 0 11 0c0-2.2-1-3.8-2-5-.2 1.4-.9 2.4-2 2.8.6-3.3-.2-7.5-.9-10.3Zm-.5 18a2.6 2.6 0 0 1-2.6-2.6c0-1.6 1.3-2.5 2.2-3.8.4 1.3 1.6 1.7 2.3 2.7.3.4.6.9.6 1.4a2.6 2.6 0 0 1-2.5 2.3Z"/></svg>',
   drop:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8c-.3 0-.5.1-.7.4C9 6.3 5.5 10.6 5.5 14.4a6.5 6.5 0 0 0 13 0c0-3.8-3.5-8.1-5.8-11.2-.2-.3-.4-.4-.7-.4Zm-3 11.6c.4 0 .8.3.8.8 0 1.4 1.1 2.5 2.5 2.5a.8.8 0 0 1 0 1.6 4.1 4.1 0 0 1-4.1-4.1c0-.5.4-.8.8-.8Z"/></svg>',
   scale:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M8 9.5a5.5 5.5 0 0 1 8 0"/><path d="M12 9.8l1.4-2"/></svg>',
+  flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><path d="m7 9 4 4 3-3 5 6"/></svg>',
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>',
@@ -7216,7 +7242,7 @@ const PL = {'حبة':'حبات','شريحة':'شرائح','رغيف':'أرغفة
 const unitTxt = (n, u) => n === 1 ? u : n === .5 ? 'نص ' + u : (Math.round(n*10)/10) + ' ' + (n > 10 ? u : (PL[u] || u));
 
 /* ---------- الحالة المؤقتة ---------- */
-let cur = today(), monthView = null, offMode = false;
+let cur = today(), monthView = null, offMode = false, chartR = null, chartSel = -1, chartAnim = true;
 
 /* ---------- الرسم ---------- */
 function weekOf(k){ const d = parse(k), s = add(k, -d.getDay()); return Array.from({length:7}, (_, i) => add(s, i)); }
@@ -7266,7 +7292,8 @@ function weightCard(){
       '<circle cx="' + P[P.length-1][0].toFixed(1) + '" cy="' + P[P.length-1][1].toFixed(1) + '" r="4" fill="#E4FF1A"/></svg>';
   }
   return '<div class="hp-card hp-weight">' +
-    '<div class="hp-ct"><span class="ic ly">' + I.scale + '</span>وزني<button class="hp-link" data-a="plan">تعديل الخطة</button></div>' +
+    '<div class="hp-ct"><span class="ic ly">' + I.scale + '</span>وزني</div>' +
+    '<div class="hp-wacts"><button data-a="plan">' + I.flag + 'بداية الخطة</button><button data-a="chart">' + I.chart + 'مخطط الوزن</button></div>' +
     '<div class="hp-wrow"><div class="hp-big"><b>' + kg1(cw) + '</b><small>كغ</small></div>' +
       '<div class="hp-wstats"><span>' + (lost >= 0 ? 'نزلت' : 'زدت') + ' <em>' + kg1(Math.abs(lost)) + '</em> كغ</span><span><em>' + days + '</em> يوم بالخطة</span></div></div>' +
     spark +
@@ -7325,6 +7352,47 @@ function monthSheet(){
     '<button class="hp-btn" data-a="close">تم</button>');
 }
 
+function chartSheet(){
+  const r = chartR, all = S.weights.slice().sort((a, b) => a.d < b.d ? -1 : 1), ws = all.filter(w => w.d >= r.from && w.d <= r.to), g = S.goal;
+  const span = diff(r.from, r.to), first = all.length ? all[0].d : today();
+  const presets = [['7','أسبوع',add(today(), -7)],['30','شهر',add(today(), -30)],['90','3 شهور',add(today(), -90)],['all','من البداية',S.start.d || first]];
+  let body = '<div class="hp-sh-h"><b>مخطط نزول الوزن</b><button data-a="close" aria-label="إغلاق">' + I.x + '</button></div>' +
+    '<div class="hp-chips hp-rng">' + presets.map(([k, n, f]) => '<button class="' + (r.from === f && r.to === today() ? 'on' : '') + '" data-a="crng" data-f="' + f + '">' + n + '</button>').join('') + '</div>' +
+    '<div class="hp-f2 hp-dates"><label>من<input id="hpCf" type="date" value="' + r.from + '" max="' + r.to + '"></label><label>إلى<input id="hpCt" type="date" value="' + r.to + '" min="' + r.from + '"></label></div>';
+  if(ws.length < 2){
+    body += '<div class="hp-cempty">' + (ws.length ? 'فيه وزن واحد بس بهالفترة (' + kg1(ws[0].kg) + ' كغ يوم ' + fmt(ws[0].d) + ')، سجّل أكثر عشان يطلع المخطط.' : 'ما فيه أوزان مسجلة بين ' + fmt(r.from) + ' و ' + fmt(r.to) + '.') + '</div>';
+    sheet(body); return;
+  }
+  // الرسم
+  const W = 340, H = 220, L = 34, R = 8, T = 14, B = 26, cw = W - L - R, ch = H - T - B;
+  let lo = Math.min(...ws.map(w => w.kg)), hi = Math.max(...ws.map(w => w.kg));
+  if(g && g >= lo - 3) lo = Math.min(lo, g);
+  const pad = Math.max(.5, (hi - lo) * .12); lo = Math.floor(lo - pad); hi = Math.ceil(hi + pad);
+  const step = (hi - lo) > 12 ? 4 : (hi - lo) > 6 ? 2 : 1;
+  const x = d => L + (span ? diff(r.from, d) / span : .5) * cw, y = kg => T + (hi - kg) / (hi - lo) * ch;
+  let grid = '';
+  for(let v = Math.ceil(lo / step) * step; v <= hi; v += step) grid += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(v).toFixed(1) + '" y2="' + y(v).toFixed(1) + '" stroke="#2C2C2E"/><text x="' + (L - 6) + '" y="' + (y(v) + 4).toFixed(1) + '" text-anchor="end">' + v + '</text>';
+  // تواريخ المحور: 4 علامات
+  let xt = ''; for(let i = 0; i <= 3; i++){ const d = add(r.from, Math.round(span * i / 3)); xt += '<text x="' + x(d).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="' + (i === 0 ? 'start' : i === 3 ? 'end' : 'middle') + '">' + fmt(d) + '</text>'; }
+  const pts = ws.map(w => [x(w.d), y(w.kg)]), line = pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const area = 'M' + pts[0][0].toFixed(1) + ' ' + (T + ch) + ' L' + line.replace(/ /g, ' L') + ' L' + pts[pts.length-1][0].toFixed(1) + ' ' + (T + ch) + 'Z';
+  const sel = chartSel >= 0 && chartSel < ws.length ? chartSel : ws.length - 1, sp = pts[sel];
+  const tipX = Math.max(L + 40, Math.min(W - R - 40, sp[0] > W - 60 ? sp[0] - 46 : sp[0])), tipY = sp[1] > T + 46 ? sp[1] - 42 : sp[1] + 14;
+  body += '<svg class="hp-chart" viewBox="0 0 ' + W + ' ' + H + '" direction="ltr">' +
+    '<defs><linearGradient id="hpArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4FF1A" stop-opacity=".28"/><stop offset="1" stop-color="#E4FF1A" stop-opacity="0"/></linearGradient></defs>' + grid +
+    (g && g >= lo && g <= hi ? '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(g).toFixed(1) + '" y2="' + y(g).toFixed(1) + '" stroke="#FF6B2C" stroke-dasharray="5 5" stroke-width="1.4"/><text class="g" x="' + (L + 4) + '" y="' + (y(g) - 5).toFixed(1) + '" text-anchor="start">الهدف ' + kg1(g) + '</text>' : '') +
+    '<path d="' + area + '" fill="url(#hpArea)"/><polyline class="ln' + (chartAnim ? ' a' : '') + '" points="' + line + '" fill="none" stroke="#E4FF1A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>' +
+    pts.map((p, i) => '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (i === sel ? 6 : 3.5) + '" fill="' + (i === sel ? '#E4FF1A' : '#1C1C1E') + '" stroke="#E4FF1A" stroke-width="2"/><circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="14" fill="transparent" data-a="cpt" data-i="' + i + '"/>').join('') +
+    '<line x1="' + sp[0].toFixed(1) + '" x2="' + sp[0].toFixed(1) + '" y1="' + T + '" y2="' + (T + ch) + '" stroke="#E4FF1A" stroke-opacity=".25"/>' +
+    '<g transform="translate(' + tipX.toFixed(1) + ' ' + tipY.toFixed(1) + ')"><rect x="-40" y="0" width="80" height="30" rx="9" fill="#2C2C2E"/><text class="t1" y="13" text-anchor="middle">' + kg1(ws[sel].kg) + '</text><text class="t2" y="25" text-anchor="middle">' + fmt(ws[sel].d) + '</text></g>' +
+    xt + '</svg>';
+  // الملخص
+  const a = ws[0], z = ws[ws.length-1], ch2 = a.kg - z.kg, wk = Math.max(1, diff(a.d, z.d)) / 7;
+  body += '<div class="hp-res hp-csum2"><div><b>' + kg1(a.kg) + '</b><small>' + fmt(a.d) + '</small></div><div><b>' + (ch2 >= 0 ? 'نزلت ' : 'زدت ') + kg1(Math.abs(ch2)) + '</b><small>' + (Math.abs(ch2) / wk).toFixed(2) + ' كغ بالأسبوع</small></div><div><b>' + kg1(z.kg) + '</b><small>' + fmt(z.d) + '</small></div></div>' +
+    '<p class="hp-sub">الأوزان بهالفترة (' + ws.length + ')</p><ul class="hp-items hp-wl">' + ws.slice().reverse().map(w => '<li><div><b>' + kg1(w.kg) + ' كغ</b><span>' + DAYS[parse(w.d).getDay()] + '، ' + fmt(w.d) + ' ' + parse(w.d).getFullYear() + '</span></div><button data-a="wdel" data-d="' + w.d + '" aria-label="احذف">' + I.x + '</button></li>').join('') + '</ul>';
+  sheet(body); chartAnim = false;
+}
+
 let foodState = null;
 function foodSheet(){
   const f = foodState, mn = MEALS.find(x => x[0] === f.meal)[1];
@@ -7379,6 +7447,10 @@ function onClick(e){
       if(!(k > 20)) return; S.start = {d, kg:k}; S.goal = g > 20 ? g : null;
       const i = S.weights.findIndex(w => w.d === d); if(i > -1) S.weights[i].kg = k; else S.weights.push({d, kg:k});
       S.weights.sort((x, y) => x.d < y.d ? -1 : 1); save(); close(); render(); break; }
+    case 'chart': chartAnim = true; chartR = {from:S.start.d || (S.weights[0] || {}).d || add(today(), -30), to:today()}; chartSel = -1; chartSheet(); break;
+    case 'crng': chartAnim = true; chartR = {from:ds.f, to:today()}; chartSel = -1; chartSheet(); break;
+    case 'cpt': chartSel = +ds.i; chartSheet(); break;
+    case 'wdel': if(confirm('تحذف وزن ' + fmt(ds.d) + '؟')){ S.weights = S.weights.filter(w => w.d !== ds.d); save(); render(); chartSel = -1; chartSheet(); } break;
     case 'wlog': formSheet('وزن ' + fmt(cur), [['hpW','الوزن (كغ)',(S.weights.find(w => w.d === cur) || {}).kg || '','number',kg1(curWeight() || 0)]], 'wSave'); break;
     case 'wSave': { const k = parseFloat(val('hpW')); if(!(k > 20)) return; const i = S.weights.findIndex(w => w.d === cur);
       if(i > -1) S.weights[i].kg = k; else S.weights.push({d:cur, kg:k}); S.weights.sort((x, y) => x.d < y.d ? -1 : 1);
@@ -7415,6 +7487,9 @@ function onClick(e){
 function pushItem(it){ const d = day(cur); d.meals = d.meals || {}; (d.meals[foodState.meal] = d.meals[foodState.meal] || []).push(it); save(); close(); render(); }
 function pulse(id){ const el = document.getElementById(id); if(el && el.nextElementSibling){ el.nextElementSibling.classList.remove('hp-pulse'); void el.offsetWidth; el.nextElementSibling.classList.add('hp-pulse'); } }
 root.addEventListener('click', onClick); host.addEventListener('click', onClick);
+host.addEventListener('change', e => {
+  if(e.target.id === 'hpCf' || e.target.id === 'hpCt'){ const f = val('hpCf'), t = val('hpCt'); if(f && t){ chartR = f <= t ? {from:f, to:t} : {from:t, to:f}; chartSel = -1; chartAnim = true; chartSheet(); } }
+});
 host.addEventListener('input', e => {
   if(e.target.id === 'hpQ'){ foodState.q = e.target.value; const pos = e.target.selectionStart; foodSheet(); const q = document.getElementById('hpQ'); q.focus(); q.setSelectionRange(pos, pos); }
   if(e.target.id === 'hpG' && foodState){ foodState.qty = parseFloat(e.target.value) || 0; const x = FOODS[foodState.pick], g = foodState.unitMode && x.u ? foodState.qty * x.u[1] : foodState.qty;
