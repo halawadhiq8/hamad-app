@@ -1417,6 +1417,226 @@ body:has(#tab-radar.active){overflow:hidden;}
 .bgr-savehint{grid-column:1/-1; font-size:11.5px; color:var(--muted); text-align:center; margin:-2px 0 2px;}
 #bgrShare[hidden],#bgrOffBtn[hidden],#bgrSaveHint[hidden]{display:none!important}
 
+/* ================= صحتي: أسود + ليموني على نفس الصورة المرجعية ================= */
+#tab-health{background:#000;}
+.hp{--lime:#E4FF1A; --card:#1C1C1E; --card2:#2C2C2E; --mut:#8E8E93; --or:#FF6B2C; --bl:#3D8BFF;
+  direction:rtl; color:#fff; padding:6px 16px 120px; font-family:inherit; -webkit-tap-highlight-color:transparent;}
+.hp, .hp *, .hp-host *{box-sizing:border-box;}
+:where(.hp) button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer;}
+.hp svg{display:block;}
+
+.hp-hello{display:flex; align-items:center; justify-content:space-between; margin:6px 2px 18px;}
+.hp-hello b{display:block; font-size:24px; font-weight:600; letter-spacing:-.2px;}
+.hp-hello span{font-size:13.5px; color:var(--mut);}
+.hp-calbtn{display:flex; align-items:center; gap:7px; height:40px; padding:0 14px; border-radius:20px; background:var(--card); font-size:13.5px;}
+.hp-calbtn svg{width:19px; height:19px; color:var(--lime);}
+
+/* الأسبوع */
+.hp-week{display:flex; align-items:center; gap:2px;}
+.hp-wnav{width:24px; height:56px; display:grid; place-items:center; color:var(--mut);}
+.hp-wnav svg{width:18px; height:18px;}
+.hp-days{flex:1; display:grid; grid-template-columns:repeat(7,1fr); gap:2px;}
+.hp-day{position:relative; display:flex; flex-direction:column; align-items:center; gap:6px; padding:9px 0 13px; border-radius:14px; transition:background .25s, color .25s;}
+.hp-day span{font-size:12px; color:#AEAEB2;}
+.hp-day b{font-size:17px; font-weight:500;}
+.hp-day i{position:absolute; bottom:5px; width:4px; height:4px; border-radius:50%;}
+.hp-day i.y{background:var(--lime);}
+.hp-day.today:not(.on) b{color:var(--lime);}
+.hp-day.off{background:rgba(255,107,44,.16);}
+.hp-day.off span{color:#FFB08C;}
+.hp-day.on{background:var(--lime); color:#000;}
+.hp-day.on span{color:#000;}
+.hp-day.on i.y{background:#000;}
+.hp-day.on.off{box-shadow:inset 0 0 0 2.5px var(--or);}
+
+.hp-offrow{display:flex; align-items:center; justify-content:space-between; margin:12px 2px 4px; font-size:13.5px; color:#C7C7CC;}
+.hp-offrow span{display:flex; align-items:center; gap:8px;}
+.hp-dot{display:inline-block; width:10px; height:10px; border-radius:50%;}
+.hp-dot.off{background:var(--or);} .hp-dot.on{background:var(--lime);} .hp-dot.y{width:6px; height:6px; background:var(--lime); margin:0 2px;}
+.hp-tog{width:48px; height:29px; border-radius:15px; background:var(--card2); position:relative; transition:background .25s;}
+.hp-tog i{position:absolute; top:3px; right:3px; width:23px; height:23px; border-radius:50%; background:#fff; transition:transform .25s cubic-bezier(.3,.7,.3,1);}
+.hp-tog.on{background:var(--or);}
+.hp-tog.on i{transform:translateX(-19px);}
+
+.hp-h{font-size:20px; font-weight:600; margin:26px 2px 12px; scroll-margin-top:80px;}
+
+/* الكروت */
+.hp-card{display:block; width:100%; text-align:right; background:var(--card); border-radius:22px; padding:16px; margin-bottom:12px;}
+.hp-ct{display:flex; align-items:center; gap:9px; font-size:16px; font-weight:500;}
+.hp-ct i{margin-inline-start:auto; color:var(--mut);}
+.hp-ct i svg{width:18px; height:18px;}
+.ic{width:24px; height:24px; display:grid; place-items:center;}
+.ic svg{width:22px; height:22px;}
+.ic.ly{color:var(--lime);} .ic.or{color:var(--or);} .ic.bl{color:var(--bl);}
+.hp-link{margin-inline-start:auto; font-size:12.5px !important; color:var(--lime) !important; font-weight:500;}
+
+.hp-btn{display:flex; align-items:center; justify-content:center; gap:6px; width:100%; height:48px; margin-top:14px; border-radius:24px; background:var(--lime) !important; color:#000 !important; font-weight:600 !important; font-size:15px;}
+.hp-btn svg{width:18px; height:18px;}
+.hp-btn.sm{width:auto; height:44px; margin:0; padding:0 20px;}
+.hp-empty p{color:#C7C7CC; font-size:14px; margin:0;}
+
+/* الوزن */
+.hp-wrow{display:flex; align-items:flex-end; justify-content:space-between; margin:16px 0 6px;}
+.hp-big b{font-size:46px; font-weight:500; letter-spacing:-1.5px; line-height:1;}
+.hp-big small{font-size:15px; color:var(--mut); margin-inline-start:5px;}
+.hp-wstats{display:flex; flex-direction:column; gap:5px; font-size:12.5px; color:var(--mut); text-align:left;}
+.hp-wstats em{font-style:normal; color:#fff; font-weight:600; font-size:14px;}
+.hp-spark{width:100%; height:70px; margin:8px 0 4px; overflow:visible;}
+.hp-plan{display:flex; align-items:center; gap:12px; margin-top:12px;}
+.hp-plan > div:not(.hp-bar){display:flex; flex-direction:column; gap:2px; min-width:58px;}
+.hp-plan > div:last-child{text-align:left;}
+.hp-plan small{font-size:11.5px; color:var(--mut);}
+.hp-plan b{font-size:17px; font-weight:600;}
+.hp-plan span{font-size:11.5px; color:#AEAEB2;}
+.hp-bar{flex:1; height:8px; border-radius:4px; background:var(--card2); overflow:hidden; display:flex; justify-content:flex-start;}
+.hp-bar i{display:block; height:100%; border-radius:4px; background:var(--lime); transition:width .6s cubic-bezier(.3,.7,.3,1);}
+
+/* الخطوات */
+.hp-srow{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-top:22px;}
+.hp-sv{font-size:15px;}
+.hp-sv b{font-size:24px; font-weight:600;}
+.hp-sv small{display:block; margin-top:8px; color:var(--mut); font-size:13px;}
+.hp-bars{display:flex; align-items:flex-end; gap:5px; height:96px; flex:0 0 52%; direction:rtl;}
+.hp-bars > div{flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:6px;}
+.hp-bars i{display:block; width:100%; max-width:22px; border-radius:4px 4px 2px 2px; background:var(--lime); opacity:.55; transform-origin:bottom; animation:hpGrow .7s cubic-bezier(.3,.7,.3,1) both;}
+.hp-bars .on i{opacity:1;}
+.hp-bars span{font-size:11px; color:var(--mut); line-height:1;}
+.hp-bars > div:nth-child(2) i{animation-delay:.04s} .hp-bars > div:nth-child(3) i{animation-delay:.08s} .hp-bars > div:nth-child(4) i{animation-delay:.12s}
+.hp-bars > div:nth-child(5) i{animation-delay:.16s} .hp-bars > div:nth-child(6) i{animation-delay:.2s} .hp-bars > div:nth-child(7) i{animation-delay:.24s}
+@keyframes hpGrow{from{transform:scaleY(0)}}
+
+.hp-two{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.hp-mini{position:relative; min-height:142px; margin:0;}
+.hp-mv{position:absolute; bottom:16px; right:16px;}
+.hp-mv b{font-size:21px; font-weight:600;}
+.hp-mv small{display:block; font-size:11.5px; color:var(--mut); margin-top:2px;}
+.hp-mini .hp-ring{position:absolute; bottom:14px; left:14px; width:52px; height:52px;}
+.hp-ring circle:last-child{transition:stroke-dasharray .7s cubic-bezier(.3,.7,.3,1);}
+
+/* الكالوري */
+.hp-calsum{display:flex; align-items:center; gap:16px;}
+.hp-csum{position:relative; width:104px; height:104px; flex:none;}
+.hp-csum .hp-ring{width:104px; height:104px;}
+.hp-csin{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+.hp-csin b{font-size:22px; font-weight:600; line-height:1.1;}
+.hp-csin small{font-size:11px; color:var(--mut);}
+.hp-cnums{flex:1; display:flex; flex-direction:column; gap:9px;}
+.hp-cnums > div{display:flex; align-items:baseline; gap:8px; font-size:14px;}
+.hp-cnums small{color:var(--mut); font-size:12.5px; width:46px;}
+.hp-cnums b{font-weight:600;}
+.hp-cnums .hp-link{margin-inline-start:auto;}
+.hp-msum{margin-inline-start:auto; font-style:normal; font-size:13px; color:var(--mut); font-weight:400;}
+.hp-items{list-style:none; margin:12px 0 0; padding:0;}
+.hp-items li{display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid #2C2C2E;}
+.hp-items li > div{flex:1; min-width:0;}
+.hp-items li b{display:block; font-size:14.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.hp-items li span{font-size:12px; color:var(--mut);}
+.hp-items em{font-style:normal; font-weight:600; font-size:14.5px;}
+.hp-items li button{width:28px; height:28px; display:grid; place-items:center; border-radius:50%; background:var(--card2); color:var(--mut);}
+.hp-items li button svg{width:13px; height:13px;}
+.hp-none{color:var(--mut); font-size:13px; margin:12px 0 0; list-style:none;}
+.hp-add{display:flex; align-items:center; justify-content:center; gap:6px; width:100%; height:42px; margin-top:12px; border-radius:14px; border:1.5px dashed #3A3A3C !important; color:var(--lime) !important; font-size:14px;}
+.hp-add svg{width:16px; height:16px;}
+
+/* الماء */
+.hp-wtop{display:flex; align-items:center; gap:18px;}
+.hp-tank{position:relative; width:62px; height:96px; border-radius:16px 16px 18px 18px; background:var(--card2); overflow:hidden; flex:none;}
+.hp-tank i{position:absolute; bottom:0; left:0; right:0; background:linear-gradient(#5AA2FF,#2E6FE0); transition:height .7s cubic-bezier(.3,.7,.3,1);}
+.hp-tank i::before{content:""; position:absolute; top:-5px; left:-20%; width:140%; height:10px; border-radius:50%; background:#5AA2FF;}
+.hp-tank span{position:absolute; inset:0; display:grid; place-items:center; font-weight:600; font-size:15px;}
+.hp-wtx b{display:block; font-size:30px; font-weight:600; letter-spacing:-.5px;}
+.hp-wtx b small{font-size:14px; color:var(--mut); font-weight:400;}
+.hp-wtx span{display:block; color:var(--mut); font-size:13px; margin:2px 0 6px;}
+.hp-wtx .hp-link{margin:0;}
+.hp-sub{font-size:13px; color:#AEAEB2; margin:18px 2px 10px; display:flex; align-items:center; gap:8px;}
+.hp-sub .hp-link{margin-inline-start:auto;}
+.hp-bottles{display:grid; grid-template-columns:repeat(6,1fr); gap:6px;}
+.hp-bottles button{display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 0 9px; border-radius:16px; background:var(--card2); color:#5AA2FF; transition:transform .15s;}
+.hp-bottles button:active{transform:scale(.94);}
+.hp-bottles b{font-size:11.5px; color:#fff; font-weight:600; white-space:nowrap;}
+.hp-bottles span{font-size:10px; color:var(--mut);}
+.hp-wman{display:flex; gap:8px; margin-top:12px;}
+.hp-wman input, .hp-form input, .hp-search input{flex:1; height:44px; border-radius:14px; border:0; background:var(--card2); color:#fff; padding:0 14px; font:inherit; font-size:15px; outline:none;}
+.hp-wlist{display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;}
+.hp-wlist button{display:flex; align-items:center; gap:5px; height:30px; padding:0 10px; border-radius:15px; background:rgba(61,139,255,.16); color:#8CBBFF; font-size:12.5px;}
+.hp-wlist svg{width:11px; height:11px;}
+.hp-pulse .hp-tank{animation:hpPulse .5s;}
+@keyframes hpPulse{40%{transform:scale(1.06)}}
+
+/* النوافذ */
+.hp-host{position:fixed; inset:0; z-index:9000; pointer-events:none; direction:rtl; color:#fff; font-family:"Readex Pro",-apple-system,"SF Arabic",sans-serif;}
+.hp-host.open{pointer-events:auto;}
+:where(.hp-host) button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer;}
+.hp-host svg{display:block;}
+.hp-scrim{position:absolute; inset:0; background:rgba(0,0,0,.6); opacity:0; transition:opacity .25s;}
+.hp-host.open .hp-scrim{opacity:1;}
+.hp-sheet{--lime:#E4FF1A; --card2:#2C2C2E; --mut:#8E8E93; --or:#FF6B2C;
+  position:absolute; bottom:0; left:0; right:0; max-width:520px; margin:auto; max-height:88vh; overflow:auto; overscroll-behavior:contain;
+  background:#1C1C1E; border-radius:28px 28px 0 0; padding:8px 18px calc(22px + env(safe-area-inset-bottom));
+  transform:translateY(100%); transition:transform .3s cubic-bezier(.3,.8,.3,1);}
+.hp-host.open .hp-sheet{transform:none;}
+.hp-grab{width:38px; height:5px; border-radius:3px; background:#48484A; margin:2px auto 12px;}
+.hp-sh-h{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+.hp-sh-h b{font-size:18px; font-weight:600;}
+.hp-sh-h button{width:36px; height:36px; display:grid; place-items:center; border-radius:50%; background:var(--card2) !important;}
+.hp-sh-h button svg{width:16px; height:16px;}
+.hp-mgrid{display:grid; grid-template-columns:repeat(7,1fr); gap:5px;}
+.hp-mhead span{text-align:center; font-size:11.5px; color:var(--mut); padding-bottom:4px;}
+.hp-mday{position:relative; aspect-ratio:1; border-radius:12px; font-size:15px; display:grid; place-items:center; background:#232325 !important;}
+.hp-mday i{position:absolute; bottom:6px; width:4px; height:4px; border-radius:50%; background:var(--lime); left:50%; margin-left:-2px;}
+.hp-mday.today{color:var(--lime);}
+.hp-mday.off{background:var(--or) !important; color:#fff;}
+.hp-mday.off i{background:#fff;}
+.hp-mday.on{background:var(--lime) !important; color:#000;}
+.hp-mday.on i{background:#000;}
+.hp-mday.on.off{box-shadow:inset 0 0 0 3px var(--or);}
+.hp-legend{display:flex; justify-content:center; gap:16px; margin:14px 0 4px; font-size:12px; color:#AEAEB2;}
+.hp-legend span{display:flex; align-items:center; gap:6px;}
+.hp-offmode{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; padding:12px 14px; border-radius:16px; background:#232325;}
+.hp-offmode b{display:block; font-size:14.5px; font-weight:500;}
+.hp-offmode small{font-size:12px; color:var(--mut);}
+.hp-seg{display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:14px; background:var(--card2); margin-bottom:12px;}
+.hp-seg button{height:36px; border-radius:11px; font-size:14px; color:#AEAEB2 !important;}
+.hp-seg button.on{background:#48484A !important; color:#fff !important;}
+.hp-search{display:flex; align-items:center; gap:8px; background:var(--card2); border-radius:14px; padding-right:12px;}
+.hp-search svg{width:18px; height:18px; color:var(--mut); flex:none;}
+.hp-search input{background:none;}
+.hp-cats{display:flex; gap:6px; overflow-x:auto; margin:12px -18px 4px; padding:0 18px; scrollbar-width:none;}
+.hp-cats::-webkit-scrollbar{display:none;}
+.hp-cats button, .hp-chips button{flex:none; height:34px; padding:0 14px; border-radius:17px; background:var(--card2) !important; font-size:13px; white-space:nowrap;}
+.hp-cats button.on, .hp-chips button.on{background:var(--lime) !important; color:#000 !important; font-weight:600;}
+.hp-flist{list-style:none; margin:8px 0 0; padding:0;}
+.hp-flist li button{display:block; width:100%; text-align:right; padding:12px 2px; border-bottom:1px solid #2C2C2E;}
+.hp-flist b{display:block; font-size:15px; font-weight:500;}
+.hp-flist span{font-size:12.5px; color:var(--mut);}
+.hp-flist small{opacity:.7;}
+.hp-fsel{display:flex; align-items:center; gap:12px; margin-bottom:4px;}
+.hp-fsel b{font-size:18px; font-weight:600;}
+.hp-back{display:flex; align-items:center; gap:2px; height:32px; padding:0 10px 0 12px; border-radius:16px; background:var(--card2) !important; font-size:13px; flex:none;}
+.hp-back svg{width:15px; height:15px;}
+.hp-cook{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+.hp-cook button{display:flex; flex-direction:column; align-items:center; gap:2px; padding:11px 6px; border-radius:16px; background:var(--card2) !important; font-size:14.5px; font-weight:500;}
+.hp-cook small{font-size:11px; color:var(--mut); font-weight:400;}
+.hp-cook button.on{background:var(--lime) !important; color:#000 !important;}
+.hp-cook button.on small{color:#3A3A00;}
+.hp-qty{display:flex; align-items:center; gap:10px;}
+.hp-qty button{width:48px; height:48px; border-radius:50%; background:var(--card2) !important; font-size:24px !important; flex:none;}
+.hp-qty input{flex:1; height:52px; border-radius:16px; border:0; background:#232325; color:#fff; text-align:center; font:inherit; font-size:24px; font-weight:600; outline:none; min-width:0;}
+.hp-chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;}
+.hp-res{display:flex; justify-content:space-around; margin-top:16px; padding:14px; border-radius:18px; background:#232325;}
+.hp-res div{text-align:center;}
+.hp-res b{display:block; font-size:24px; font-weight:600; color:var(--lime);}
+.hp-res small{font-size:12px; color:var(--mut);}
+.hp-form{display:flex; flex-direction:column; gap:12px;}
+.hp-form label{display:flex; flex-direction:column; gap:6px; font-size:13px; color:#AEAEB2;}
+.hp-form input{flex:none; width:100%; box-sizing:border-box;}
+.hp-form input[type=date]{direction:ltr; text-align:right;}
+.hp-f2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.hp-note{font-size:12.5px; color:var(--mut); line-height:1.7; margin:14px 2px 0;}
+.hp-note code{direction:ltr; unicode-bidi:embed; color:var(--lime); font-size:12px;}
+@media (prefers-reduced-motion:reduce){.hp *, .hp-host *{animation:none !important; transition:none !important;}}
+#tab-health .hp{padding-left:0; padding-right:0;} #tab-health .hp-wnav{width:20px;}
+
 </style>
 </head>
 <body>
@@ -5699,607 +5919,6 @@ function initViewTransitions(){
   });
   document.querySelectorAll('.view-panel').forEach(el=> obs.observe(el, {attributes:true, attributeFilter:['style']}));
 }
-/* ================= صحتي: خطة غذائية + متابعة الوزن =================
-   وحدة مستقلة: كل الأسماء داخل الدالة، والكلاسات تنضاف لها البادئة hl- تلقائياً عند العرض،
-   والبيانات محفوظة بالمفتاح rihala_health فقط. تتفعل من showTab عبر healthRender(). */
-(function(){
-'use strict';
-var root = document.getElementById('hl-root');
-if(!root) return;
-
-var START='2026-09-23', CAL=2000, PRO=155, POSTCAL=260, POSTPRO=15, PRECAL=140, CUPS=12;
-var AR_DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-var AR_MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-var SCHED={6:['chicken','chicken'],0:['chicken','tuna'],1:['chicken','chicken'],2:['tuna','chicken'],3:['chicken','sardine'],4:['chicken','tuna'],5:['sardine','free']};
-var WEEK_ORDER=[6,0,1,2,3,4,5];
-var PN={chicken:'دجاج',tuna:'تونة',sardine:'سردين',free:'وجبة حرة'};
-var KEY='rihala_health';
-
-/* ---------- helpers ---------- */
-function pad(n){return String(n).padStart(2,'0');}
-function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
-function parse(s){var p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
-function addDays(s,n){var d=parse(s);d.setDate(d.getDate()+n);return iso(d);}
-function diffDays(a,b){return Math.round((parse(b)-parse(a))/864e5);}
-function fmtDate(s){var d=parse(s);return d.getDate()+' '+AR_MON[d.getMonth()];}
-function n0(x){return Math.round(x).toLocaleString('en-US');}
-
-/* ---------- state ---------- */
-function defaults(){return {days:{},weights:[{id:'start',d:START,kg:121.4,w:null}],bootDays:[],goals:[{id:'g1',kg:111.4,label:'الهدف الأول'}]};}
-function load(){
-  try{
-    var r=localStorage.getItem(KEY);
-    if(r){var o=JSON.parse(r),b=defaults();
-      return {days:o.days||b.days,weights:Array.isArray(o.weights)?o.weights:b.weights,bootDays:Array.isArray(o.bootDays)?o.bootDays:b.bootDays,
-        goals:(Array.isArray(o.goals)&&o.goals.length)?o.goals:b.goals};}
-  }catch(e){}
-  return defaults();
-}
-function goalsSorted(){return (S.goals||[]).slice().sort(function(a,b){return b.kg-a.kg;});}
-function currentGoal(){
-  var gs=goalsSorted(); if(!gs.length)return null;
-  var st=wstats(), cw=st?st.last.kg:null;
-  if(cw==null)return gs[0];
-  for(var i=0;i<gs.length;i++){ if(cw>gs[i].kg) return gs[i]; }
-  return gs[gs.length-1];
-}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
-var S=load();
-function D(k){if(!S.days[k])S.days[k]={};return S.days[k];}
-
-/* ---------- meal data ---------- */
-var SALAD='سلطة كبيرة: جزر وطماطم وخيار مع ليمون وخل وملح خفيف';
-var OIL='ملعقة كبيرة زيت زيتون (قِسها بالملعقة)';
-var RICE='عيش أبيض مطبوخ 300 جم (الوزن بعد الطبخ)';
-var BREAKFAST={cal:600,pro:37,items:['3 بيضات كاملة','شوفان 50 جم (وزن جاف) مطبوخ بـ 250 مل حليب قليل الدسم','شريحة خبز']};
-function lunchOf(v){
-  if(v==='tuna')return {cal:880,pro:75,items:['تونة بالماء 3 علب مصفّاة',RICE,SALAD,OIL]};
-  if(v==='sardine')return {cal:850,pro:54,items:['سردين علبتين مصفّاة',RICE,SALAD,'بدون زيت زيتون، السردين فيه زيته']};
-  return {cal:885,pro:60,items:['دجاج مطبوخ 180 جم',RICE,SALAD,OIL]};
-}
-function dinnerOf(v){
-  if(v==='free')return {cal:0,pro:0,items:['كل اللي تبيه بدون حساب وبدون ذنب','وجبة وحدة بالأسبوع ما تكسر الخطة، الذنب هو اللي يكسرها']};
-  if(v==='tuna')return {cal:490,pro:70,items:['تونة بالماء 3 علب مصفّاة',SALAD,OIL]};
-  if(v==='sardine')return {cal:450,pro:46,items:['سردين علبتين مصفّاة',SALAD,'بدون زيت زيتون']};
-  return {cal:500,pro:63,items:['دجاج مطبوخ 200 جم',SALAD,OIL]};
-}
-var PRE={cal:PRECAL,pro:1,items:['2 تمرات مع قهوة أو شاي، قبل الحصة بساعة','لا تروح الحصة وأنت صايم']};
-var POST={cal:POSTCAL,pro:POSTPRO,items:['شوفان 40 جم (وزن جاف) مع 250 مل حليب قليل الدسم','بعد الحصة مباشرة']};
-
-var TIPS=[
- 'زن نفسك بنفس الظروف كل صباح، وراقب متوسط الأسبوع وليس رقم اليوم.',
- 'السلطة الكبيرة تشبعك بسعرات قليلة. زد الخس والورق الأخضر إذا جعت.',
- 'ملعقة زيت الزيتون فيها حوالي 120 سعرة. الصبّ بدون قياس يضيف 300 سعرة بدون ما تحس.',
- 'وزن العيش مطبوخ مو نيّ. اطبخ كمية وزنها بميزان المطبخ مرة وحدة.',
- 'النوم 7 إلى 8 ساعات يحمي عضلك ويقلل جوعك. لو تختار بين ساعة نوم وساعة تمرين، اختر النوم.',
- 'إذا جعت بعد العشا: كوب حليب قليل الدسم أو خيار وجزر أحسن من الأكل الزايد.',
- 'غيّر التوابل بدل ما تمل: ليمون، ثوم، كمون، بهارات، صلصة حارة. وبدّل الطبخ بين مشوي ومسلوق وفرن.',
- 'المشي بعد المغرب يخدم مزاجك بقدر ما يخدم جسمك، وأخف عليك من حر النهار.',
- 'التونة 3 مرات بالأسبوع كحد أقصى بسبب الزئبق. السردين أفضل منها وزئبقه أقل.',
- 'الوزن ما ينزل بخط مستقيم. الثبات أسبوع لا يعني أنك وقفت.'
-];
-
-/* ---------- day view ---------- */
-function ctot(arr){var c=0,p=0;(arr||[]).forEach(function(x){c+=x.cal||0;p+=x.pro||0;});return {cal:c,pro:p};}
-function view(k){
-  var dow=parse(k).getDay(), d=S.days[k]||{};
-  var boot=d.boot!==undefined?d.boot:S.bootDays.indexOf(dow)>-1;
-  var lv=d.lv||SCHED[dow][0], dv=d.dv||SCHED[dow][1];
-  var done=d.done||{};
-  var custom=d.custom||{};
-  var meals=[
-    {k:'breakfast',icon:'🍳',name:'الفطور',c:BREAKFAST,custom:custom.breakfast||[]},
-    {k:'lunch',icon:'🍗',name:'الغداء',c:lunchOf(lv),vk:'lv',cur:lv,opts:['chicken','tuna','sardine'],custom:custom.lunch||[]},
-    {k:'dinner',icon:'🌙',name:'العشاء',c:dinnerOf(dv),vk:'dv',cur:dv,opts:['chicken','tuna','sardine','free'],custom:custom.dinner||[]},
-    {k:'snack',icon:'🍪',name:'سناك وإضافات',c:{cal:0,pro:0,items:[]},custom:custom.snack||[]}
-  ];
-  meals.forEach(function(m){m.ctot=ctot(m.custom);});
-  var extra=boot?[{k:'pre',icon:'☕',name:'قبل الحصة',c:PRE,custom:[],ctot:{cal:0,pro:0}},{k:'post',icon:'💪',name:'بعد الحصة',c:POST,custom:[],ctot:{cal:0,pro:0}}]:[];
-  var cal=0,pro=0;
-  meals.concat(extra).forEach(function(m){
-    if(done[m.k]){cal+=m.c.cal;pro+=m.c.pro;}
-    cal+=m.ctot.cal;pro+=m.ctot.pro;
-  });
-  return {dow:dow,d:d,boot:boot,done:done,meals:meals,extra:extra,cal:cal,pro:pro,
-    calT:CAL+(boot?POSTCAL:0),proT:PRO+(boot?POSTPRO:0),water:d.water||0,walk:!!d.walk,sleep:!!d.sleep};
-}
-
-/* ---------- pieces ---------- */
-var CHECK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-
-function gaugeSVG(val,target){
-  var cx=150,cy=150,R=108,p=Math.max(0,Math.min(1.08,val/target));
-  function pt(q,r){var a=Math.PI*(1-q);return [cx+r*Math.cos(a),cy-r*Math.sin(a)];}
-  var ticks='',i,a,b;
-  for(i=0;i<=10;i++){
-    var mj=(i%5===0);
-    a=pt(i/10,R+10);b=pt(i/10,R+(mj?24:17));
-    ticks+='<line class="tick'+(mj?' mj':'')+'" x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'"/>';
-  }
-  var q=Math.min(p,1), e=pt(q,R), out='';
-  out+='<path class="g-track" d="M '+(cx-R)+' '+cy+' A '+R+' '+R+' 0 0 1 '+(cx+R)+' '+cy+'"/>';
-  if(q>0.001)out+='<path class="g-fill" d="M '+(cx-R)+' '+cy+' A '+R+' '+R+' 0 0 1 '+e[0].toFixed(1)+' '+e[1].toFixed(1)+'"/>';
-  if(p>1){var s=pt(1,R),f=pt(p,R);out+='<path class="g-over" d="M '+s[0].toFixed(1)+' '+s[1].toFixed(1)+' A '+R+' '+R+' 0 0 1 '+f[0].toFixed(1)+' '+f[1].toFixed(1)+'"/>';}
-  var n=pt(p,R-26);
-  out+=ticks;
-  out+='<line class="needle" x1="'+cx+'" y1="'+cy+'" x2="'+n[0].toFixed(1)+'" y2="'+n[1].toFixed(1)+'"/>';
-  out+='<circle class="hub" cx="'+cx+'" cy="'+cy+'" r="9"/><circle class="hub2" cx="'+cx+'" cy="'+cy+'" r="3.5"/>';
-  out+='<text class="gtxt" x="'+(cx-R)+'" y="'+(cy+24)+'" text-anchor="middle">0</text>';
-  out+='<text class="gtxt" x="'+(cx+R)+'" y="'+(cy+24)+'" text-anchor="middle">'+n0(target)+'</text>';
-  return '<svg viewBox="0 0 300 176" role="img" aria-label="عداد السعرات">'+out+'</svg>';
-}
-function segBar(val,target){
-  var on=Math.min(10,Math.round(val/target*10)),h='',i;
-  for(i=0;i<10;i++)h+='<i class="'+(i<on?'on':'')+'"></i>';
-  return '<div class="seg10">'+h+'</div>';
-}
-function chipsFor(m){
-  if(!m.opts)return '';
-  return '<div class="chips">'+m.opts.map(function(o){
-    return '<button class="chip'+(m.cur===o?' on':'')+'" data-act="variant" data-vk="'+m.vk+'" data-v="'+o+'" aria-pressed="'+(m.cur===o)+'">'+PN[o]+'</button>';
-  }).join('')+'</div>';
-}
-function customListHTML(m){
-  var rows=(m.custom||[]).map(function(x){
-    return '<li class="citem"><span>'+x.name+'</span><b>'+n0(x.cal)+' سعرة'+(x.pro?('، '+n0(x.pro)+'ج بروتين'):'')+'</b><button class="xdel" data-act="delcustom" data-meal="'+m.k+'" data-id="'+x.id+'">حذف</button></li>';
-  }).join('');
-  return (rows?('<ul class="clist">'+rows+'</ul>'):'')+
-    '<div class="addrow">'+
-      '<input type="text" class="cname" id="cname-'+m.k+'" placeholder="اسم الأكلة" maxlength="40">'+
-      '<input type="number" class="ccal" id="ccal-'+m.k+'" placeholder="سعرة" inputmode="numeric" min="0" max="5000">'+
-      '<input type="number" class="cpro" id="cpro-'+m.k+'" placeholder="بروتين (اختياري)" inputmode="numeric" min="0" max="500">'+
-      '<button class="addbtn" data-act="addcustom" data-meal="'+m.k+'">إضافة</button>'+
-    '</div>';
-}
-function stopHTML(m,done){
-  var mac=m.c.cal?('<span>'+m.c.cal+' سعرة</span><em>'+m.c.pro+' جم بروتين</em>'):'<span>بدون حساب</span>';
-  var ctotHTML=(m.ctot&&m.ctot.cal)?('<div class="cmac">+<b>'+n0(m.ctot.cal)+'</b> سعرة مضافة'+(m.ctot.pro?('، <b>'+n0(m.ctot.pro)+'</b>ج بروتين'):'')+'</div>'):'';
-  return '<div class="stop'+(done?' done':'')+'">'+
-    '<button class="dot" data-act="toggle" data-key="'+m.k+'" aria-pressed="'+done+'" aria-label="تم: '+m.name+'">'+CHECK+'</button>'+
-    '<div class="shead"><span class="sname">'+m.icon+' '+m.name+'</span><span class="smac">'+mac+'</span></div>'+
-    (m.c.items&&m.c.items.length?('<ul>'+m.c.items.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>'):'')+
-    chipsFor(m)+ctotHTML+customListHTML(m)+'</div>';
-}
-function toggleRow(act,title,sub,on){
-  return '<button class="trow" data-act="'+act+'" role="switch" aria-checked="'+on+'"><span class="t"><b>'+title+'</b><small>'+sub+'</small></span><span class="sw'+(on?' on':'')+'"></span></button>';
-}
-
-/* ---------- weight stats ---------- */
-function sortedW(){return S.weights.slice().sort(function(a,b){return a.d<b.d?-1:(a.d>b.d?1:0);});}
-function avg(a){return a.length?a.reduce(function(s,x){return s+x.kg;},0)/a.length:null;}
-function wstats(){
-  var ws=sortedW();
-  if(!ws.length)return null;
-  var last=ws[ws.length-1],first=ws[0],ref=parse(last.d).getTime(),DAY=864e5;
-  function inR(lo,hi){return ws.filter(function(x){var t=parse(x.d).getTime();return t>ref-hi*DAY&&t<=ref-lo*DAY;});}
-  return {ws:ws,last:last,first:first,a1:avg(inR(0,7)),a0:avg(inR(7,14))};
-}
-
-/* ---------- header ---------- */
-var sub='today', cur=iso(new Date()), resetArmed=false, resetTimer=null;
-var SUBS=[['today','اليوم'],['builder','وجبة سريعة'],['week','الأسبوع'],['weight','الوزن'],['guide','الدليل']];
-
-function headHTML(){
-  var st=wstats(),today=iso(new Date()),n=diffDays(START,today)+1;
-  var planDay=n>=1?('اليوم '+n):'قريباً';
-  var curW=st?st.last.kg.toFixed(1)+' كجم':'--';
-  var cg0=currentGoal();
-  var left=(st&&cg0)?Math.max(0,st.last.kg-cg0.kg).toFixed(1)+' كجم':'--';
-  return '<div class="head"><div class="title">صحتي</div><div class="subtitle">نزول دهون مع الحفاظ على العضل</div></div>'+
-    '<div class="strip"><div><b>'+planDay+'</b><small>من الخطة</small></div>'+
-    '<div><b>'+curW+'</b><small>الوزن الحالي</small></div>'+
-    '<div><b>'+left+'</b><small>باقي للهدف الأول</small></div></div>'+
-    '<div class="seg">'+SUBS.map(function(t){return '<button data-act="sub" data-sub="'+t[0]+'" class="'+(sub===t[0]?'on':'')+'">'+t[1]+'</button>';}).join('')+'</div>';
-}
-
-/* ---------- today ---------- */
-function todayHTML(){
-  var V=view(cur),today=iso(new Date()),isToday=(cur===today);
-  var rem=V.calT-V.cal, over=rem<0;
-  var stops=V.meals.map(function(m){return stopHTML(m,!!V.done[m.k]);}).join('');
-  var extraHTML=V.extra.length?('<p class="grp">أيام البوت كامب: وجبتين إضافيتين حول الحصة</p><div class="route">'+V.extra.map(function(m){return stopHTML(m,!!V.done[m.k]);}).join('')+'</div>'):'';
-  var cups='',i;
-  for(i=0;i<CUPS;i++)cups+='<button class="'+(i<V.water?'on':'')+'" style="height:'+(38+i*5)+'%" data-act="water" data-i="'+i+'" aria-label="كوب '+(i+1)+'"></button>';
-  var tip=TIPS[(Math.max(0,diffDays(START,cur)))%TIPS.length];
-  return ''+
-  '<div class="daynav"><button class="nb" data-act="day" data-n="-1">→ السابق</button>'+
-    '<div class="lbl"><b>'+AR_DAYS[V.dow]+(isToday?'<span class="badge">اليوم</span>':'')+'</b><small>'+fmtDate(cur)+'</small></div>'+
-    '<button class="nb" data-act="day" data-n="1">التالي ←</button></div>'+
-  (isToday?'':'<button class="back" data-act="gotoday">الرجوع لليوم</button>')+
-  '<div class="card gauge">'+gaugeSVG(V.cal,V.calT)+
-    '<div class="big">'+n0(Math.abs(rem))+'</div>'+
-    '<div class="bigcap'+(over?' over':'')+'">'+(over?'سعرة فوق هدف اليوم':'سعرة متبقية من '+n0(V.calT))+'</div>'+
-    '<div class="prot"><div class="prow"><span>البروتين</span><span><b>'+Math.round(V.pro)+'</b> من '+V.proT+' جم</span></div>'+segBar(V.pro,V.proT)+'</div></div>'+
-  '<div class="card"><h2>وجباتي اليوم<span>اضغط الدائرة عند ما تخلص الوجبة</span></h2>'+
-  toggleRow('boot','اليوم فيه بوت كامب','يضيف وجبة قبل الحصة وبعدها',V.boot)+
-  '<div class="route">'+stops+'</div>'+extraHTML+'</div>'+
-  '<div class="card"><h2>خزان الماء<span>الهدف 3 لتر</span></h2>'+
-  '<div class="tank">'+cups+'</div>'+
-  '<div class="tcap"><span><b>'+V.water+'</b> من '+CUPS+' كوب</span><span>'+(V.water*0.25).toFixed(2).replace(/\.?0+$/,'')+' لتر</span></div></div>'+
-  '<div class="card"><h2>عادات اليوم</h2>'+
-  toggleRow('walk','مشي من نص ساعة إلى ساعة','بعد المغرب أخف عليك من الحر',V.walk)+
-  toggleRow('sleep','نوم 7 إلى 8 ساعات','أهم من ساعة تمرين زايدة',V.sleep)+'</div>'+
-  '<div class="tip"><b>نصيحة:</b> '+tip+'</div>';
-}
-
-/* ---------- week ---------- */
-function shopping(){
-  var t={eggs:0,oats:0,milk:0,rice:0,bread:0,chicken:0,tuna:0,sard:0,oil:0,tt:0,st:0,boot:0},dow;
-  for(dow=0;dow<7;dow++){
-    t.eggs+=3;t.oats+=50;t.milk+=250;t.bread+=1;t.rice+=300;
-    var l=SCHED[dow][0],dn=SCHED[dow][1];
-    if(l==='chicken'){t.chicken+=180;t.oil+=1;}else if(l==='tuna'){t.tuna+=3;t.tt++;t.oil+=1;}else if(l==='sardine'){t.sard+=2;t.st++;}
-    if(dn==='chicken'){t.chicken+=200;t.oil+=1;}else if(dn==='tuna'){t.tuna+=3;t.tt++;t.oil+=1;}else if(dn==='sardine'){t.sard+=2;t.st++;}
-    if(S.bootDays.indexOf(dow)>-1){t.oats+=40;t.milk+=250;t.boot++;}
-  }
-  return t;
-}
-function weekHTML(){
-  var tdow=parse(iso(new Date())).getDay();
-  var rows=WEEK_ORDER.map(function(dow){
-    var l=SCHED[dow][0],d=SCHED[dow][1],on=S.bootDays.indexOf(dow)>-1;
-    return '<div class="stage'+(dow===tdow?' now':'')+'"><div class="sday">'+AR_DAYS[dow]+'</div>'+
-      '<div class="smeals"><span>الغداء: <b>'+PN[l]+'</b></span><span>العشاء: <b>'+PN[d]+'</b></span></div>'+
-      '<button class="chip'+(on?' on':'')+'" data-act="bootday" data-dow="'+dow+'" aria-pressed="'+on+'">بوت كامب</button></div>';
-  }).join('');
-  var t=shopping(), oilMl=t.oil*15;
-  return ''+
-  '<div class="card"><h2>مسار الأسبوع<span>يبدأ من السبت</span></h2>'+rows+
-  '<p class="muted">اختر أيام البوت كامب اللي تحضرها، وتنضاف وجباتها تلقائياً بالجدول وقائمة المشتريات. الفطور ثابت كل يوم. الجمعة عشاء وجبة حرة. وتقدر تبدل أي وجبة من صفحة اليوم.</p></div>'+
-  '<div class="card"><h2>قائمة مشتريات الأسبوع<span>تتعدل حسب أيام البوت كامب</span></h2>'+
-  '<ul class="list">'+
-    '<li><span>دجاج (مطبوخ)</span><span>'+n0(t.chicken)+' جم (حوالي '+(t.chicken/0.75/1000).toFixed(1)+' كجم نيّ)</span></li>'+
-    '<li><span>تونة بالماء</span><span>'+t.tuna+' علب ('+t.tt+' مرات)</span></li>'+
-    '<li><span>سردين</span><span>'+t.sard+' علب ('+t.st+' مرات)</span></li>'+
-    '<li><span>بيض</span><span>'+t.eggs+' بيضة</span></li>'+
-    '<li><span>شوفان</span><span>'+n0(t.oats)+' جم</span></li>'+
-    '<li><span>حليب قليل الدسم</span><span>'+(t.milk/1000).toFixed(2).replace(/\.?0+$/,'')+' لتر</span></li>'+
-    '<li><span>عيش أبيض (نيّ)</span><span>'+n0(t.rice/3)+' جم</span></li>'+
-    '<li><span>خبز</span><span>'+t.bread+' شرايح</span></li>'+
-    '<li><span>زيت زيتون</span><span>'+t.oil+' ملاعق (حوالي '+oilMl+' مل)</span></li>'+
-    '<li><span>جزر وطماطم وخيار</span><span>يومياً</span></li>'+
-    '<li><span>ليمون وخل</span><span>حسب الحاجة</span></li>'+
-  '</ul>'+
-  '<p class="muted">الكميات تقريبية. التونة والسردين اشتريهم بالماء، وصفّهم قبل الأكل.</p></div>';
-}
-
-/* ---------- weight ---------- */
-function chartHTML(ws){
-  var W=320,H=176,pl=34,pr=12,pt=14,pb=26;
-  var cg=currentGoal();
-  var vals=ws.map(function(x){return x.kg;}); if(cg) vals=vals.concat([cg.kg]);
-  var lo=Math.min.apply(null,vals)-1,hi=Math.max.apply(null,vals)+1;
-  var times=ws.map(function(x){return parse(x.d).getTime();});
-  var t0=Math.min.apply(null,times),t1=Math.max.apply(null,times);
-  function X(t){return t1===t0?(pl+(W-pl-pr)/2):pl+(t-t0)/(t1-t0)*(W-pl-pr);}
-  function Y(v){return pt+(hi-v)/(hi-lo)*(H-pt-pb);}
-  var g='',i;
-  for(i=0;i<4;i++){
-    var v=lo+(hi-lo)*i/3,y=Y(v);
-    g+='<line class="gl" x1="'+pl+'" y1="'+y.toFixed(1)+'" x2="'+(W-pr)+'" y2="'+y.toFixed(1)+'"/><text class="ax" x="'+(pl-6)+'" y="'+(y+4).toFixed(1)+'" text-anchor="end">'+Math.round(v)+'</text>';
-  }
-  if(cg){
-    var gy=Y(cg.kg);
-    g+='<line class="gy" x1="'+pl+'" y1="'+gy.toFixed(1)+'" x2="'+(W-pr)+'" y2="'+gy.toFixed(1)+'"/><text class="ax" x="'+(W-pr)+'" y="'+(gy-5).toFixed(1)+'" text-anchor="end" style="fill:var(--accent)">'+(cg.label||'الهدف')+' '+cg.kg+'</text>';
-  }
-  var pts=ws.map(function(x){return X(parse(x.d).getTime()).toFixed(1)+','+Y(x.kg).toFixed(1);});
-  if(ws.length>1)g+='<polyline class="wl" points="'+pts.join(' ')+'"/>';
-  ws.forEach(function(x,idx){var p=pts[idx].split(',');g+='<circle class="wp" cx="'+p[0]+'" cy="'+p[1]+'" r="4.5"/>';});
-  var fd=parse(ws[0].d),ld=parse(ws[ws.length-1].d);
-  g+='<text class="ax" x="'+pl+'" y="'+(H-6)+'" text-anchor="start">'+fd.getDate()+'/'+(fd.getMonth()+1)+'</text>';
-  if(ws.length>1)g+='<text class="ax" x="'+(W-pr)+'" y="'+(H-6)+'" text-anchor="end">'+ld.getDate()+'/'+(ld.getMonth()+1)+'</text>';
-  return '<div class="chart"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="منحنى الوزن">'+g+'</svg></div>';
-}
-function verdictHTML(st){
-  if(st.a1===null||st.a0===null)return '<div class="verdict">سجّل وزنك 3 مرات بالأسبوع على الأقل، وبعد أسبوعين أحسب لك سرعة النزول من متوسط الأسبوعين. أول أسبوعين النزول يكون أكبر بسبب الماء، فلا تتحمس ولا تنصدم.</div>';
-  var loss=st.a0-st.a1, l=loss.toFixed(2);
-  if(loss>1.2)return '<div class="verdict warn">نزلت '+l+' كجم عن الأسبوع الماضي، وهذا أسرع من اللازم وقد يكلفك عضل. زد 150 إلى 200 سعرة (عيش أو شوفان) وراقب أداءك بالتمرين.</div>';
-  if(loss<0.5)return '<div class="verdict warn">نزول متوسطك '+l+' كجم عن الأسبوع الماضي، أقل من المتوقع. لا تستعجل. إذا استمر أسبوعين زد المشي أو نزّل 150 سعرة (قلل العيش أول شي).</div>';
-  return '<div class="verdict">نزلت '+l+' كجم عن الأسبوع الماضي، وهذا داخل النطاق المطلوب من 0.5 إلى 1.2 كجم. كمّل بنفس الخطة.</div>';
-}
-function goalsHTML(){
-  var gs=goalsSorted(), cg=currentGoal();
-  var rows=gs.length?gs.map(function(g){
-    return '<div class="ent"><span>'+(g.label||'هدف')+(g.id===(cg&&cg.id)?' <b style="color:var(--accent2)">(الحالي)</b>':'')+'</span><b>'+g.kg+' كجم</b><button class="x" data-act="delgoal" data-id="'+g.id+'">حذف</button></div>';
-  }).join(''):'<div class="muted" style="padding:8px 2px">ماكو أهداف بعد، ضيف هدفك الأول.</div>';
-  return '<div class="card"><h2>أهدافي</h2>'+rows+
-    '<div class="wform" style="margin-top:12px">'+
-      '<div><label for="hl-gkg">الوزن المستهدف (كجم)</label><input id="hl-gkg" type="number" inputmode="decimal" step="0.1" min="30" max="300" placeholder="105"></div>'+
-      '<div><label for="hl-glabel">اسم الهدف (اختياري)</label><input id="hl-glabel" type="text" placeholder="الهدف الثاني"></div>'+
-      '<div class="full"><button class="btn" data-act="addgoal">إضافة هدف</button><div class="msg" id="hl-gmsg" role="status"></div></div>'+
-    '</div></div>';
-}
-function weightHTML(){
-  var st=wstats(), body='', cg=currentGoal();
-  if(st){
-    var change=st.last.kg-st.first.kg;
-    var prog=cg?Math.max(0,Math.min(1,(st.first.kg-st.last.kg)/(st.first.kg-cg.kg))):0;
-    body+=chartHTML(st.ws);
-    body+='<ul class="list" style="margin-top:12px">'+
-      '<li><span>الوزن الحالي</span><span>'+st.last.kg.toFixed(1)+' كجم</span></li>'+
-      '<li><span>الفرق منذ أول تسجيل</span><span>'+(change<=0?'':'+')+change.toFixed(1)+' كجم</span></li>'+
-      '<li><span>متوسط آخر 7 أيام</span><span>'+(st.a1!==null?st.a1.toFixed(1)+' كجم':'--')+'</span></li></ul>';
-    if(cg){
-      body+='<div style="margin-top:14px;display:flex;justify-content:space-between;font-size:13.5px"><span>'+(cg.label||'الهدف')+': '+cg.kg+' كجم</span><b>'+Math.round(prog*100)+'%</b></div><div class="progress"><i style="width:'+(prog*100).toFixed(1)+'%"></i></div>';
-    } else {
-      body+='<div class="muted" style="margin-top:14px;font-size:13.5px">ضيف هدف وزن من الأسفل عشان يظهر تقدمك.</div>';
-    }
-    body+=verdictHTML(st);
-  }
-  var list=st?st.ws.slice().reverse().map(function(x){
-    return '<div class="ent"><span>'+fmtDate(x.d)+(x.w?' - خصر '+x.w+' سم':'')+'</span><b>'+x.kg.toFixed(1)+' كجم</b><button class="x" data-act="delw" data-id="'+x.id+'">حذف</button></div>';
-  }).join(''):'';
-  return ''+
-  '<div class="card"><h2>سجّل وزنك</h2><div class="wform">'+
-    '<div><label for="hl-wkg">الوزن (كجم)</label><input id="hl-wkg" type="number" inputmode="decimal" step="0.1" min="30" max="300" placeholder="121.4"></div>'+
-    '<div><label for="hl-wwa">الخصر (سم) اختياري</label><input id="hl-wwa" type="number" inputmode="decimal" step="0.5" min="30" max="250" placeholder="كل أسبوعين"></div>'+
-    '<div class="full"><label for="hl-wdt">التاريخ</label><input id="hl-wdt" type="date" value="'+iso(new Date())+'"></div>'+
-    '<div class="full"><button class="btn" data-act="savew">حفظ الوزن</button><div class="msg" id="hl-wmsg" role="status"></div></div>'+
-  '</div></div>'+
-  '<div class="card"><h2>المسار نحو الهدف</h2>'+body+'</div>'+
-  goalsHTML()+
-  '<div class="card"><h2>السجل</h2>'+list+'</div>';
-}
-
-/* ---------- guide ---------- */
-/* ---------- بنّاء الوجبة السريع ---------- */
-var IDAM_LIST=[
- {id:'chicken',name:'دجاج',cuts:[{id:'breast',name:'صدر'},{id:'thigh',name:'فخذ'},{id:'wing',name:'جناح'}]},
- {id:'tuna',name:'تونة',cuts:null},
- {id:'sardine',name:'سردين',cuts:null},
- {id:'egg',name:'بيض',cuts:null},
- {id:'fish',name:'سمك',cuts:null}
-];
-var IDAM_BASE={
- chicken_breast:{kcal:165,pro:31},
- chicken_thigh:{kcal:177,pro:24},
- chicken_wing:{kcal:203,pro:30},
- tuna:{kcal:116,pro:26},
- sardine:{kcal:208,pro:24.6},
- egg:{kcal:155,pro:13},
- fish:{kcal:105,pro:23}
-};
-var METHODS=[
- {id:'airfryer',name:'ايرفراير',mult:1.15},
- {id:'grilled',name:'مشوي',mult:1.05},
- {id:'boiled',name:'مسلوق',mult:1.0},
- {id:'fried',name:'مقلي',mult:1.45}
-];
-function idamBase100(id,cut){ return IDAM_BASE[cut?(id+'_'+cut):id]; }
-var BSIDES=[
- {id:'rice',name:'أرز أبيض مطبوخ',unit:'100غ',kcal:130,pro:2.7,max:3},
- {id:'salad',name:'سلطة كبيرة',unit:'حصة',kcal:50,pro:2,max:2},
- {id:'oil',name:'زيت زيتون',unit:'ملعقة كبيرة',kcal:120,pro:0,max:3},
- {id:'bread',name:'خبز أبيض',unit:'شريحة',kcal:80,pro:3,max:4},
- {id:'oats',name:'شوفان بالحليب قليل الدسم',unit:'وعاء',kcal:320,pro:14,max:2}
-];
-var bProt={}, bQty={};
-function bRow(id){
-  if(!bProt[id]) bProt[id]={cut:(id==='chicken'?'breast':null),method:'boiled',g:0};
-  return bProt[id];
-}
-function proteinCalc(id){
-  var row=bRow(id), g=row.g||0;
-  if(!g) return {kcal:0,pro:0};
-  var base=idamBase100(id,row.cut);
-  if(!base) return {kcal:0,pro:0};
-  var m=null;
-  for(var i=0;i<METHODS.length;i++){ if(METHODS[i].id===row.method){m=METHODS[i];break;} }
-  if(!m) m=METHODS[2];
-  return {kcal:base.kcal*m.mult*g/100, pro:base.pro*g/100};
-}
-function builderTotals(){
-  var cal=0,pro=0;
-  IDAM_LIST.forEach(function(f){ var r=proteinCalc(f.id); cal+=r.kcal; pro+=r.pro; });
-  BSIDES.forEach(function(s){
-    var q=bQty[s.id]||0;
-    cal+=q*s.kcal;pro+=q*s.pro;
-  });
-  return {cal:cal,pro:pro};
-}
-function builderHTML(){
-  var V=view(cur), remaining=V.calT-V.cal;
-  var t=builderTotals();
-  var after=remaining-t.cal, over=after<0;
-  var foodsHTML=IDAM_LIST.map(function(f){
-    var row=bRow(f.id);
-    var cutsHTML='';
-    if(f.cuts){
-      cutsHTML='<div class="chips">'+f.cuts.map(function(c){
-        return '<button class="chip'+(row.cut===c.id?' on':'')+'" data-act="bcut" data-food="'+f.id+'" data-cut="'+c.id+'">'+c.name+'</button>';
-      }).join('')+'</div>';
-    }
-    var methodsHTML='<div class="chips">'+METHODS.map(function(m){
-      return '<button class="chip'+(row.method===m.id?' on':'')+'" data-act="bmethod" data-food="'+f.id+'" data-method="'+m.id+'">'+m.name+'</button>';
-    }).join('')+'</div>';
-    var r=proteinCalc(f.id);
-    var resTxt=row.g?('<b>'+n0(r.kcal)+'</b> سعرة، <b>'+n0(r.pro)+'</b> جم بروتين'):'<span class="muted">اكتب الوزن بالغرام</span>';
-    return '<div class="bfood"><div class="bfname">'+f.name+'</div>'+cutsHTML+methodsHTML+
-      '<div class="bgramrow"><label for="bgram-'+f.id+'">الوزن (غرام)</label><input id="bgram-'+f.id+'" type="number" inputmode="numeric" min="0" max="1000" step="5" class="bgram" data-food="'+f.id+'" value="'+(row.g||'')+'" placeholder="0"></div>'+
-      '<div class="bresult">'+resTxt+'</div></div>';
-  }).join('');
-  var sidesHTML=BSIDES.map(function(s){
-    var q=bQty[s.id]||0;
-    return '<div class="bside"><div class="bsname">'+s.name+'<small>'+s.kcal+' سعرة / '+s.unit+'</small></div>'+
-      '<div class="bqty"><button data-act="bqty" data-food="'+s.id+'" data-d="-1" aria-label="أنقص">−</button>'+
-      '<b>'+q+'</b>'+
-      '<button data-act="bqty" data-food="'+s.id+'" data-d="1" data-max="'+s.max+'" aria-label="زد">+</button></div></div>';
-  }).join('');
-  var warn=over?
-    '<div class="bwarn over">⚠ هذي الوجبة تتجاوز احتياجك المتبقي اليوم بمقدار <b>'+n0(Math.abs(after))+'</b> سعرة</div>':
-    '<div class="bwarn ok">✓ ضمن حدودك — بعد هالوجبة يتبقى لك <b>'+n0(after)+'</b> سعرة اليوم</div>';
-  return '<div class="card"><h2>بنّاء الوجبة السريع<span>اختر القطعة وطريقة الطبخ واكتب الوزن</span></h2>'+
-    '<p class="muted">متبقي لك اليوم قبل هالوجبة: <b>'+n0(Math.max(0,remaining))+'</b> سعرة'+(remaining<0?' <span class="over">(تجاوزت فعلاً بـ '+n0(Math.abs(remaining))+')</span>':'')+'</p>'+
-    foodsHTML+'</div>'+
-    '<div class="card">'+sidesHTML+'</div>'+
-    '<div class="card"><h2>مجموع الوجبة</h2>'+
-    '<ul class="list"><li><span>السعرات</span><span>'+n0(t.cal)+' سعرة</span></li>'+
-    '<li><span>البروتين</span><span>'+n0(t.pro)+' جم</span></li></ul>'+
-    warn+
-    '<button class="back" data-act="breset" style="margin-top:10px">تصفير الاختيارات</button></div>';
-}
-function guideHTML(){
-  function acc(t,inner,open){return '<details class="acc"'+(open?' open':'')+'><summary>'+t+'</summary><div class="in">'+inner+'</div></details>';}
-  return '<div class="card"><h2>دليل الخطة</h2>'+
-  acc('قبل ما تبدأ',
-   '<p>مؤشر كتلة جسمك 40 وهذا يعتبر سمنة من الدرجة الثالثة، فاحتياطك الصحي أهم من السرعة.</p><ul><li>سوّ فحص دم شامل (سكر، دهون، ضغط) قبل ما ترفع شدة البوت كامب.</li><li>خبّر المدرب بوزنك من أول حصة.</li><li>أول أسبوعين خفف القفز والجري لحماية الركب والكاحل، وابدأ بالمشي وزد تدريجياً.</li></ul><p>هذا الدليل مبني على دراسات عامة وليس بديلاً عن طبيبك.</p>',true)+
-  acc('أرقامك اليومية',
-   '<ul><li><em>2000 سعرة</em> بالأيام العادية. ويزيد 260 سعرة بأيام البوت كامب (شوفان وحليب بعد الحصة).</li><li><em>155 جم بروتين</em> أو أكثر.</li><li>ماء 3 لترات على الأقل.</li><li>نوم 7 إلى 8 ساعات.</li><li>نزول متوقع 0.7 إلى 1 كجم بالأسبوع، وأكثر بأول أسبوعين بسبب الماء.</li></ul><p>احتياجك التقريبي 2900 إلى 3100 سعرة مع النادي والمشي، والعجز حوالي 900 إلى 1000 سعرة. ما أنصح بأقل من 1800 سعرة.</p>')+
-  acc('قبل الحصة وبعدها',
-   '<ul><li><em>قبل الحصة بساعة:</em> 2 إلى 3 تمرات مع قهوة أو شاي. كربوهيدرات سريعة بدون ثقل على المعدة.</li><li><em>بعد الحصة:</em> الشوفان مع الحليب لدعم التعافي وحماية العضل.</li><li><em>الكافيين:</em> كوب أو كوبين قبل التمرين يرفع الأداء. لا تشربه بعد العصر عشان النوم.</li><li><em>الملح والماء:</em> الحر والعرق يستنزفون الصوديوم. لا تحذف الملح كلياً بأيام التمرين، وإذا حسيت بدوخة أو صداع بعد الحصة زد الملح شوي بالسلطة.</li><li><em>الكرياتين (اختياري):</em> 3 إلى 5 جم يومياً من ماركة موثوقة، مع الماء.</li></ul>')+
-  acc('التونة والسردين والملح',
-   '<ul><li>التونة 3 مرات بالأسبوع كحد أقصى بسبب الزئبق، وخذها بالماء.</li><li>السردين أفضل منها: غني بالأوميغا 3 وزئبقه أقل. صفّ الزيت إذا كان بالزيت.</li><li>المعلبات فيها صوديوم عالي، فخفف الملح بالسلطة وصفّ العلب.</li><li>ملعقة زيت الزيتون فيها حوالي 120 سعرة. قِسها.</li></ul>')+
-  acc('الصحة النفسية والاستمرار',
-   '<ul><li><em>المرونة أفضل من الصرامة:</em> الدراسات تربط الحمية المتشددة بنوبات أكل زايد ومزاج أسوأ. لهذا فيه وجبة حرة وحدة بالأسبوع بدون حساب.</li><li>إذا الميزان يتعبك نفسياً، زن 3 مرات بالأسبوع بدل كل يوم، وتابع الخصر والملابس.</li><li>المشي بالهواء الطلق يحسن المزاج ويقلل القلق.</li><li>الملل سبب أكيد للانهيار: غيّر التوابل وطريقة الطبخ بنفس الأكل.</li></ul>')+
-  acc('علامات تنبه لازم تعدل الخطة',
-   '<p>إذا استمر أكثر من أسبوع أي من هذي:</p><ul><li>تعب مستمر أو ضعف واضح بالتمرين</li><li>عصبية زايدة أو مزاج نازل</li><li>أرق</li><li>تفكير مستمر بالأكل يسيطر على يومك</li></ul><p>زد 150 إلى 200 سعرة (عيش أو شوفان). وبعد 8 إلى 10 أسابيع إذا حسيت بإرهاق عام، خذ أسبوعين على سعرات الصيانة (حوالي 2900). الاستراحة جزء من الخطة وليست فشل.</p><p>وإذا مزاجك نزل بشكل واضح أو تفكيرك بالأكل والوزن صار مقلق، تكلم مع طبيب أو أخصائي نفسي أو تغذية.</p>')+
-  acc('ليش هذي الأرقام: المراجع',
-   '<ul><li>غارثي وزملاؤه (2011): نزول 0.7% من الوزن بالأسبوع حافظ على العضل عند الرياضيين أفضل من 1.4%.</li><li>لونغلاند وزملاؤه (2016): بروتين 2.4 جم/كجم مع عجز كبير وتمرين قوي أعطى عضل أكثر ودهون أقل من 1.2 جم/كجم.</li><li>هيلمز وزملاؤه (2014): 2.3 إلى 3.1 جم بروتين لكل كجم من الكتلة الخالية من الدهون أثناء العجز.</li><li>ميفلن وسانت جيور (1990): المعادلة الأدق لتقدير الحرق الأساسي.</li><li>دراسة ماتادور، بيرن وزملاؤه (2018): النزول المتقطع مع فترات صيانة حافظ على نتائج أفضل.</li></ul><p>هذي تقديرات عامة. الأرقام الفعلية عندك تتضح بمتابعة الوزن.</p>')+
-  '</div>'+
-  '<div class="card"><h2>بيانات صحتي</h2><p class="muted" style="margin-top:0">محفوظة على هذا الجهاز فقط، وما تأثر على باقي أقسام كشكولي.</p>'+
-  '<div style="margin-top:12px"><button class="btn ghost" data-act="reset">'+(resetArmed?'اضغط مرة ثانية للتأكيد':'مسح بيانات صحتي وبدء من جديد')+'</button></div></div>';
-}
-
-/* ---------- render ---------- */
-function scroller(){return document.scrollingElement||document.documentElement;}
-function mount(html){
-  /* نضيف البادئة hl- لكل كلاس قبل الإدراج، عشان ما تتعارض مع كلاسات التطبيق (card, row, btn, pill ...) */
-  var t=document.createElement('template');
-  t.innerHTML=html;
-  t.content.querySelectorAll('[class]').forEach(function(el){
-    el.setAttribute('class',el.getAttribute('class').split(/\s+/).filter(Boolean).map(function(c){return 'hl-'+c;}).join(' '));
-  });
-  root.textContent='';
-  root.appendChild(t.content);
-}
-function render(){
-  var se=scroller(), y=se.scrollTop, by=document.body.scrollTop;
-  var af=document.activeElement, focusId=null, selStart=null, selEnd=null;
-  if(af&&root.contains(af)&&af.id){
-    focusId=af.id;
-    try{selStart=af.selectionStart;selEnd=af.selectionEnd;}catch(e){}
-  }
-  var body=sub==='today'?todayHTML():sub==='builder'?builderHTML():sub==='week'?weekHTML():sub==='weight'?weightHTML():guideHTML();
-  mount(headHTML()+body);
-  se.scrollTop=y; document.body.scrollTop=by;
-  if(focusId){
-    var fe=document.getElementById(focusId);
-    if(fe){
-      fe.focus();
-      if(selStart!=null&&fe.setSelectionRange){ try{fe.setSelectionRange(selStart,selEnd);}catch(e){} }
-    }
-  }
-}
-
-/* ---------- actions ---------- */
-function addCustomItem(mealKey){
-  var nameEl=document.getElementById('cname-'+mealKey),calEl=document.getElementById('ccal-'+mealKey),proEl=document.getElementById('cpro-'+mealKey);
-  if(!calEl)return;
-  var cal=parseFloat(String(calEl.value).replace(',','.'));
-  if(!(cal>0&&cal<=5000))return;
-  var name=(nameEl&&nameEl.value.trim())||'أكلة';
-  var pro=parseFloat(String((proEl&&proEl.value)||'').replace(',','.'));
-  if(!(pro>=0&&pro<=500))pro=0;
-  var dd=D(cur);
-  dd.custom=dd.custom||{breakfast:[],lunch:[],dinner:[],snack:[]};
-  if(!dd.custom[mealKey])dd.custom[mealKey]=[];
-  dd.custom[mealKey].push({id:'c'+Date.now().toString(36)+Math.floor(Math.random()*1000),name:name,cal:Math.round(cal),pro:Math.round(pro)});
-  save();render();
-}
-function saveGoal(){
-  var kgEl=document.getElementById('hl-gkg'),lbEl=document.getElementById('hl-glabel'),msg=document.getElementById('hl-gmsg');
-  if(!kgEl)return;
-  var kg=parseFloat(String(kgEl.value).replace(',','.'));
-  if(!(kg>=30&&kg<=300)){if(msg)msg.textContent='اكتب وزن هدف صحيح بين 30 و300 كجم.';return;}
-  var label=(lbEl&&lbEl.value.trim())||('هدف '+((S.goals||[]).length+1));
-  var g={id:'g'+Date.now().toString(36)+Math.floor(Math.random()*1000),kg:Math.round(kg*10)/10,label:label};
-  S.goals=S.goals||[];
-  S.goals.push(g);
-  save();render();
-}
-function saveWeight(){
-  var kgEl=document.getElementById('hl-wkg'),waEl=document.getElementById('hl-wwa'),dtEl=document.getElementById('hl-wdt'),msg=document.getElementById('hl-wmsg');
-  if(!kgEl)return;
-  var kg=parseFloat(String(kgEl.value).replace(',','.'));
-  if(!(kg>=30&&kg<=300)){msg.textContent='اكتب وزن صحيح بين 30 و300 كجم.';return;}
-  var d=dtEl.value||iso(new Date());
-  var w=parseFloat(String(waEl.value).replace(',','.'));
-  var entry={id:'w'+Date.now().toString(36)+Math.floor(Math.random()*1000),d:d,kg:Math.round(kg*10)/10,w:(w>=30&&w<=250)?w:null};
-  S.weights=S.weights.filter(function(x){return x.d!==d;});
-  S.weights.push(entry);
-  save();render();
-}
-
-root.addEventListener('click',function(e){
-  var t=e.target.closest('[data-act]');
-  if(!t||!root.contains(t))return;
-  var a=t.getAttribute('data-act'),ds=t.dataset,dd;
-  if(a==='sub'){sub=ds.sub;render();return;}
-  if(a==='day'){cur=addDays(cur,parseInt(ds.n,10));render();return;}
-  if(a==='gotoday'){cur=iso(new Date());render();return;}
-  if(a==='toggle'){dd=D(cur);dd.done=dd.done||{};dd.done[ds.key]=!dd.done[ds.key];save();render();return;}
-  if(a==='variant'){dd=D(cur);dd[ds.vk]=ds.v;save();render();return;}
-  if(a==='boot'){dd=D(cur);dd.boot=!view(cur).boot;save();render();return;}
-  if(a==='water'){dd=D(cur);var i=parseInt(ds.i,10);dd.water=(dd.water===i+1)?i:i+1;save();render();return;}
-  if(a==='walk'){dd=D(cur);dd.walk=!dd.walk;save();render();return;}
-  if(a==='sleep'){dd=D(cur);dd.sleep=!dd.sleep;save();render();return;}
-  if(a==='bootday'){
-    var dow=parseInt(ds.dow,10),ix=S.bootDays.indexOf(dow);
-    if(ix>-1)S.bootDays.splice(ix,1);else S.bootDays.push(dow);
-    save();render();return;
-  }
-  if(a==='bcut'){bRow(ds.food).cut=ds.cut;render();return;}
-  if(a==='bmethod'){bRow(ds.food).method=ds.method;render();return;}
-  if(a==='bqty'){
-    var d=parseInt(ds.d,10),max=ds.max?parseInt(ds.max,10):99;
-    var q=(bQty[ds.food]||0)+d;
-    bQty[ds.food]=Math.max(0,Math.min(max,q));
-    render();return;
-  }
-  if(a==='breset'){bProt={};bQty={};render();return;}
-  if(a==='savew'){saveWeight();return;}
-  if(a==='delw'){S.weights=S.weights.filter(function(x){return x.id!==ds.id;});save();render();return;}
-  if(a==='addgoal'){saveGoal();return;}
-  if(a==='delgoal'){S.goals=(S.goals||[]).filter(function(x){return x.id!==ds.id;});save();render();return;}
-  if(a==='addcustom'){addCustomItem(ds.meal);return;}
-  if(a==='delcustom'){
-    var dd2=D(cur);
-    if(dd2.custom&&dd2.custom[ds.meal]){dd2.custom[ds.meal]=dd2.custom[ds.meal].filter(function(x){return x.id!==ds.id;});save();render();}
-    return;
-  }
-  if(a==='reset'){
-    if(!resetArmed){
-      resetArmed=true;render();
-      clearTimeout(resetTimer);resetTimer=setTimeout(function(){resetArmed=false;if(sub==='guide')render();},4000);
-    }else{
-      resetArmed=false;clearTimeout(resetTimer);S=defaults();save();cur=iso(new Date());sub='today';render();
-    }
-  }
-});
-root.addEventListener('input',function(e){
-  var t=e.target;
-  if(t&&t.classList&&t.classList.contains('hl-bgram')){
-    var g=parseFloat(String(t.value).replace(',','.'));
-    bRow(t.dataset.food).g=(g>=0&&g<=1000)?g:0;
-    render();
-  }
-});
-root.addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&e.target&&e.target.tagName==='INPUT'&&e.target.closest('.hl-addrow')){
-    e.preventDefault();
-    addCustomItem(e.target.dataset.meal||e.target.id.split('-')[1]);
-    return;
-  }
-  if(e.key==='Enter'&&e.target&&e.target.tagName==='INPUT'&&e.target.closest('.hl-wform')){
-    e.preventDefault();
-    if(e.target.id==='hl-gkg'||e.target.id==='hl-glabel'){saveGoal();}else{saveWeight();}
-  }
-});
-
-/* يستدعيها showTab كل ما تفتح التبويب: يرجع لتاريخ اليوم ويحدّث العرض */
-window.healthRender=function(){cur=iso(new Date());render();};
-render();
-})();
 
 init();
 if('serviceWorker' in navigator){
@@ -7484,6 +7103,330 @@ window.WX = (function(){
     svg.innerHTML = DEFS + DRAW[style](d);
   }
   new MutationObserver(() => { if(ov.classList.contains('show') && !raf) raf = requestAnimationFrame(loop); }).observe(ov, {attributes:true, attributeFilter:['class']});
+})();
+
+/* ================= صحتي (التصميم الجديد) =================
+   رزنامة أسبوعية + شهرية مع أيام الأوف · الوزن وبداية الخطة · الخطوات · حاسبة الكالوري (3 وجبات) · الماء
+   البيانات بالمفتاح kash_health_v2، وأول مرة تنقل الأوزان والهدف والماء من القسم القديم (rihala_health) بدون ما تمسحه. */
+(function(){
+'use strict';
+const root = document.getElementById('hl-root'); if(!root) return;
+const KEY = window.HP_KEY || 'kash_health_v2';
+const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const DS = ['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+const DL = ['ح','ن','ث','ر','خ','ج','س'];
+const MON = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const MEALS = [['b','فطور'],['l','غداء'],['d','عشاء']];
+
+/* ---------- الأكل: سعرات وبروتين لكل 100 جم (قيم تقريبية) ---------- */
+const CATS = [['p','بروتين'],['c','نشويات'],['m','ألبان'],['v','خضار وفواكه'],['f','دهون ومكسرات'],['x','أطباق']];
+const FOODS = [
+  ['صدر دجاج','p',165,31,1],['فخذ دجاج بدون جلد','p',209,26,1],['لحم غنم','p',294,25,1],['لحم بقر قليل الدهن','p',217,26,1],['كبدة','p',175,27,1],
+  ['سمك هامور','p',118,24,1],['سمك زبيدي','p',150,21,1],['روبيان','p',99,24,1],['تونة بالماء (معلبة)','p',116,26,0],['سردين (معلب)','p',208,25,0],
+  ['بيض كامل','p',155,13,1,['حبة',50]],['بياض بيض','p',52,11,1,['حبة',33]],
+  ['عيش أبيض مطبوخ','c',130,2.7,0],['عيش بني مطبوخ','c',112,2.6,0],['مكرونة مطبوخة','c',158,5.8,0],['خبز عربي','c',275,9,0,['رغيف',70]],
+  ['خبز توست أبيض','c',265,9,0,['شريحة',28]],['خبز أسمر','c',247,13,0,['شريحة',30]],['شوفان (وزن ناشف)','c',389,17,0],['بطاطس','c',87,1.9,1],['بطاطا حلوة','c',90,2,1],['ذرة','c',96,3.4,0],
+  ['حليب قليل الدسم (مل)','m',42,3.4,0],['حليب كامل الدسم (مل)','m',61,3.2,0],['لبن (مل)','m',40,3.3,0],['زبادي يوناني','m',59,10,0],['جبن فيتا','m',264,14,0],['جبن قريش','m',98,11,0],['لبنة','m',160,6,0],
+  ['سلطة خضار','v',20,1,0],['خيار','v',15,0.7,0],['طماطم','v',18,0.9,0],['بروكلي','v',34,2.8,1],['موز','v',89,1.1,0,['حبة',120]],['تفاح','v',52,0.3,0,['حبة',180]],
+  ['برتقال','v',47,0.9,0,['حبة',150]],['تمر','v',282,2.5,0,['حبة',10]],['فراولة','v',32,0.7,0],
+  ['زيت زيتون','f',884,0,0,['ملعقة كبيرة',14]],['زبدة فول سوداني','f',588,25,0,['ملعقة كبيرة',16]],['مكسرات مشكلة','f',607,20,0],['لوز','f',579,21,0],['أفوكادو','f',160,2,0],
+  ['مجبوس دجاج','x',170,9,0],['كبسة لحم','x',190,9,0],['هريس','x',110,7,0],['فلافل','x',333,13,0,['حبة',17]],['حمص','x',166,8,0],['فول مدمس','x',110,7,0],['شاورما دجاج','x',215,14,0,['ساندويش',250]]
+].map(([n,c,k,p,cook,u]) => ({n,c,k,p,cook:!!cook,u}));
+// طريقة الطبخ: سعرات إضافية لكل 100 جم من الزيت
+const COOK = [['g','مشوي',0],['a','قلاية هوائية',12],['f','مقلي',80],['b','مسلوق',0]];
+const COOKN = Object.fromEntries(COOK.map(([k,n]) => [k,n])), COOKK = Object.fromEntries(COOK.map(([k,,v]) => [k,v]));
+// أحجام قوارير الماء الموجودة بالأسواق
+const BOTTLES = [[200,'كوب'],[330,'صغير'],[500,'نص لتر'],[600,'وسط'],[1000,'لتر'],[1500,'لتر ونص']];
+
+/* ---------- تواريخ ---------- */
+const pad = n => String(n).padStart(2,'0');
+const iso = d => d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+const parse = s => { const p = s.split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); };
+const add = (s, n) => { const d = parse(s); d.setDate(d.getDate()+n); return iso(d); };
+const diff = (a, b) => Math.round((parse(b) - parse(a)) / 864e5);
+const today = () => iso(new Date());
+const fmt = s => { const d = parse(s); return d.getDate() + ' ' + MON[d.getMonth()]; };
+const num = x => Math.round(x).toLocaleString('en-US');
+const kg1 = x => (Math.round(x*10)/10).toFixed(1);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- الحفظ + النقل من القسم القديم ---------- */
+function blank(){ return {start:{d:today(), kg:null}, goal:null, weights:[], calT:2000, waterT:3000, stepT:10000, days:{}}; }
+function migrate(){
+  const S = blank();
+  try{
+    const o = JSON.parse(localStorage.getItem('rihala_health') || 'null'); if(!o) return S;
+    const ws = (o.weights || []).filter(w => w && w.d && w.kg).map(w => ({d:w.d, kg:+w.kg})).sort((a,b) => a.d < b.d ? -1 : 1);
+    if(ws.length){ S.weights = ws; S.start = {d:ws[0].d, kg:ws[0].kg}; }
+    const gs = (o.goals || []).map(g => +g.kg).filter(Boolean).sort((a,b) => b - a), cur = ws.length ? ws[ws.length-1].kg : null;
+    if(gs.length) S.goal = gs.find(g => cur == null || g < cur) || gs[gs.length-1];
+    Object.entries(o.days || {}).forEach(([k, d]) => { if(d && d.water) S.days[k] = {water:[d.water * 250]}; });
+  }catch(e){}
+  return S;
+}
+function load(){ try{ const o = JSON.parse(localStorage.getItem(KEY) || 'null'); if(o && o.days) return Object.assign(blank(), o); }catch(e){} const m = migrate(); save(m); return m; }
+function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s || S)); }catch(e){} }
+let S = load();
+const day = k => S.days[k] || (S.days[k] = {});
+const dayView = k => S.days[k] || {};
+
+/* ---------- الحسابات ---------- */
+function itemKcal(it){ return it.kcal; }
+function dayTotals(k){
+  const d = dayView(k), m = d.meals || {}; let kcal = 0, p = 0;
+  MEALS.forEach(([mk]) => (m[mk] || []).forEach(it => { kcal += it.kcal; p += it.p || 0; }));
+  return {kcal, p, water:(d.water || []).reduce((a,b) => a+b, 0), steps:d.steps || 0, off:!!d.off,
+    logged:kcal > 0 || (d.water || []).length > 0 || (d.steps || 0) > 0};
+}
+function curWeight(){ return S.weights.length ? S.weights[S.weights.length-1].kg : S.start.kg; }
+
+/* ---------- أيقونات (خطوط بسيطة) ---------- */
+const I = {
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"/></svg>',
+  next:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"/></svg>',
+  prev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6l6 6-6 6"/></svg>',
+  steps:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.2 3c1.9 0 3 2.2 3 4.7 0 2-.8 3.6-1 5.3H5.1C4.8 11.3 4 9.7 4.2 7.6 4.4 5 5.4 3 7.2 3Zm-2 11.3h4l-.1 1.6c0 1.3-.9 2.3-2 2.3s-2-1-1.9-2.4ZM16.8 6c1.8 0 2.8 2 3 4.6.2 2.1-.6 3.7-.9 5.4h-4.1c-.2-1.7-1-3.3-1-5.3 0-2.5 1.1-4.7 3-4.7Zm-2.1 11.3h4.1l.1 1.6c.1 1.4-.8 2.4-1.9 2.4s-2-1-2-2.3Z"/></svg>',
+  fire:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.6 2.5c.4 3-1.4 4.6-3 6.3C8 10.5 6.5 12.3 6.5 15a5.5 5.5 0 0 0 11 0c0-2.2-1-3.8-2-5-.2 1.4-.9 2.4-2 2.8.6-3.3-.2-7.5-.9-10.3Zm-.5 18a2.6 2.6 0 0 1-2.6-2.6c0-1.6 1.3-2.5 2.2-3.8.4 1.3 1.6 1.7 2.3 2.7.3.4.6.9.6 1.4a2.6 2.6 0 0 1-2.5 2.3Z"/></svg>',
+  drop:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8c-.3 0-.5.1-.7.4C9 6.3 5.5 10.6 5.5 14.4a6.5 6.5 0 0 0 13 0c0-3.8-3.5-8.1-5.8-11.2-.2-.3-.4-.4-.7-.4Zm-3 11.6c.4 0 .8.3.8.8 0 1.4 1.1 2.5 2.5 2.5a.8.8 0 0 1 0 1.6 4.1 4.1 0 0 1-4.1-4.1c0-.5.4-.8.8-.8Z"/></svg>',
+  scale:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M8 9.5a5.5 5.5 0 0 1 8 0"/><path d="M12 9.8l1.4-2"/></svg>',
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>',
+  meal:{b:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 15h16M6 15a6 6 0 0 1 12 0M12 4v2.5M5.2 7.2l1.6 1.6M18.8 7.2l-1.6 1.6M8 19h8"/></svg>',
+        l:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>',
+        d:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10Z"/></svg>'}
+};
+function ring(pct, color, r = 22, w = 7){
+  const c = 2 * Math.PI * r, v = Math.max(0, Math.min(1, pct));
+  return '<svg class="hp-ring" viewBox="0 0 ' + (r*2+w*2) + ' ' + (r*2+w*2) + '"><circle cx="' + (r+w) + '" cy="' + (r+w) + '" r="' + r + '" fill="none" stroke="#2C2C2E" stroke-width="' + w + '"/>' +
+    '<circle cx="' + (r+w) + '" cy="' + (r+w) + '" r="' + r + '" fill="none" stroke="' + color + '" stroke-width="' + w + '" stroke-linecap="round" stroke-dasharray="' + (c*v).toFixed(1) + ' ' + c.toFixed(1) + '" transform="rotate(-90 ' + (r+w) + ' ' + (r+w) + ')"/></svg>';
+}
+function bottleSvg(ml){
+  // قارورة مرسومة بطولها الحقيقي تقريباً (نسبة للتر ونص)
+  const h = 18 + Math.round(Math.sqrt(ml / 1500) * 34), w = ml >= 1000 ? 18 : ml >= 500 ? 15 : 13;
+  if(ml === 200) return '<svg viewBox="0 0 24 56" width="24" height="56"><path d="M6 ' + (56-24) + 'h12l-1.4 22H7.4Z" fill="currentColor" opacity=".9"/><path d="M6 ' + (56-24) + 'h12" stroke="currentColor" stroke-width="1.4"/></svg>';
+  const x = (24 - w) / 2, top = 56 - h, neck = Math.max(5, h * .2);
+  return '<svg viewBox="0 0 24 56" width="24" height="56"><rect x="' + (12-3) + '" y="' + (top-3) + '" width="6" height="3.4" rx="1" fill="currentColor"/>' +
+    '<path d="M' + (12-2.6) + ' ' + top + 'h5.2c0 ' + (neck*.5) + ' ' + (w/2-2.6) + ' ' + (neck*.6) + ' ' + (w/2-2.6) + ' ' + neck + 'V' + (56-2.5) + 'a2.5 2.5 0 0 1-2.5 2.5H' + (x+2.5) + 'a2.5 2.5 0 0 1-2.5-2.5V' + (top+neck) + 'c0-' + (neck*.4) + ' ' + (w/2-2.6) + '-' + (neck*.5) + ' ' + (w/2-2.6) + '-' + neck + 'Z" fill="currentColor" opacity=".9"/>' +
+    '<path d="M' + x + ' ' + (top+neck+h*.18) + 'h' + w + 'M' + x + ' ' + (top+neck+h*.32) + 'h' + w + '" stroke="#000" stroke-opacity=".25" stroke-width="1.2"/></svg>';
+}
+
+const PL = {'حبة':'حبات','شريحة':'شرائح','رغيف':'أرغفة','ملعقة كبيرة':'ملاعق كبيرة','ساندويش':'ساندويشات'};
+const unitTxt = (n, u) => n === 1 ? u : n === .5 ? 'نص ' + u : (Math.round(n*10)/10) + ' ' + (n > 10 ? u : (PL[u] || u));
+
+/* ---------- الحالة المؤقتة ---------- */
+let cur = today(), monthView = null, offMode = false;
+
+/* ---------- الرسم ---------- */
+function weekOf(k){ const d = parse(k), s = add(k, -d.getDay()); return Array.from({length:7}, (_, i) => add(s, i)); }
+function render(){
+  const t = dayTotals(cur), wk = weekOf(cur), tk = today(), dd = parse(cur);
+  const name = (document.querySelector('.topbar-name, .hero-name') || {}).textContent;
+  root.innerHTML = '<div class="hp">' +
+  /* الترحيب */
+  '<div class="hp-hello"><div><b>صحتي</b><span>' + DAYS[dd.getDay()] + '، ' + fmt(cur) + (cur === tk ? ' · اليوم' : '') + '</span></div>' +
+    '<button class="hp-calbtn" data-a="month" aria-label="الرزنامة كاملة">' + I.cal + '<span>الرزنامة</span></button></div>' +
+  /* الأسبوع */
+  '<div class="hp-week"><button class="hp-wnav" data-a="wk" data-n="-7" aria-label="الأسبوع اللي قبل">' + I.prev + '</button><div class="hp-days">' +
+    wk.map(k => { const x = dayTotals(k), d = parse(k); return '<button class="hp-day' + (k === cur ? ' on' : '') + (x.off ? ' off' : '') + (k === tk ? ' today' : '') + '" data-a="pick" data-k="' + k + '"><span>' + DS[d.getDay()] + '</span><b>' + d.getDate() + '</b><i class="' + (x.logged ? 'y' : '') + '"></i></button>'; }).join('') +
+  '</div><button class="hp-wnav" data-a="wk" data-n="7" aria-label="الأسبوع اللي بعد">' + I.next + '</button></div>' +
+  '<div class="hp-offrow"><span>' + (t.off ? '<em class="hp-dot off"></em>هذا يوم أوف' : 'يوم عادي بالخطة') + '</span><button class="hp-tog' + (t.off ? ' on' : '') + '" data-a="off" role="switch" aria-checked="' + t.off + '"><i></i></button></div>' +
+
+  /* الوزن والخطة */
+  '<h3 class="hp-h">الوزن والخطة</h3>' + weightCard() +
+
+  /* النشاط */
+  '<h3 class="hp-h">نشاط اليوم</h3>' + stepsCard(wk, t) +
+  '<div class="hp-two">' +
+    '<button class="hp-card hp-mini" data-a="go" data-to="hpCal"><div class="hp-ct"><span class="ic or">' + I.fire + '</span>السعرات<i>' + I.chev + '</i></div><div class="hp-mv"><b>' + num(t.kcal) + '</b><small>من ' + num(S.calT) + ' سعرة</small></div>' + ring(t.kcal / S.calT, t.kcal > S.calT ? '#FF453A' : '#FF6B2C') + '</button>' +
+    '<button class="hp-card hp-mini" data-a="go" data-to="hpWater"><div class="hp-ct"><span class="ic bl">' + I.drop + '</span>الماء<i>' + I.chev + '</i></div><div class="hp-mv"><b>' + (t.water / 1000).toFixed(t.water % 1000 ? 1 : 0) + '</b><small>من ' + (S.waterT / 1000) + ' لتر</small></div>' + ring(t.water / S.waterT, '#3D8BFF') + '</button>' +
+  '</div>' +
+
+  /* حاسبة الكالوري */
+  '<h3 class="hp-h" id="hpCal">حاسبة الكالوري</h3>' + calCard(t) +
+
+  /* الماء */
+  '<h3 class="hp-h" id="hpWater">الماء</h3>' + waterCard(t) +
+  '</div>';
+}
+
+function weightCard(){
+  const cw = curWeight(), st = S.start, g = S.goal;
+  if(st.kg == null) return '<div class="hp-card hp-empty"><p>سجّل وزنك وتاريخ بداية الدايت عشان نتابع نزولك.</p><button class="hp-btn" data-a="plan">ابدأ الخطة</button></div>';
+  const lost = st.kg - cw, days = Math.max(0, diff(st.d, today())), pct = g ? Math.max(0, Math.min(1, (st.kg - cw) / (st.kg - g))) : 0;
+  // خط الوزن
+  const ws = S.weights.length ? S.weights : [{d:st.d, kg:st.kg}];
+  let spark = '';
+  if(ws.length > 1){
+    const W = 300, H = 64, lo = Math.min(...ws.map(w => w.kg), g || 1e9) - .5, hi = Math.max(...ws.map(w => w.kg)) + .5, d0 = ws[0].d, span = Math.max(1, diff(d0, ws[ws.length-1].d));
+    const P = ws.map(w => [diff(d0, w.d) / span * W, H - (w.kg - lo) / (hi - lo) * H]);
+    spark = '<svg class="hp-spark" viewBox="-4 -6 ' + (W+8) + ' ' + (H+12) + '" preserveAspectRatio="none">' + (g ? '<line x1="0" x2="' + W + '" y1="' + (H - (g - lo) / (hi - lo) * H).toFixed(1) + '" y2="' + (H - (g - lo) / (hi - lo) * H).toFixed(1) + '" stroke="#E4FF1A" stroke-opacity=".35" stroke-dasharray="4 5"/>' : '') +
+      '<polyline points="' + P.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ') + '" fill="none" stroke="#E4FF1A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>' +
+      '<circle cx="' + P[P.length-1][0].toFixed(1) + '" cy="' + P[P.length-1][1].toFixed(1) + '" r="4" fill="#E4FF1A"/></svg>';
+  }
+  return '<div class="hp-card hp-weight">' +
+    '<div class="hp-ct"><span class="ic ly">' + I.scale + '</span>وزني<button class="hp-link" data-a="plan">تعديل الخطة</button></div>' +
+    '<div class="hp-wrow"><div class="hp-big"><b>' + kg1(cw) + '</b><small>كغ</small></div>' +
+      '<div class="hp-wstats"><span>' + (lost >= 0 ? 'نزلت' : 'زدت') + ' <em>' + kg1(Math.abs(lost)) + '</em> كغ</span><span><em>' + days + '</em> يوم بالخطة</span></div></div>' +
+    spark +
+    '<div class="hp-plan"><div><small>البداية</small><b>' + kg1(st.kg) + '</b><span>' + fmt(st.d) + '</span></div>' +
+      '<div class="hp-bar"><i style="width:' + (pct * 100).toFixed(1) + '%"></i></div>' +
+      '<div><small>الهدف</small><b>' + (g ? kg1(g) : '—') + '</b><span>' + (g ? 'باقي ' + kg1(Math.max(0, cw - g)) : 'حدده') + '</span></div></div>' +
+    '<button class="hp-btn" data-a="wlog">' + I.plus + 'سجّل وزن اليوم</button></div>';
+}
+
+function stepsCard(wk, t){
+  const vals = wk.map(k => dayTotals(k).steps), mx = Math.max(S.stepT, ...vals, 1);
+  return '<button class="hp-card hp-steps" data-a="steps"><div class="hp-ct"><span class="ic ly">' + I.steps + '</span>الخطوات<i>' + I.chev + '</i></div>' +
+    '<div class="hp-srow"><div class="hp-sv"><b>' + num(t.steps) + '</b> خطوة<small>' + (t.steps * 0.00075).toFixed(2) + ' كم | ' + num(t.steps * 0.04) + ' سعرة</small></div>' +
+    '<div class="hp-bars">' + wk.map((k, i) => '<div class="' + (k === cur ? 'on' : '') + '"><i style="height:' + Math.max(4, vals[i] / mx * 100).toFixed(1) + '%"></i><span>' + DL[parse(k).getDay()] + '</span></div>').join('') + '</div></div></button>';
+}
+
+function calCard(t){
+  const m = (dayView(cur).meals) || {};
+  return '<div class="hp-card hp-calsum"><div class="hp-csum">' + ring(t.kcal / S.calT, t.kcal > S.calT ? '#FF453A' : '#E4FF1A', 34, 9) +
+      '<div class="hp-csin"><b>' + num(Math.max(0, S.calT - t.kcal)) + '</b><small>' + (t.kcal > S.calT ? 'زيادة ' + num(t.kcal - S.calT) : 'باقي لك') + '</small></div></div>' +
+    '<div class="hp-cnums"><div><small>أكلت</small><b>' + num(t.kcal) + '</b></div><div><small>بروتين</small><b>' + num(t.p) + ' جم</b></div><div><small>هدفك</small><b>' + num(S.calT) + '</b><button class="hp-link" data-a="calT">تغيير</button></div></div></div>' +
+    MEALS.map(([mk, mn]) => { const its = m[mk] || [], sum = its.reduce((a, b) => a + b.kcal, 0);
+      return '<div class="hp-card hp-meal"><div class="hp-ct"><span class="ic ly">' + I.meal[mk] + '</span>' + mn + '<em class="hp-msum">' + num(sum) + ' سعرة</em></div>' +
+        (its.length ? '<ul class="hp-items">' + its.map((it, i) => '<li><div><b>' + esc(it.n) + '</b><span>' + (it.g ? (it.unit ? unitTxt(it.g, it.unit) : num(it.g) + ' جم') : 'يدوي') + (it.m ? ' · ' + COOKN[it.m] : '') + '</span></div><em>' + num(it.kcal) + '</em><button data-a="rm" data-m="' + mk + '" data-i="' + i + '" aria-label="احذف">' + I.x + '</button></li>').join('') + '</ul>' : '<p class="hp-none">ما سجلت شي للحين</p>') +
+        '<button class="hp-add" data-a="food" data-m="' + mk + '">' + I.plus + 'أضف لل' + mn + '</button></div>'; }).join('');
+}
+
+function waterCard(t){
+  const ws = dayView(cur).water || [], pct = Math.min(1, t.water / S.waterT);
+  return '<div class="hp-card hp-water"><div class="hp-wtop"><div class="hp-tank"><i style="height:' + (pct * 100).toFixed(1) + '%"></i><span>' + Math.round(pct * 100) + '%</span></div>' +
+      '<div class="hp-wtx"><b>' + num(t.water) + ' <small>مل</small></b><span>من ' + num(S.waterT) + ' مل اليوم</span><button class="hp-link" data-a="waterT">تغيير الهدف</button></div></div>' +
+    '<p class="hp-sub">اختر حجم القارورة اللي شربتها</p>' +
+    '<div class="hp-bottles">' + BOTTLES.map(([ml, n]) => '<button data-a="w" data-ml="' + ml + '">' + bottleSvg(ml) + '<b>' + (ml >= 1000 ? (ml / 1000) + ' لتر' : ml + ' مل') + '</b><span>' + n + '</span></button>').join('') + '</div>' +
+    '<div class="hp-wman"><input id="hpWml" type="number" inputmode="numeric" placeholder="كمية ثانية بالمل"><button class="hp-btn sm" data-a="wman">أضف</button></div>' +
+    (ws.length ? '<div class="hp-wlist">' + ws.map((v, i) => '<button data-a="wrm" data-i="' + i + '">' + num(v) + ' مل ' + I.x + '</button>').join('') + '</div>' : '') +
+    '</div>';
+}
+
+/* ---------- النوافذ (Bottom sheet) ---------- */
+const host = document.createElement('div'); host.className = 'hp-host'; document.body.appendChild(host);
+function sheet(html){ host.innerHTML = '<div class="hp-scrim" data-a="close"></div><div class="hp-sheet" role="dialog"><div class="hp-grab"></div>' + html + '</div>'; requestAnimationFrame(() => host.classList.add('open')); }
+function close(){ host.classList.remove('open'); setTimeout(() => { if(!host.classList.contains('open')) host.innerHTML = ''; }, 260); }
+
+function monthSheet(){
+  const m = monthView, first = new Date(m.y, m.m, 1), n = new Date(m.y, m.m+1, 0).getDate(), tk = today();
+  let cells = '';
+  for(let i = 0; i < first.getDay(); i++) cells += '<span></span>';
+  for(let d = 1; d <= n; d++){ const k = m.y + '-' + pad(m.m+1) + '-' + pad(d), x = dayTotals(k);
+    cells += '<button class="hp-mday' + (k === cur ? ' on' : '') + (x.off ? ' off' : '') + (k === tk ? ' today' : '') + '" data-a="mpick" data-k="' + k + '">' + d + (x.logged ? '<i></i>' : '') + '</button>'; }
+  // ملخص الشهر
+  let offs = 0, logged = 0; for(let d = 1; d <= n; d++){ const x = dayTotals(m.y + '-' + pad(m.m+1) + '-' + pad(d)); if(x.off) offs++; if(x.logged) logged++; }
+  sheet('<div class="hp-sh-h"><button data-a="mnav" data-n="-1" aria-label="الشهر اللي قبل">' + I.prev + '</button><b>' + MON[m.m] + ' ' + m.y + '</b><button data-a="mnav" data-n="1" aria-label="الشهر اللي بعد">' + I.next + '</button></div>' +
+    '<div class="hp-mgrid hp-mhead">' + DS.map(s => '<span>' + s + '</span>').join('') + '</div><div class="hp-mgrid">' + cells + '</div>' +
+    '<div class="hp-legend"><span><em class="hp-dot on"></em>المختار</span><span><em class="hp-dot off"></em>يوم أوف (' + offs + ')</span><span><em class="hp-dot y"></em>مسجّل (' + logged + ')</span></div>' +
+    '<div class="hp-offmode"><div><b>تحديد أيام الأوف</b><small>' + (offMode ? 'اضغط على أي يوم يتلوّن أوف أو يرجع عادي' : 'شغّله وبعدها اضغط على الأيام') + '</small></div><button class="hp-tog' + (offMode ? ' on' : '') + '" data-a="offmode" role="switch" aria-checked="' + offMode + '"><i></i></button></div>' +
+    '<button class="hp-btn" data-a="close">تم</button>');
+}
+
+let foodState = null;
+function foodSheet(){
+  const f = foodState, mn = MEALS.find(x => x[0] === f.meal)[1];
+  let body = '<div class="hp-sh-h"><b>أضف لل' + mn + '</b><button data-a="close" aria-label="إغلاق">' + I.x + '</button></div>' +
+    '<div class="hp-seg"><button class="' + (f.tab === 'list' ? 'on' : '') + '" data-a="ftab" data-t="list">من اللستة</button><button class="' + (f.tab === 'man' ? 'on' : '') + '" data-a="ftab" data-t="man">إدخال يدوي</button></div>';
+  if(f.tab === 'man'){
+    body += '<div class="hp-form"><label>اسم الأكل<input id="hpMn" value="' + esc(f.mn || '') + '" placeholder="مثلاً: ساندويش من المطعم"></label>' +
+      '<div class="hp-f2"><label>السعرات<input id="hpMk" type="number" inputmode="numeric" placeholder="0"></label><label>البروتين (جم)<input id="hpMp" type="number" inputmode="decimal" placeholder="اختياري"></label></div>' +
+      '<label>الوزن بالجرام<input id="hpMg" type="number" inputmode="numeric" placeholder="اختياري"></label></div><button class="hp-btn" data-a="fman">أضف</button>';
+  } else if(f.pick == null){
+    const q = (f.q || '').trim(), list = FOODS.map((x, i) => [x, i]).filter(([x]) => q ? x.n.includes(q) : x.c === f.cat);
+    body += '<div class="hp-search">' + I.search + '<input id="hpQ" value="' + esc(q) + '" placeholder="دوّر على أكل…"></div>' +
+      (q ? '' : '<div class="hp-cats">' + CATS.map(([k, n]) => '<button class="' + (f.cat === k ? 'on' : '') + '" data-a="fcat" data-c="' + k + '">' + n + '</button>').join('') + '</div>') +
+      '<ul class="hp-flist">' + (list.length ? list.map(([x, i]) => '<li><button data-a="fpick" data-i="' + i + '"><b>' + x.n + '</b><span>' + x.k + ' سعرة · ' + x.p + ' جم بروتين <small>لكل 100' + (x.n.includes('(مل)') ? ' مل' : ' جم') + '</small></span></button></li>').join('') : '<li class="hp-none">ما لقيته، أضفه من «إدخال يدوي»</li>') + '</ul>';
+  } else {
+    const x = FOODS[f.pick], grams = f.unitMode && x.u ? f.qty * x.u[1] : f.qty, k = calcK(x, grams, f.m), p = x.p * grams / 100;
+    body += '<div class="hp-fsel"><button class="hp-back" data-a="fback">' + I.prev + 'رجوع</button><b>' + x.n + '</b></div>' +
+      (x.cook ? '<p class="hp-sub">طريقة الطبخ</p><div class="hp-cook">' + COOK.map(([kk, n, add]) => '<button class="' + (f.m === kk ? 'on' : '') + '" data-a="fcook" data-k="' + kk + '">' + n + (add ? '<small>+' + add + ' لكل 100 جم</small>' : '<small>بدون زيت</small>') + '</button>').join('') + '</div>' : '') +
+      '<p class="hp-sub">' + (f.unitMode && x.u ? 'العدد' : 'الوزن بالجرام') + (x.u ? ' <button class="hp-link" data-a="funit">' + (f.unitMode ? 'بالجرام' : 'بال' + x.u[0]) + '</button>' : '') + '</p>' +
+      '<div class="hp-qty"><button data-a="fq" data-d="' + (f.unitMode ? -1 : -10) + '" aria-label="أنقص">−</button><input id="hpG" type="number" inputmode="decimal" value="' + f.qty + '"><button data-a="fq" data-d="' + (f.unitMode ? 1 : 10) + '" aria-label="زد">+</button></div>' +
+      '<div class="hp-chips">' + (f.unitMode ? [1,2,3,4,5,6] : [50,100,150,200,250,300]).map(v => '<button class="' + (f.qty === v ? 'on' : '') + '" data-a="fset" data-v="' + v + '">' + v + (f.unitMode ? '' : ' جم') + '</button>').join('') + '</div>' +
+      '<div class="hp-res"><div><b>' + num(k) + '</b><small>سعرة</small></div><div><b>' + num(p) + '</b><small>جم بروتين</small></div>' + (f.unitMode && x.u ? '<div><b>' + num(grams) + '</b><small>جم</small></div>' : '') + '</div>' +
+      '<button class="hp-btn" data-a="fadd">أضف لل' + mn + '</button>';
+  }
+  sheet(body);
+}
+function calcK(x, g, m){ return (x.k + (x.cook && m ? COOKK[m] : 0)) * g / 100; }
+
+function formSheet(title, fields, act){
+  sheet('<div class="hp-sh-h"><b>' + title + '</b><button data-a="close" aria-label="إغلاق">' + I.x + '</button></div><div class="hp-form">' +
+    fields.map(([id, label, val, type, ph]) => '<label>' + label + '<input id="' + id + '" type="' + (type || 'number') + '" ' + (type === 'date' ? '' : 'inputmode="decimal"') + ' value="' + (val == null ? '' : val) + '" placeholder="' + (ph || '') + '"></label>').join('') +
+    '</div><button class="hp-btn" data-a="' + act + '">حفظ</button>');
+}
+const val = id => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
+
+/* ---------- الأحداث ---------- */
+function onClick(e){
+  const b = e.target.closest('[data-a]'); if(!b) return;
+  const a = b.dataset.a, ds = b.dataset;
+  switch(a){
+    case 'pick': cur = ds.k; render(); break;
+    case 'wk': cur = add(cur, +ds.n); render(); break;
+    case 'off': { const d = day(cur); d.off = !d.off; save(); render(); break; }
+    case 'go': { const el = document.getElementById(ds.to); if(el) el.scrollIntoView({behavior:'smooth', block:'start'}); break; }
+    case 'month': { const d = parse(cur); monthView = {y:d.getFullYear(), m:d.getMonth()}; offMode = false; monthSheet(); break; }
+    case 'mnav': { let {y, m} = monthView; m += +ds.n; if(m < 0){ m = 11; y--; } if(m > 11){ m = 0; y++; } monthView = {y, m}; monthSheet(); break; }
+    case 'mpick': if(offMode){ const d = day(ds.k); d.off = !d.off; save(); render(); monthSheet(); } else { cur = ds.k; render(); close(); } break;
+    case 'offmode': offMode = !offMode; monthSheet(); break;
+    case 'close': close(); break;
+    case 'plan': formSheet('بداية الخطة', [['hpSd','تاريخ بداية الدايت',S.start.d,'date'],['hpSk','وزنك يوم البداية (كغ)',S.start.kg,'number','مثلاً 95'],['hpG','وزنك الهدف (كغ)',S.goal,'number','مثلاً 85']], 'planSave'); break;
+    case 'planSave': { const d = val('hpSd') || today(), k = parseFloat(val('hpSk')), g = parseFloat(val('hpG'));
+      if(!(k > 20)) return; S.start = {d, kg:k}; S.goal = g > 20 ? g : null;
+      const i = S.weights.findIndex(w => w.d === d); if(i > -1) S.weights[i].kg = k; else S.weights.push({d, kg:k});
+      S.weights.sort((x, y) => x.d < y.d ? -1 : 1); save(); close(); render(); break; }
+    case 'wlog': formSheet('وزن ' + fmt(cur), [['hpW','الوزن (كغ)',(S.weights.find(w => w.d === cur) || {}).kg || '','number',kg1(curWeight() || 0)]], 'wSave'); break;
+    case 'wSave': { const k = parseFloat(val('hpW')); if(!(k > 20)) return; const i = S.weights.findIndex(w => w.d === cur);
+      if(i > -1) S.weights[i].kg = k; else S.weights.push({d:cur, kg:k}); S.weights.sort((x, y) => x.d < y.d ? -1 : 1);
+      if(S.start.kg == null) S.start = {d:cur, kg:k}; save(); close(); render(); break; }
+    case 'steps': sheet('<div class="hp-sh-h"><b>خطوات ' + fmt(cur) + '</b><button data-a="close" aria-label="إغلاق">' + I.x + '</button></div><div class="hp-form">' +
+        '<label>عدد الخطوات<input id="hpSt" type="number" inputmode="numeric" value="' + (dayView(cur).steps || '') + '" placeholder="من ساعة قارمن"></label>' +
+        '<label>هدفك اليومي<input id="hpStT" type="number" inputmode="numeric" value="' + S.stepT + '"></label></div>' +
+        '<p class="hp-note">ساعة قارمن ما تسمح لمواقع الويب تقرا خطواتها مباشرة. اكتبها من تطبيق Garmin Connect، أو خل قارمن ترسلها لتطبيق Health وسوّ اختصار يفتح كشكولي على الرابط <code>#steps=العدد</code> وتنحفظ بروحها.</p>' +
+        '<button class="hp-btn" data-a="stSave">حفظ</button>'); break;
+    case 'stSave': { const n = parseInt(val('hpSt'), 10), g = parseInt(val('hpStT'), 10); const d = day(cur); d.steps = n > 0 ? n : 0; if(g > 0) S.stepT = g; save(); close(); render(); break; }
+    case 'calT': formSheet('هدف السعرات اليومي', [['hpCT','السعرات',S.calT]], 'calTSave'); break;
+    case 'calTSave': { const n = parseInt(val('hpCT'), 10); if(n > 500) S.calT = n; save(); close(); render(); break; }
+    case 'waterT': formSheet('هدف الماء اليومي', [['hpWT','بالمل',S.waterT]], 'waterTSave'); break;
+    case 'waterTSave': { const n = parseInt(val('hpWT'), 10); if(n > 200) S.waterT = n; save(); close(); render(); break; }
+    case 'w': { const d = day(cur); (d.water = d.water || []).push(+ds.ml); save(); render(); pulse('hpWater'); break; }
+    case 'wman': { const n = parseInt(val('hpWml'), 10); if(!(n > 0)) return; const d = day(cur); (d.water = d.water || []).push(n); save(); render(); break; }
+    case 'wrm': { const d = day(cur); d.water.splice(+ds.i, 1); save(); render(); break; }
+    case 'rm': { const d = day(cur); d.meals[ds.m].splice(+ds.i, 1); save(); render(); break; }
+    case 'food': foodState = {meal:ds.m, tab:'list', cat:'p', q:'', pick:null}; foodSheet(); break;
+    case 'ftab': foodState.tab = ds.t; foodSheet(); break;
+    case 'fcat': foodState.cat = ds.c; foodSheet(); break;
+    case 'fpick': { const x = FOODS[+ds.i]; Object.assign(foodState, {pick:+ds.i, m:x.cook ? 'g' : null, unitMode:!!x.u, qty:x.u ? 1 : 100}); foodSheet(); break; }
+    case 'fback': foodState.pick = null; foodSheet(); break;
+    case 'fcook': foodState.m = ds.k; foodSheet(); break;
+    case 'funit': { const x = FOODS[foodState.pick]; foodState.unitMode = !foodState.unitMode; foodState.qty = foodState.unitMode ? 1 : x.u[1]; foodSheet(); break; }
+    case 'fq': foodState.qty = Math.max(foodState.unitMode ? .5 : 5, (+foodState.qty || 0) + +ds.d); foodSheet(); break;
+    case 'fset': foodState.qty = +ds.v; foodSheet(); break;
+    case 'fadd': { const f = foodState, x = FOODS[f.pick], g = f.unitMode && x.u ? f.qty * x.u[1] : f.qty; if(!(g > 0)) return;
+      pushItem({n:x.n, g:f.unitMode && x.u ? f.qty : g, unit:f.unitMode && x.u ? x.u[0] : null, m:x.cook ? f.m : null, kcal:Math.round(calcK(x, g, f.m)), p:Math.round(x.p * g / 10) / 10}); break; }
+    case 'fman': { const n = val('hpMn'), k = parseFloat(val('hpMk')); if(!n || !(k >= 0)) return;
+      pushItem({n, g:parseFloat(val('hpMg')) || 0, m:null, kcal:Math.round(k), p:parseFloat(val('hpMp')) || 0}); break; }
+  }
+}
+function pushItem(it){ const d = day(cur); d.meals = d.meals || {}; (d.meals[foodState.meal] = d.meals[foodState.meal] || []).push(it); save(); close(); render(); }
+function pulse(id){ const el = document.getElementById(id); if(el && el.nextElementSibling){ el.nextElementSibling.classList.remove('hp-pulse'); void el.offsetWidth; el.nextElementSibling.classList.add('hp-pulse'); } }
+root.addEventListener('click', onClick); host.addEventListener('click', onClick);
+host.addEventListener('input', e => {
+  if(e.target.id === 'hpQ'){ foodState.q = e.target.value; const pos = e.target.selectionStart; foodSheet(); const q = document.getElementById('hpQ'); q.focus(); q.setSelectionRange(pos, pos); }
+  if(e.target.id === 'hpG' && foodState){ foodState.qty = parseFloat(e.target.value) || 0; const x = FOODS[foodState.pick], g = foodState.unitMode && x.u ? foodState.qty * x.u[1] : foodState.qty;
+    const r = host.querySelectorAll('.hp-res b'); if(r[0]) r[0].textContent = num(calcK(x, g, foodState.m)); if(r[1]) r[1].textContent = num(x.p * g / 100); if(r[2]) r[2].textContent = num(g); }
+});
+
+/* خطوات من اختصار الآيفون: index.html#steps=8500 */
+function fromHash(){ const m = /steps=(\d+)/.exec(location.hash); if(m){ day(today()).steps = +m[1]; save(); history.replaceState(null, '', location.pathname + location.search); if(window.showTab) try{ showTab('tab-health'); }catch(e){} } }
+fromHash();
+
+window.healthRender = function(){ S = load(); render(); };
+render();
 })();
 
 </script>
