@@ -1303,6 +1303,71 @@ body:has(#tab-radar.active){overflow:hidden;}
 .compass.rugc.ok + .rug-msg b{color:var(--accent);}
 @media (prefers-reduced-motion:reduce){.compass.rugc .arrow,.compass.rugc .rug-k{transition:none;}}
 
+/* ================= إزالة الخلفية ================= */
+.bgr-lead{font-size:13px; color:var(--muted); line-height:1.8; margin:0 0 14px;}
+.bgr-lead b{color:var(--text); font-weight:500;}
+.bgr-drop{display:flex; flex-direction:column; align-items:center; gap:6px; padding:30px 16px; border-radius:20px; border:1.5px dashed rgba(244,184,96,.45);
+  background:radial-gradient(120% 100% at 50% 0%, rgba(244,184,96,.08), transparent 70%); cursor:pointer; text-align:center; transition:border-color .2s, background .2s, transform .15s var(--obs-ease), padding .3s var(--obs-ease);}
+.bgr-drop:active{transform:scale(.985);}
+.bgr-drop.over{border-color:var(--accent); background:rgba(244,184,96,.12);}
+.bgr-drop.small{padding:14px; flex-direction:row; justify-content:center; gap:10px;}
+.bgr-drop.small small{display:none;}
+.bgr-drop-ic{width:52px; height:52px; border-radius:16px; background:var(--accent); color:#1a1205; display:grid; place-items:center;}
+.bgr-drop.small .bgr-drop-ic{width:34px; height:34px; border-radius:11px;}
+.bgr-drop-ic svg{width:26px; height:26px;}
+.bgr-drop.small .bgr-drop-ic svg{width:18px; height:18px;}
+.bgr-drop b{font-size:16px; font-weight:500;}
+.bgr-drop small{font-size:12px; color:var(--muted);}
+.bgr-q{position:relative; display:grid; grid-template-columns:repeat(3,1fr); margin-top:12px; padding:4px; border-radius:14px; background:rgba(255,255,255,.05);}
+.bgr-q .ind{position:absolute; top:4px; bottom:4px; right:4px; width:calc((100% - 8px)/3); border-radius:10px; background:var(--text); transition:transform .4s cubic-bezier(.3,1.2,.5,1);}
+.bgr-q button{position:relative; z-index:1; border:0; background:none; color:var(--muted); font:inherit; font-size:13px; padding:8px 0; line-height:1.3; transition:color .25s;}
+.bgr-q button small{display:block; font-size:10px; opacity:.75;}
+.bgr-q button.on{color:var(--bg); font-weight:500;}
+.bgr-note{font-size:11.5px; color:var(--muted); margin:8px 2px 0; line-height:1.6;}
+.bgr-work{margin-top:14px;}
+.bgr-stage{position:relative; width:100%; max-height:62vh; border-radius:18px; overflow:hidden; background:#0B0E16; touch-action:none; margin:0 auto;}
+.bgr-stage img,.bgr-after,.bgr-after canvas{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;}
+.bgr-after{clip-path:inset(0 0 0 100%);}
+.bgr-after.chk{background:conic-gradient(#2A2E3A 25%, #1C1F29 0 50%, #2A2E3A 0 75%, #1C1F29 0) 0 0/18px 18px;}
+.bgr-scan{position:absolute; left:0; right:0; top:0; height:30%; opacity:0; pointer-events:none;
+  background:linear-gradient(to bottom, transparent, rgba(244,184,96,.22) 85%, rgba(255,227,166,.9) 100%);}
+.bgr-work.busy .bgr-scan{opacity:1; animation:bgrScan 1.8s cubic-bezier(.45,0,.55,1) infinite alternate;}
+.bgr-work.busy .bgr-stage img{filter:saturate(.6) brightness(.8);}
+@keyframes bgrScan{from{transform:translateY(-100%)} to{transform:translateY(240%)}}
+.bgr-handle{position:absolute; top:0; bottom:0; left:50%; width:0; z-index:3; pointer-events:none;}
+.bgr-handle i{position:absolute; top:0; bottom:0; left:-1px; width:2px; background:#fff; box-shadow:0 0 8px rgba(0,0,0,.6);}
+.bgr-handle span{position:absolute; top:50%; left:0; transform:translate(-50%,-50%); white-space:nowrap; font-size:11px; padding:6px 10px; border-radius:99px; background:#fff; color:#111; font-weight:600; box-shadow:0 4px 14px rgba(0,0,0,.4);}
+.bgr-prog{margin-top:12px;}
+.bgr-prog .bar{height:4px; border-radius:2px; background:rgba(255,255,255,.08); overflow:hidden;}
+.bgr-prog .bar i{display:block; height:100%; background:linear-gradient(to left,var(--accent),#FFE3A6); transform-origin:right; transform:scaleX(0); transition:transform .4s var(--obs-ease);}
+.bgr-prog span{display:block; font-size:12.5px; color:var(--muted); margin-top:8px; text-align:center;}
+.bgr-prog.err span{color:var(--bad);}
+.bgr-done{margin-top:14px; animation:bgrIn .45s var(--obs-ease);}
+@keyframes bgrIn{from{opacity:0; transform:translateY(8px);}}
+.bgr-bgs{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none;}
+.bgr-bgs::-webkit-scrollbar{display:none;}
+.bgr-bgs > *{flex:none; display:flex; flex-direction:column; align-items:center; gap:5px; border:0; background:none; color:var(--muted); font:inherit; font-size:11px; cursor:pointer; position:relative;}
+.bgr-bgs i{width:44px; height:44px; border-radius:14px; border:2px solid rgba(255,255,255,.1); transition:border-color .2s, transform .2s var(--obs-ease);}
+.bgr-bgs .on{color:var(--text);}
+.bgr-bgs .on i{border-color:var(--accent); transform:scale(1.06);}
+.bgr-bgs i.chk{background:conic-gradient(#3A3F4E 25%, #1C1F29 0 50%, #3A3F4E 0 75%, #1C1F29 0) 0 0/11px 11px;}
+.bgr-bgs i.blr{background:radial-gradient(circle at 35% 40%, #8FA4C8, #3E4A66 60%, #1C2233); filter:blur(.4px);}
+.bgr-bgs i.any{background:conic-gradient(#F08A7E,#F4B860,#7FC99A,#7FD1E8,#9D8BFF,#F08A7E);}
+.bgr-bgs .pick input{position:absolute; inset:0; opacity:0; width:100%; height:100%; cursor:pointer;}
+.bgr-meta{font-size:11.5px; color:var(--muted); margin:10px 2px 0; text-align:center;}
+.bgr-acts{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;}
+.bgr-acts .btn{margin-top:0;}
+.bgr-acts #bgrSave{grid-column:1/-1;}
+.bgr-acts #bgrShare[hidden] + #bgrNew{grid-column:1/-1;}
+@media (prefers-reduced-motion:reduce){.bgr-work.busy .bgr-scan{animation:none; opacity:.5;} .bgr-done{animation:none;}}
+.bgr-clean{display:flex; align-items:center; gap:10px; margin-top:10px; padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.035); font-size:13.5px; cursor:pointer; flex-wrap:wrap;}
+.bgr-clean input{display:none;}
+.bgr-clean span{width:38px; height:22px; border-radius:11px; background:rgba(255,255,255,.15); position:relative; flex:none; transition:background .2s;}
+.bgr-clean span::after{content:""; position:absolute; top:3px; right:3px; width:16px; height:16px; border-radius:50%; background:#fff; transition:transform .3s cubic-bezier(.3,1.3,.5,1);}
+.bgr-clean input:checked + span{background:var(--accent);}
+.bgr-clean input:checked + span::after{transform:translateX(-16px);}
+.bgr-clean small{width:100%; font-size:11.5px; color:var(--muted); margin-right:48px;}
+
 </style>
 </head>
 <body>
@@ -1374,6 +1439,7 @@ body:has(#tab-radar.active){overflow:hidden;}
       <button class="home-shortcut-btn" onclick="goToTab('tab-coords')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></span>إحداثيات</button>
       <button class="home-shortcut-btn" onclick="goToTab('tab-mw')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="currentColor" stroke="none"><path d="M12 2.5c.5 3.4 1.4 5.3 3 7 1.7 1.6 3.6 2.5 7 3-3.4.5-5.3 1.4-7 3-1.6 1.7-2.5 3.6-3 7-.5-3.4-1.4-5.3-3-7-1.7-1.6-3.6-2.5-7-3 3.4-.5 5.3-1.4 7-3 1.6-1.7 2.5-3.6 3-7z"/></svg></span>المجرة</button>
       <button class="home-shortcut-btn" onclick="goToTab('tab-health')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/><path d="M7.5 12.5h2.4l1.3-2.4 1.8 4 1.2-1.6h2.3"/></svg></span>صحتي</button>
+      <button class="home-shortcut-btn" onclick="goToTab('tab-bg')"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M4 16l4.5-4.5a2 2 0 0 1 2.8 0L16 16"/><circle cx="16" cy="9" r="1.6"/><path d="M3 20L21 4" stroke-dasharray="2 3"/></svg></span>إزالة الخلفية</button>
 
     </div>
   </div>
@@ -1407,6 +1473,57 @@ body:has(#tab-radar.active){overflow:hidden;}
   </div>
   <div class="wxr-title"><b>رادار الطقس</b><span id="wxrLoc">—</span></div>
 </div>
+</div>
+
+<!-- TAB: إزالة الخلفية -->
+<div class="tab" id="tab-bg">
+  <div class="card bgr" id="bgr">
+    <h2><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l4.5-4.5a2 2 0 0 1 2.8 0L16 16"/><path d="M14 14l1.5-1.5a2 2 0 0 1 2.8 0L20 14"/><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 20L21 4" stroke-dasharray="2 3"/></svg></span> إزالة الخلفية</h2>
+    <p class="bgr-lead">ارفع أي صورة وتطلع لك بدون خلفية بدقتها الأصلية. <b>الصورة ما تطلع من جوالك</b>، كل الشغل يصير داخل الجهاز.</p>
+
+    <label class="bgr-drop" id="bgrDrop">
+      <input type="file" accept="image/*" id="bgrFile" hidden>
+      <span class="bgr-drop-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/></svg></span>
+      <b>اختر صورة</b>
+      <small>أو اسحبها هني · JPG, PNG, HEIC</small>
+    </label>
+
+    <div class="bgr-q" id="bgrQ">
+      <span class="ind"></span>
+      <button data-m="isnet_quint8">سريع<small>44 ميقا</small></button>
+      <button data-m="isnet_fp16" class="on">دقة عالية<small>88 ميقا</small></button>
+      <button data-m="isnet">أعلى دقة<small>176 ميقا</small></button>
+    </div>
+    <label class="bgr-clean"><input type="checkbox" id="bgrClean" checked><span></span>تنظيف البقايا<small>يشيل الظلال الخفيفة اللي تبقى من الخلفية</small></label>
+    <p class="bgr-note">أول مرة بس ينزل «عقل» الإزالة حسب الحجم فوق، وبعدها يشتغل حتى بدون نت.</p>
+
+    <div class="bgr-work" id="bgrWork" hidden>
+      <div class="bgr-stage" id="bgrStage">
+        <img id="bgrOrig" alt="الصورة الأصلية">
+        <div class="bgr-after" id="bgrAfter"><canvas id="bgrOut"></canvas></div>
+        <div class="bgr-scan" id="bgrScan"></div>
+        <div class="bgr-handle" id="bgrHandle" hidden><i></i><span>قبل · بعد</span></div>
+      </div>
+      <div class="bgr-prog" id="bgrProg"><div class="bar"><i id="bgrBar"></i></div><span id="bgrStep">جاري التجهيز…</span></div>
+
+      <div class="bgr-done" id="bgrDone" hidden>
+        <div class="bgr-bgs" id="bgrBgs">
+          <button data-bg="none" class="on" aria-label="شفافة"><i class="chk"></i>شفافة</button>
+          <button data-bg="#FFFFFF" aria-label="أبيض"><i style="background:#fff"></i>أبيض</button>
+          <button data-bg="#0B0E16" aria-label="أسود"><i style="background:#0B0E16"></i>أسود</button>
+          <button data-bg="#F4B860" aria-label="ذهبي"><i style="background:#F4B860"></i>ذهبي</button>
+          <button data-bg="blur" aria-label="الأصل مغبّش"><i class="blr"></i>مغبّش</button>
+          <label class="pick" aria-label="لون من اختيارك"><i class="any"></i>لون<input type="color" id="bgrColor" value="#7FD1E8"></label>
+        </div>
+        <div class="bgr-meta" id="bgrMeta"></div>
+        <div class="bgr-acts">
+          <button class="btn" id="bgrSave">حفظ الصورة PNG</button>
+          <button class="btn secondary" id="bgrShare">مشاركة</button>
+          <button class="btn secondary" id="bgrNew">صورة جديدة</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- TAB: WALLET -->
@@ -2370,6 +2487,7 @@ body:has(#tab-radar.active){overflow:hidden;}
   <button class="tabbtn" data-tab="tab-coords" onclick="showTab('tab-coords',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></span>إحداثيات</button>
   <button class="tabbtn" data-tab="tab-wallet" onclick="showTab('tab-wallet',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg></span>محفظتي</button>
   <button class="tabbtn" data-tab="tab-health" onclick="showTab('tab-health',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/><path d="M7.5 12.5h2.4l1.3-2.4 1.8 4 1.2-1.6h2.3"/></svg></span>صحتي</button>
+  <button class="tabbtn" data-tab="tab-bg" onclick="showTab('tab-bg',this)"><span class="ic"><svg viewBox="0 0 24 24" class="isvg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M4 16l4.5-4.5a2 2 0 0 1 2.8 0L16 16"/><circle cx="16" cy="9" r="1.6"/><path d="M3 20L21 4" stroke-dasharray="2 3"/></svg></span>إزالة الخلفية</button>
 </div>
 
 <script>
@@ -6947,6 +7065,154 @@ window.WX = (function(){
   const q = document.getElementById('qCompass');
   if(q && q.querySelector('.tick') && !q.classList.contains('rugc')) dress(q);
   if(window.__qBearing !== undefined && q) setArrow(q, window.__qBearing);
+})();
+
+/* ================= كشكولي · إزالة الخلفية (داخل الجهاز — @imgly/background-removal) ================= */
+(function(){
+  const $ = id => document.getElementById(id);
+  if(!$('bgr')) return;
+  const LIB = 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm';
+
+  const MAX = 4096;                                   // أطول ضلع نشتغل عليه (يحمي ذاكرة الجوال)
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let model = 'isnet_fp16', lib = null, orig = null, cut = null, bg = 'none', busy = false, srcName = 'image';
+  try{ const m = localStorage.getItem('bgr_model'); if(m && m !== 'birefnet') model = m; }catch(e){}
+
+  /* ---------- اختيار الدقة ---------- */
+  const qBtns = [...document.querySelectorAll('#bgrQ button')];
+  function setQ(m){ model = m; const i = qBtns.findIndex(b => b.dataset.m === m); qBtns.forEach((b, j) => b.classList.toggle('on', i === j)); $('bgrQ').querySelector('.ind').style.transform = 'translateX(' + (-100 * i) + '%)'; try{ localStorage.setItem('bgr_model', m); }catch(e){} }
+  qBtns.forEach(b => b.onclick = () => { if(!busy){ setQ(b.dataset.m); if(orig) run(); } });
+  setQ(model);
+
+  /* ---------- رفع الصورة ---------- */
+  $('bgrFile').onchange = e => { const f = e.target.files[0]; if(f) take(f); e.target.value = ''; };
+  const drop = $('bgrDrop');
+  ['dragenter','dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if(f && f.type.startsWith('image/')) take(f); });
+
+  async function take(file){
+    if(busy) return;
+    srcName = (file.name || 'image').replace(/\.[^.]+$/, '');
+    // نقرأ الصورة ونصغرها لو كانت ضخمة جداً
+    const bmp = await loadBitmap(file);
+    if(!bmp){ status('ما قدرت أفتح هالصورة. جرب JPG أو PNG.', 0, true); return; }
+    let w = bmp.width, h = bmp.height, k = Math.min(1, MAX / Math.max(w, h));
+    const cv = document.createElement('canvas'); cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+    cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height);
+    orig = {canvas:cv, w:cv.width, h:cv.height, scaled:k < 1, ow:w, oh:h};
+    $('bgrOrig').src = cv.toDataURL('image/jpeg', .92);
+    $('bgrWork').hidden = false; drop.classList.add('small');
+    $('bgrStage').style.aspectRatio = cv.width + ' / ' + cv.height;
+    run();
+    setTimeout(() => $('bgrWork').scrollIntoView({block:'start', behavior:reduce ? 'auto' : 'smooth'}), 60);
+  }
+  function loadBitmap(file){
+    return new Promise(res => {
+      if(window.createImageBitmap) createImageBitmap(file).then(res).catch(() => viaImg());
+      else viaImg();
+      function viaImg(){ const u = URL.createObjectURL(file), im = new Image(); im.onload = () => { res(im); }; im.onerror = () => res(null); im.src = u; }
+    });
+  }
+
+  /* ---------- التشغيل ---------- */
+  function status(t, p, err){
+    $('bgrStep').textContent = t; $('bgrProg').classList.toggle('err', !!err);
+    if(p != null) $('bgrBar').style.transform = 'scaleX(' + Math.max(.02, Math.min(1, p)) + ')';
+  }
+  async function run(){
+    if(!orig || busy) return; busy = true;
+    $('bgrWork').classList.add('busy'); $('bgrDone').hidden = true; $('bgrHandle').hidden = true; $('bgrProg').hidden = false;
+    $('bgrAfter').style.clipPath = 'inset(0 0 0 100%)';
+    status('جاري التجهيز…', .03);
+    try{
+      const t0 = performance.now();
+      if(!lib){ status('تحميل أداة الإزالة…', .05); lib = await import(LIB); }
+      const blob = await new Promise((res, rej) => orig.canvas.toBlob(b => b ? res(b) : rej(new Error('blob')), 'image/png'));
+      const opts = dev => ({
+        model, device:dev,
+        output:{format:'image/png', quality:1},
+        progress:(key, cur, tot) => {
+          if(key.startsWith('fetch:')) status('تحميل عقل الإزالة (أول مرة بس)… ' + Math.round(cur / tot * 100) + '%', .05 + .75 * (cur / tot));
+          else if(key.includes('compute')) status('جاري إزالة الخلفية…', .85 + .1 * (cur / Math.max(1, tot)));
+        }
+      });
+      let out;
+      try{ out = await lib.removeBackground(blob, opts(navigator.gpu ? 'gpu' : 'cpu')); }
+      catch(err){ if(!navigator.gpu) throw err; status('جاري إزالة الخلفية…', .85); out = await lib.removeBackground(blob, opts('cpu')); }
+      raw = await loadBitmap(out); cut = clean ? cleanUp(raw) : raw;
+      finish(t0);
+    }catch(e){
+      console.warn(e);
+      status('صار خطأ: ' + (e && e.message && /fetch|network|Failed/i.test(e.message) ? 'تأكد من النت أول مرة عشان ينزل عقل الإزالة.' : 'جرب «سريع» أو صورة أصغر.'), 1, true);
+    }finally{ busy = false; $('bgrWork').classList.remove('busy'); }
+  }
+
+  function finish(t0){
+    const secs = ((performance.now() - t0) / 1000).toFixed(1);
+    status('خلصت ✓', 1);
+    draw(); reveal();
+    $('bgrMeta').textContent = orig.w + '×' + orig.h + ' بكسل' + (orig.scaled ? ' (صغّرتها من ' + orig.ow + '×' + orig.oh + ' عشان الجوال)' : '') + ' · ' + secs + ' ثانية';
+    setTimeout(() => { $('bgrProg').hidden = true; }, 900);
+    $('bgrDone').hidden = false;
+  }
+
+  /* ---------- تنظيف البقايا: نشيل الشفافية الخفيفة ونخلي الأطراف حادة وناعمة ---------- */
+  let raw = null, clean = true;
+  try{ clean = localStorage.getItem('bgr_clean') !== '0'; }catch(e){}
+  $('bgrClean').checked = clean;
+  $('bgrClean').onchange = e => { clean = e.target.checked; try{ localStorage.setItem('bgr_clean', clean ? '1' : '0'); }catch(_){} if(raw){ cut = clean ? cleanUp(raw) : raw; draw(); } };
+  function cleanUp(src){
+    const c = document.createElement('canvas'); c.width = orig.w; c.height = orig.h; const x = c.getContext('2d');
+    x.drawImage(src, 0, 0, c.width, c.height); const id = x.getImageData(0, 0, c.width, c.height), d = id.data;
+    const lo = 64, hi = 230;                         // أقل من 25% يختفي، أكثر من 90% يصير كامل
+    for(let i = 3; i < d.length; i += 4){ const a = d[i]; d[i] = a <= lo ? 0 : a >= hi ? 255 : Math.round((a - lo) / (hi - lo) * 255); }
+    x.putImageData(id, 0, 0); return c;
+  }
+
+  /* ---------- الرسم مع الخلفية المختارة ---------- */
+  function draw(){
+    if(!cut) return;
+    const c = $('bgrOut'); c.width = orig.w; c.height = orig.h; const x = c.getContext('2d');
+    x.clearRect(0, 0, c.width, c.height);
+    if(bg === 'blur'){ x.save(); x.filter = 'blur(' + Math.round(Math.max(orig.w, orig.h) / 60) + 'px) brightness(.85)'; x.drawImage(orig.canvas, -20, -20, c.width + 40, c.height + 40); x.restore(); }
+    else if(bg !== 'none'){ x.fillStyle = bg; x.fillRect(0, 0, c.width, c.height); }
+    x.drawImage(cut, 0, 0, c.width, c.height);
+    $('bgrAfter').classList.toggle('chk', bg === 'none');
+  }
+  document.querySelectorAll('#bgrBgs [data-bg]').forEach(b => b.onclick = () => { bg = b.dataset.bg; mark(b); draw(); });
+  $('bgrColor').oninput = e => { bg = e.target.value; mark($('bgrColor').parentElement); draw(); };
+  function mark(el){ document.querySelectorAll('#bgrBgs > *').forEach(b => b.classList.toggle('on', b === el)); }
+
+  /* ---------- مقارنة قبل وبعد ---------- */
+  let pos = 50;
+  function setPos(p){ pos = Math.max(0, Math.min(100, p)); $('bgrAfter').style.clipPath = 'inset(0 0 0 ' + pos + '%)'; $('bgrHandle').style.left = pos + '%'; }
+  function reveal(){
+    $('bgrHandle').hidden = false;
+    if(reduce){ setPos(50); return; }
+    const t0 = performance.now(), from = 100, to = 50;
+    (function f(t){ const p = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - p, 3); setPos(from + (to - from) * e); if(p < 1) requestAnimationFrame(f); })(t0);
+  }
+  const stage = $('bgrStage');
+  let drag = false;
+  stage.addEventListener('pointerdown', e => { if(!cut || busy) return; drag = true; stage.setPointerCapture(e.pointerId); move(e); });
+  stage.addEventListener('pointermove', e => { if(drag) move(e); });
+  stage.addEventListener('pointerup', () => drag = false);
+  function move(e){ const r = stage.getBoundingClientRect(); setPos((e.clientX - r.left) / r.width * 100); }
+
+  /* ---------- حفظ ومشاركة ---------- */
+  const fileOf = () => new Promise(res => $('bgrOut').toBlob(b => res(new File([b], srcName + '-kashkoli.png', {type:'image/png'})), 'image/png'));
+  $('bgrSave').onclick = async () => {
+    const f = await fileOf(), u = URL.createObjectURL(f), a = document.createElement('a');
+    a.href = u; a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000);
+  };
+  $('bgrShare').onclick = async () => {
+    const f = await fileOf();
+    if(navigator.canShare && navigator.canShare({files:[f]})){ try{ await navigator.share({files:[f], title:'صورة بدون خلفية'}); }catch(e){} }
+    else $('bgrSave').click();
+  };
+  if(!(navigator.canShare)) $('bgrShare').hidden = true;
+  $('bgrNew').onclick = () => $('bgrFile').click();
 })();
 
 </script>
