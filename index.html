@@ -6077,7 +6077,8 @@ window.KPLACES = [["الرياض",24.639,46.716,1],["دبي",25.265,55.292,1],["
 window.WX = (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // 16..37N × 35..59.5E كل 1.5 درجة = 255 نقطة (Open-Meteo يحسب كل نقطة طلب، وحده 600 بالدقيقة)
-  const G = {lat0:16, lon0:35, step:1.5, nLat:15, nLon:17};
+  const GULF = {lat0:16, lon0:35, step:1.5, nLat:15, nLon:17};
+  let G = GULF; // الشبكة الحالية: تمشي مع الخريطة لأي مكان بالعالم
   const pad = n => String(n).padStart(2,'0');
   const MODELS = [['icon_seamless','ICON'],['ecmwf_ifs025','ECMWF'],['gfs_seamless','GFS']];
   // كم يوم يغطي كل نموذج (ICON أقصر، ECMWF الأدق لأسبوعين)
@@ -6153,10 +6154,10 @@ window.WX = (function(){
   try{ Object.keys(localStorage).filter(k => k.startsWith('wxgrid') || k.startsWith('wxdays_')).forEach(k => localStorage.removeItem(k)); }catch(e){}
   async function cGet(k, maxAge){ try{ const r = await (await caches.open(WXC)).match('/__wx/' + k); if(!r) return null; const c = await r.json(); return Date.now() - c.at < maxAge ? c.d : null; }catch(e){ return null; } }
   function cSet(k, d){ try{ caches.open(WXC).then(c => c.put('/__wx/' + k, new Response(JSON.stringify({at:Date.now(), d}), {headers:{'Content-Type':'application/json'}}))); }catch(e){} }
-  async function fetchModel(m){
-    const ck = 'grid_' + m, hit = await cGet(ck, 3 * 36e5); if(hit) return uv(hit);
+  async function fetchModel(m, g = G){
+    const ck = g === GULF ? 'grid_' + m : 'grid_' + m + '_' + g.lat0 + '_' + g.lon0 + '_' + g.step + '_' + g.nLat + 'x' + g.nLon, hit = await cGet(ck, 3 * 36e5); if(hit){ hit.G = g; return uv(hit); }
     const lats = [], lons = [];
-    for(let i = 0; i < G.nLat; i++) for(let j = 0; j < G.nLon; j++){ lats.push(G.lat0 + i * G.step); lons.push(G.lon0 + j * G.step); }
+    for(let i = 0; i < g.nLat; i++) for(let j = 0; j < g.nLon; j++){ lats.push(+(g.lat0 + i * g.step).toFixed(3)); lons.push(+(((g.lon0 + j * g.step + 540) % 360) - 180).toFixed(3)); }
     const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lats.join(',') + '&longitude=' + lons.join(',') +
       '&hourly=temperature_2m,precipitation,wind_speed_10m,wind_direction_10m,cloud_cover&forecast_days=' + DAYS[m] + '&temporal_resolution=hourly_3&timezone=GMT&models=' + m;
     const arr = await fetch(url).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); });
@@ -6166,7 +6167,7 @@ window.WX = (function(){
     const d = {time:arr[0].hourly.time};
     keys.forEach(k => { const f = k === 'precipitation' ? 1 / 3 : 1; d[k] = new Float32Array(H * arr.length); arr.forEach((p, n) => p.hourly[k].forEach((v, h) => d[k][h * arr.length + n] = v == null ? NaN : Math.round(v * f * 10) / 10)); d[k] = Array.from(d[k]); });
     // u/v من السرعة والاتجاه (الاتجاه = من وين تهب)
-    cSet(ck, d);
+    cSet(ck, d); d.G = g;
     return uv(d);
   }
 
@@ -6178,10 +6179,10 @@ window.WX = (function(){
   }
 
   /* قيمة بنقطة: ثنائي خطي بالمكان + خطي بالوقت */
-  const N = () => G.nLat * G.nLon;
   function sample(key, lat, lon, t){
-    if(!data) return NaN;
-    const fi = (lat - G.lat0) / G.step, fj = (lon - G.lon0) / G.step;
+    if(!data) return NaN; const G = data.G || GULF, N = () => G.nLat * G.nLon;
+    let lo = lon; while(lo < G.lon0 - 180) lo += 360; while(lo > G.lon0 + 180) lo -= 360;
+    const fi = (lat - G.lat0) / G.step, fj = (lo - G.lon0) / G.step;
     if(fi < 0 || fj < 0 || fi > G.nLat - 1 || fj > G.nLon - 1) return NaN;
     const i0 = Math.floor(fi), j0 = Math.floor(fj), i1 = Math.min(i0 + 1, G.nLat - 1), j1 = Math.min(j0 + 1, G.nLon - 1), di = fi - i0, dj = fj - j0;
     const h0 = Math.floor(t), h1 = Math.min(h0 + 1, times.length - 1), dt = t - h0, A = data[key], n = N();
@@ -6367,10 +6368,35 @@ window.WX = (function(){
     if(pinMarker) setPin(pinMarker._ll);
     try{ localStorage.setItem('wx_layer', k); }catch(e){}
   }
+  /* الشبكة تلحق الخريطة: لو طلعت برا المنطقة المحملة نجيب شبكة جديدة للمكان (255 نقطة، تنحفظ 3 ساعات) */
+  const STEPS = [.25, .5, .75, 1, 1.5, 2, 2.5, 3, 4, 5, 6];
+  let gridT = 0, gridSeq = 0;
+  const span = g => ({s:g.lat0, n:g.lat0 + (g.nLat - 1) * g.step, w:g.lon0, e:g.lon0 + (g.nLon - 1) * g.step});
+  function viewBox(){ const b = map.getBounds(); return {s:Math.max(-85, b.getSouth()), n:Math.min(85, b.getNorth()), w:b.getWest(), e:b.getEast()}; }
+  function needStep(v){ const latS = v.n - v.s, lonS = v.e - v.w, tall = latS >= lonS * .9, nLat = tall ? 17 : 15, nLon = tall ? 15 : 17;
+    const raw = Math.max(latS / (nLat - 3), lonS / (nLon - 3)); return {step:STEPS.find(x => x >= raw) || STEPS[STEPS.length - 1], nLat, nLon}; }
+  function covers(g, v, st){ const a = span(g), c = (v.w + v.e) / 2; let sh = 0; while(c + sh < a.w - 180) sh += 360; while(c + sh > a.w + 180) sh -= 360;
+    return v.s >= a.s - .2 && v.n <= a.n + .2 && v.w + sh >= a.w - .2 && v.e + sh <= a.e + .2 && g.step <= st * 2.1; }
+  async function followView(){
+    if(!map || !data) return; const v = viewBox(), need = needStep(v);
+    if(covers(G, v, need.step)) return;
+    let g = covers(GULF, v, need.step) ? GULF : null;
+    if(!g){ const st = need.step, cLat = (v.s + v.n) / 2, cLon = (v.w + v.e) / 2;
+      const lat0 = Math.max(-84, Math.min(84 - (need.nLat - 1) * st, Math.floor((cLat - (need.nLat - 1) / 2 * st) / st) * st));
+      const lon0 = Math.floor((cLon - (need.nLon - 1) / 2 * st) / st) * st;
+      g = {lat0:+lat0.toFixed(3), lon0:+lon0.toFixed(3), step:st, nLat:need.nLat, nLon:need.nLon}; }
+    const my = ++gridSeq, keepT = times[Math.round(tIdx)];
+    $('.wx-load').classList.add('on');
+    try{ const d = await fetchModel(model, g); if(my !== gridSeq) return; G = g; data = d; times = d.time;
+      const i = times.indexOf(keepT); tIdx = i >= 0 ? i : nowIdx(); setLayer(layer); }
+    catch(e){ $('.wx-bubble').textContent = String(e.message) === '429' ? 'وصلنا حد الخدمة المجانية، جرب بعد شوي' : 'تعذر تحميل توقعات هالمنطقة'; }
+    if(my === gridSeq) $('.wx-load').classList.remove('on');
+  }
+
   async function setModel(m){
     model = m; root.querySelectorAll('.wx-models button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
     $('.wx-load').classList.add('on');
-    try{ data = await fetchModel(m); times = data.time; }catch(e){ $('.wx-bubble').textContent = 'تعذر تحميل التوقعات'; }
+    try{ data = await fetchModel(m); times = data.time; }catch(e){ $('.wx-bubble').textContent = String(e.message) === '429' ? 'وصلنا حد الخدمة المجانية، جرب بعد شوي' : 'تعذر تحميل التوقعات'; }
     $('.wx-load').classList.remove('on');
     if(!times.length) return;
     if(!setModel.done){ tIdx = nowIdx(); setModel.done = true; }
@@ -6574,7 +6600,7 @@ window.WX = (function(){
     pane.appendChild(fieldCv); pane2.appendChild(partCv);
     cityLayer = L.layerGroup().addTo(map);
     ui();
-    map.on('moveend zoomend resize', () => { drawField(); drawCities(); buildFlow(); });
+    map.on('moveend zoomend resize', () => { drawField(); drawCities(); buildFlow(); clearTimeout(gridT); gridT = setTimeout(followView, 700); });
     map.on('click', e => { if(clickPin){ setPin(e.latlng); if(window.wxrPlace) wxrPlace(e.latlng.lat, e.latlng.lng, true); } });
     map.on('move', updateCross);
     try{ layer = localStorage.getItem('wx_layer') || 'precip'; if(!LAYERS[layer]) layer = 'precip'; model = localStorage.getItem('wx_model') || 'gfs_seamless'; }catch(e){}
@@ -8010,7 +8036,7 @@ render();
 (function(){
   const home = document.getElementById('tab-home'); if(!home) return;
   const FILES = ['d1-earth','d2-moon','d3-dunes','d4-compass','d5-orbit','d6-calendar','d8-solar'];
-  const VER = '1795534915';
+  const VER = '1795536429';
   const FONTS = [['','خط التصميم'],["'Readex Pro'",'Readex Pro'],["'IBM Plex Sans Arabic'",'IBM Plex'],["'Tajawal'",'تجوّل'],["'Cairo'",'القاهرة'],["'Almarai'",'المراعي'],["'Changa'",'Changa'],["'Noto Kufi Arabic'",'نوتو كوفي'],["'Reem Kufi'",'ريم كوفي'],["'El Messiri'",'المسيري'],["'Amiri'",'أميري'],["'Noto Naskh Arabic'",'نوتو نسخ'],["'Lalezar'",'لاله زار'],["'Marhey'",'مرحي']];
   const get = (k, d) => { try{ const v = localStorage.getItem(k); return v == null ? d : v; }catch(e){ return d; } };
   const put = (k, v) => { try{ localStorage.setItem(k, v); }catch(e){} };
