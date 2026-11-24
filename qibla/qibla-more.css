@@ -1,0 +1,27 @@
+.mapq{width:320px;height:320px}
+.cres{width:300px;height:300px}
+.bub{width:320px;height:260px}
+.bub-k{width:84px;height:84px;margin-top:-6px;opacity:.25;transform:scale(.9);transition:opacity .4s,transform .5s var(--spring),filter .4s}
+.bub-k.on{opacity:1;transform:scale(1.05);filter:drop-shadow(0 0 16px rgba(255,214,140,.7))}
+.stg:has(.bub){display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rug-w{position:relative;display:grid;place-items:center;width:300px;height:360px}
+.rug{width:150px;height:250px;transition:transform .2s linear;filter:drop-shadow(0 18px 18px rgba(0,0,0,.6));transform-origin:50% 55%}
+.rug-k{position:absolute;top:-6px;width:54px;height:54px;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .5s var(--spring)}
+.rug-w.on .rug-k{opacity:1;transform:none;filter:drop-shadow(0 0 14px rgba(255,214,140,.7))}
+.rug-w.on .rug{filter:drop-shadow(0 0 24px rgba(244,184,96,.45)) drop-shadow(0 18px 18px rgba(0,0,0,.6))}
+.ty{position:relative;width:100%;height:420px;border-radius:28px;overflow:hidden;background:#0B0E18;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--border)}
+.ty-bg{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 40%,#F4B860,#B36A22 60%,#3A2410);opacity:0;transition:opacity .3s}
+.ty-n{position:relative;font-size:120px;font-weight:200;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-4px}
+.ty.ok .ty-n{color:#1a1205;font-weight:400}
+.ty-t{position:relative;font-size:20px;margin-top:8px;font-weight:500}
+.ty.ok .ty-t{color:#1a1205}
+.ty-ch{position:relative;display:flex;gap:6px;height:28px;margin-top:14px;direction:ltr}
+.ty-ch i{width:16px;height:16px;border-top:3px solid var(--accent);border-right:3px solid var(--accent);transform:rotate(45deg);opacity:.2;animation:tyCh 1.2s infinite}
+.ty-ch.l{transform:scaleX(-1)}.ty-ch.hide{opacity:0}
+.ty-ch i:nth-child(2){animation-delay:.15s}.ty-ch i:nth-child(3){animation-delay:.3s}
+@keyframes tyCh{0%,100%{opacity:.15}40%{opacity:1}}
+.ty-bar{position:absolute;left:24px;right:24px;bottom:24px;height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}
+.ty-bar i{display:block;height:100%;background:var(--accent);transform-origin:right;transform:scaleX(0)}
+.ty.ok .ty-bar i{background:#1a1205}
+.d14 .rd .msg,.d14 .rd .deg{visibility:hidden}
+@media (prefers-reduced-motion:reduce){.ty-ch i{animation:none;opacity:.7}}

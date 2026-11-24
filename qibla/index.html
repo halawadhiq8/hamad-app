@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كشكولي · بوصلة القبلة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06080D;--glass:rgba(14,17,27,.82);--text:#ECEAF3;--muted:#9095AB;--border:rgba(255,255,255,.075);--accent:#F4B860;--gold2:#FFE3A6;--cyan:#7FD1E8;--good:#7FC99A;
+  --ease:cubic-bezier(.22,1,.36,1);--spring:cubic-bezier(.3,1.35,.5,1)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;background:#0E1018;color:var(--text);font-family:"Readex Pro",system-ui,sans-serif;font-weight:300}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:center;max-width:1180px;margin:0 auto;padding:30px 40px;min-height:100vh}
+header small{font-size:12px;color:var(--muted)}
+header h1{font-size:34px;font-weight:500;margin-top:6px}
+header p{color:var(--muted);margin-top:10px;line-height:1.8;max-width:470px;font-size:14px}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.pick button{flex:0 0 calc(33.333% - 4px);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:11px 12px;text-align:right;transition:background .2s,border-color .2s}
+.pick button.on{background:rgba(244,184,96,.12);border-color:rgba(244,184,96,.5)}
+.pick b{display:block;font-weight:500;font-size:14px}.pick span{font-size:11.5px;color:var(--muted)}
+.info{margin-top:20px;min-height:170px}
+.info h2{font-size:21px;font-weight:500}.info .tag{font-size:13px;color:var(--accent);margin-top:4px}
+.info dl{display:grid;grid-template-columns:62px 1fr;gap:8px 14px;margin-top:14px;font-size:13.5px;line-height:1.75}.info dt{color:var(--muted)}
+.nav9{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:12px}
+.nav9 button{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--border);display:grid;place-items:center}
+.nav9 button:active{transform:scale(.92)}.nav9 svg{width:20px;height:20px}
+.nav9 .ct{min-width:150px;text-align:center;font-size:14px}.nav9 .ct b{font-weight:500}.nav9 .ct small{display:block;color:var(--muted);font-size:11.5px}
+.dots{display:flex;justify-content:center;gap:5px;margin-top:12px}
+.dots i{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.18);transition:width .3s var(--ease),background .3s;cursor:pointer}.dots i.on{width:20px;background:var(--accent)}
+.phone{width:380px;height:760px;border-radius:52px;background:#000;padding:11px;box-shadow:0 40px 80px -30px rgba(0,0,0,.8),inset 0 0 0 1.5px #2a2a2a}
+.scr{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;background:var(--bg)}
+.isl{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:108px;height:31px;border-radius:20px;background:#000;z-index:50}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:14px;padding:18px 16px}.pick{display:none}.phone{width:100%;height:78vh;padding:0;border-radius:26px;background:none;box-shadow:none}.scr{border-radius:26px}.isl{display:none}.stage{order:2}.info{min-height:0}}
+
+/* ===== هيكل مشترك داخل الجوال ===== */
+.d{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;padding:62px 18px 22px;touch-action:none;user-select:none;-webkit-user-select:none}
+.d.on{display:flex}
+.d .ttl{align-self:stretch;display:flex;justify-content:space-between;align-items:flex-start}
+.d .ttl b{font-size:20px;font-weight:500}.d .ttl small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.d .live{font-size:11.5px;padding:7px 11px;border-radius:12px;border:1px solid var(--border);color:var(--muted)}
+.d .live.on{color:var(--good);border-color:rgba(127,201,154,.5)}
+.d .stg{flex:1;width:100%;display:grid;place-items:center;position:relative}
+.d .rd{text-align:center;margin-top:6px}
+.d .rd .deg{font-size:40px;font-weight:200;font-variant-numeric:tabular-nums;line-height:1}
+.d .rd .msg{font-size:14px;margin-top:8px;color:var(--muted);transition:color .25s;min-height:20px}
+.d.ok .rd .msg{color:var(--accent);font-weight:500}
+.d .hint{font-size:11px;color:var(--muted);margin-top:10px;opacity:.75}
+.kaaba{width:100%;height:100%}
+
+/* ١. شريط الاتجاه */
+.tape{position:relative;width:100%;height:120px;overflow:hidden;border-radius:22px;background:linear-gradient(180deg,#10162A,#0A0E1A);border:1px solid var(--border);
+  -webkit-mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+.tape .strip{position:absolute;top:0;bottom:0;left:50%;width:0;direction:ltr}
+.tape .tk{position:absolute;bottom:0;width:1px;background:rgba(255,255,255,.3);height:14px}
+.tape .tk.m{height:26px;background:rgba(255,255,255,.6)}
+.tape .lb{position:absolute;bottom:32px;transform:translateX(-50%);font-size:12px;color:var(--muted);white-space:nowrap}
+.tape .lb.c{color:var(--text);font-weight:500;font-size:14px}
+.tape .kb{position:absolute;top:12px;width:34px;height:34px;transform:translateX(-50%)}
+.tape .ctr{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.tape .ctr::before{content:"";position:absolute;top:0;left:-6px;border:7px solid transparent;border-top:9px solid var(--accent)}
+.d1 .big{width:220px;height:220px;border-radius:50%;margin-bottom:22px;display:grid;place-items:center;background:radial-gradient(circle,rgba(244,184,96,.10),transparent 65%);transition:background .4s}
+.d1.ok .big{background:radial-gradient(circle,rgba(244,184,96,.35),transparent 65%)}
+.d1 .big svg{width:110px;height:110px;transition:transform .5s var(--spring)}
+.d1.ok .big svg{transform:scale(1.12)}
+
+/* ٢. المحراب */
+.mih{position:relative;width:290px;height:400px}
+.mih .arch{position:absolute;inset:0}
+.mih .glow{position:absolute;inset:0;clip-path:url(#mihClip);background:linear-gradient(to top,rgba(244,184,96,.55),rgba(244,184,96,0) 70%);transform:translateY(100%);transition:transform 1s var(--ease)}
+.d2.ok .mih .glow{transform:none}
+.mih .pat{position:absolute;left:50%;top:58%;width:230px;height:230px;margin:-115px 0 0 -115px}
+.mih .lamp{position:absolute;left:50%;top:58%;width:0;height:0}
+.mih .lamp svg{position:absolute;left:-18px;top:-105px;width:36px;height:120px;filter:drop-shadow(0 0 10px rgba(244,184,96,.7))}
+
+/* ٣. النجمة الثمانية */
+.st8{width:300px;height:300px}
+
+/* ٤. الطواف */
+.orb{width:310px;height:310px}
+
+/* ٥. النحاس */
+.brass{position:relative;width:300px;height:300px;border-radius:50%;
+  background:conic-gradient(from 20deg,#6B4A1E,#E7C27A,#8A5F25,#F1D59A,#7A5420,#D9AE62,#6B4A1E);padding:14px;box-shadow:0 30px 50px -20px #000,inset 0 2px 3px rgba(255,255,255,.5)}
+.brass .face{position:relative;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#F7EBD3,#E2CFA8 60%,#C9B286);box-shadow:inset 0 6px 18px rgba(0,0,0,.45)}
+.brass .face svg{position:absolute;inset:0;width:100%;height:100%}
+.brass .glass{position:absolute;inset:14px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.35),transparent 40%,transparent 70%,rgba(255,255,255,.08));pointer-events:none}
+
+/* ٦. الرادار */
+.rdr{width:310px;height:310px}
+
+/* ٧. السهم ثلاثي الأبعاد */
+.p3{width:320px;height:320px;perspective:700px}
+.p3 .plane{position:relative;width:100%;height:100%;transform:rotateX(58deg);transform-style:preserve-3d}
+.p3 .disc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#18203A,#0B0F1C 70%);border:1px solid rgba(244,184,96,.3);box-shadow:0 0 60px rgba(244,184,96,.12)}
+.p3 .disc svg{width:100%;height:100%}
+.p3 .arrow3{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
+.p3 .arrow3 .a{position:absolute;left:-26px;top:-120px;width:52px;height:120px;transform-origin:50% 100%;transform:rotateX(-58deg) translateZ(0);filter:drop-shadow(0 18px 8px rgba(0,0,0,.6))}
+.p3 .shadow{position:absolute;left:50%;top:50%;width:40px;height:110px;margin:-110px 0 0 -20px;background:radial-gradient(ellipse at 50% 100%,rgba(0,0,0,.6),transparent 70%);transform-origin:50% 100%}
+
+/* ٨. الحلقة الذهبية */
+.gr{width:300px;height:300px}
+.gr .arc{transition:stroke .3s}
+.d8 .rd .msg{visibility:hidden}.d8.ok .rd .msg{visibility:visible}
+
+/* ٩. الضوء */
+.beam{position:relative;width:100%;height:440px;overflow:hidden;border-radius:26px;background:radial-gradient(120% 80% at 50% 100%,#0D1222,#05070C)}
+.beam .cone{position:absolute;left:50%;bottom:30px;width:0;height:0}
+.beam .cone i{position:absolute;left:-160px;bottom:0;width:320px;height:420px;background:conic-gradient(from -14deg at 50% 100%,rgba(255,228,170,0) 0deg,rgba(255,228,170,.32) 14deg,rgba(255,228,170,0) 28deg,transparent 28deg);-webkit-mask:linear-gradient(to top,#000 40%,transparent);mask:linear-gradient(to top,#000 40%,transparent);filter:blur(2px)}
+.beam .kb9{position:absolute;width:64px;height:64px;margin:-32px;transition:filter .3s,opacity .3s}
+.beam .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.4}
+.beam .me{position:absolute;left:50%;bottom:22px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* وضع التطبيق: بدون صفحة العرض */
+html,body{background:#06080D !important; overflow:hidden; height:100%;}
+.wrap{display:block !important; padding:0 !important; min-height:0 !important; max-width:none !important;}
+.wrap > div:first-child, .nav9, .dots, .isl{display:none !important;}
+.stage{width:100%;}
+.phone{width:100% !important; height:100vh !important; padding:0 !important; border-radius:0 !important; background:none !important; box-shadow:none !important;}
+.scr{border-radius:0 !important;}
+.d{padding:16px 16px 18px !important;}
+</style>
+<link rel="stylesheet" href="qibla-more.css">
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <header><small>كشكولي · قسم الصلاة</small><h1>14 تصميم لبوصلة القبلة</h1>
+      <p>كلها تشتغل: <b>اسحب يمين ويسار</b> داخل الجوال كأنك تلف بجوالك، ولما توصل لاتجاه القبلة يتغير الشكل ويهتز الجوال. على الجوال الحقيقي تقدر تفعّل البوصلة الحية.</p></header>
+    <div class="pick" id="pick"></div>
+    <div class="info" id="info"></div>
+  </div>
+  <div class="stage">
+    <div class="nav9"><button id="pv" aria-label="السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button><div class="ct" id="ct"></div><button id="nx" aria-label="التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button></div>
+    <div class="phone"><div class="scr" id="scr"><span class="isl"></span></div></div>
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <clipPath id="mihClip" clipPathUnits="objectBoundingBox"><path d="M.08 1 V.42 C.08 .2 .3 .06 .5 0 C.7 .06 .92 .2 .92 .42 V1 Z"/></clipPath>
+  <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9B8"/><stop offset=".55" stop-color="#F4B860"/><stop offset="1" stop-color="#C9802F"/></linearGradient>
+  <symbol id="kaaba" viewBox="0 0 64 64"><path d="M10 20 L32 10 L54 20 V46 L32 56 L10 46 Z" fill="#0A0A0C" stroke="#3A3A40" stroke-width="1"/><path d="M10 20 L32 30 L54 20" fill="none" stroke="#2A2A30"/><path d="M32 30 V56" stroke="#1E1E22"/>
+    <path d="M10 27 L32 37 L54 27" fill="none" stroke="url(#gGold)" stroke-width="3"/><path d="M38 42 v9 l6 -2.7 v-9z" fill="url(#gGold)" opacity=".9"/></symbol>
+</defs></svg>
+
+<script>
+/* ===== الحسابات ===== */
+const LOC = (() => { try{ const s = JSON.parse(localStorage.getItem('rihala_loc') || 'null'); if(s && s.lat) return s; }catch(e){} return {lat:29.3759, lng:47.9774}; })(), MECCA = {lat:21.4225, lng:39.8262};
+const R = Math.PI / 180;
+const Q = (() => { const f1 = LOC.lat * R, f2 = MECCA.lat * R, dl = (MECCA.lng - LOC.lng) * R; return (Math.atan2(Math.sin(dl), Math.cos(f1) * Math.tan(f2) - Math.sin(f1) * Math.cos(dl)) / R + 360) % 360; })();
+const DIST = (() => { const a = Math.sin((MECCA.lat - LOC.lat) * R / 2) ** 2 + Math.cos(LOC.lat * R) * Math.cos(MECCA.lat * R) * Math.sin((MECCA.lng - LOC.lng) * R / 2) ** 2; return Math.round(6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))); })();
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const norm = a => ((a % 360) + 360) % 360;
+const diffOf = h => ((Q - h + 540) % 360) - 180;          // + = لف يمين
+const KB = (cls, st) => '<svg class="' + (cls || '') + '" ' + (st || '') + ' viewBox="0 0 64 64"><use href="#kaaba"/></svg>';
+const msgOf = d => Math.abs(d) < 3 ? 'متجه للقبلة ✓' : 'لف ' + Math.round(Math.abs(d)) + '° ' + (d > 0 ? 'يمين ←' : '→ يسار');
+const DIRS = [['ش','N',0],['ق','E',90],['ج','S',180],['غ','W',270]];
+
+/* ===== التصاميم ===== */
+const D = [];
+function add(def){ D.push(def); }
+
+/* ١ شريط الاتجاه */
+add({n:'شريط الاتجاه', s:'مثل طيارات الكابتن', tag:'الأبسط والأوضح', idea:'بدل الدائرة، شريط درجات يتحرك قدامك مثل شاشة الطيارة، والكعبة مرسومة على مكانها بالشريط. فوقه كعبة كبيرة تضوي لما توصل.', ux:'تعرف فوراً كم باقي ووين تلف، بدون ما تفكر بالدائرة والزوايا.', motion:'الشريط ينزلق بنعومة مع حركتك، والكعبة تكبر ويطلع حولها توهج لما تتطابق.',
+  html:'<div class="big">' + KB() + '</div><div class="tape"><div class="strip"></div><div class="ctr"></div></div>',
+  init(el){ const st = el.querySelector('.strip'); let h = ''; for(let a = -720; a <= 720; a += 5){ const d = norm(a), m = d % 30 === 0, lb = DIRS.find(x => x[2] === d);
+      h += '<i class="tk' + (m ? ' m' : '') + '" style="left:' + (a * 4) + 'px"></i>' + (m ? '<span class="lb' + (lb ? ' c' : '') + '" style="left:' + (a * 4) + 'px">' + (lb ? lb[0] + ' ' + lb[1] : d) + '</span>' : ''); }
+    for(let k = -2; k <= 2; k++) h += '<span class="kb" style="left:' + ((Q + k * 360) * 4) + 'px">' + KB() + '</span>'; st.innerHTML = h; },
+  draw(el, h){ el.querySelector('.strip').style.transform = 'translateX(' + (-h * 4) + 'px)'; }});
+
+/* ٢ المحراب */
+add({n:'المحراب', s:'إطار محراب ومصباح', tag:'الأجمل روحانياً', idea:'البوصلة داخل شكل محراب، وفيها نقش هندسي إسلامي يلف معك، والمؤشر مصباح ذهبي معلّق.', ux:'شكل مألوف ومريح للعين، والمصباح دايماً يأشر للقبلة.', motion:'لما تتطابق، المحراب يتعبى نور ذهبي من تحت لفوق مثل شروق هادي.',
+  html:'<div class="mih"><svg class="arch" viewBox="0 0 290 400"><path d="M23 400 V168 C23 80 87 24 145 0 C203 24 267 80 267 168 V400" fill="rgba(255,255,255,.02)" stroke="rgba(244,184,96,.55)" stroke-width="1.5"/><path d="M41 400 V172 C41 96 97 48 145 26 C193 48 249 96 249 172 V400" fill="none" stroke="rgba(244,184,96,.2)"/></svg><div class="glow"></div><svg class="pat" viewBox="0 0 230 230"></svg><div class="lamp"><svg viewBox="0 0 36 120"><path d="M18 0 V40" stroke="rgba(244,184,96,.6)"/><path d="M8 44 h20 l-3 26 q-7 8 -14 0 z" fill="url(#gGold)"/><path d="M12 72 h12 l-6 10z" fill="#C9802F"/><circle cx="18" cy="58" r="4" fill="#FFF6DD"/></svg></div></div>',
+  init(el){ let p = '<g class="rot"><circle cx="115" cy="115" r="112" fill="none" stroke="rgba(244,184,96,.25)"/>';
+    for(let i = 0; i < 8; i++) p += '<rect x="65" y="65" width="100" height="100" fill="none" stroke="rgba(244,184,96,.16)" transform="rotate(' + (i * 11.25) + ' 115 115)"/>';
+    for(let a = 0; a < 360; a += 10) p += '<line x1="115" y1="5" x2="115" y2="' + (a % 90 ? 11 : 18) + '" stroke="rgba(236,234,243,' + (a % 90 ? .3 : .8) + ')" transform="rotate(' + a + ' 115 115)"/>';
+    DIRS.forEach(([ar, en, a]) => p += '<text x="115" y="34" text-anchor="middle" font-size="13" fill="' + (a ? '#ECEAF3' : '#F4B860') + '" font-family="Readex Pro" transform="rotate(' + a + ' 115 115)">' + ar + ' ' + en + '</text>');
+    p += '<g transform="rotate(' + Q + ' 115 115)"><use href="#kaaba" x="99" y="40" width="32" height="32"/></g></g>'; el.querySelector('.pat').innerHTML = p; },
+  draw(el, h){ el.querySelector('.pat .rot').setAttribute('transform', 'rotate(' + (-h) + ' 115 115)'); el.querySelector('.lamp svg').style.transform = 'rotate(' + diffOf(h) * 0 + 'deg)'; }});
+
+/* ٣ النجمة الثمانية */
+add({n:'النجمة الثمانية', s:'نجمة إسلامية بدل الإبرة', tag:'الأكثر هوية', idea:'وجه البوصلة نجمة ثمانية (ربع الحزب) بخطوط ذهبية رفيعة، والكعبة على حلقة الدرجات. فوق علامة ثابتة تطابق عليها الكعبة.', ux:'ما فيه إبرة تلخبطك: بس خل الكعبة توصل للعلامة الذهبية فوق.', motion:'النجمة تلف كقطعة وحدة بثقل، ولما تتطابق ترتسم خطوطها بالذهبي.',
+  html:'<svg class="st8" viewBox="0 0 300 300"></svg>',
+  init(el){ const c = 150; let s = '<path d="M' + c + ' 6 l-8 -12 h16z" transform="translate(0,12)" fill="#F4B860"/><g class="rot"><circle cx="150" cy="150" r="138" fill="#0C1020" stroke="rgba(255,255,255,.1)"/>';
+    for(let a = 0; a < 360; a += 5) s += '<line x1="150" y1="16" x2="150" y2="' + (a % 30 ? 22 : 28) + '" stroke="rgba(236,234,243,' + (a % 30 ? .25 : .7) + ')" transform="rotate(' + a + ' 150 150)"/>';
+    for(let a = 30; a < 360; a += 30) if(a % 90) s += '<text x="150" y="44" text-anchor="middle" font-size="10" fill="rgba(236,234,243,.45)" font-family="Readex Pro" transform="rotate(' + a + ' 150 150)">' + a + '</text>';
+    DIRS.forEach(([ar, en, a]) => s += '<text x="150" y="46" text-anchor="middle" font-size="12.5" font-weight="500" fill="' + (a ? '#ECEAF3' : '#F4B860') + '" font-family="Readex Pro" transform="rotate(' + a + ' 150 150)">' + ar + ' ' + en + '</text>');
+    s += '<g class="star"><rect x="85" y="85" width="130" height="130" fill="none" stroke="rgba(244,184,96,.5)" stroke-width="1.4"/><rect x="85" y="85" width="130" height="130" fill="none" stroke="rgba(244,184,96,.5)" stroke-width="1.4" transform="rotate(45 150 150)"/><circle cx="150" cy="150" r="46" fill="none" stroke="rgba(244,184,96,.35)"/><circle cx="150" cy="150" r="5" fill="#F4B860"/></g>';
+    s += '<g transform="rotate(' + Q + ' 150 150)"><line x1="150" y1="104" x2="150" y2="70" stroke="#F4B860" stroke-width="1.5" stroke-dasharray="3 3"/><use href="#kaaba" x="133" y="52" width="34" height="34"/></g></g>';
+    el.querySelector('.st8').innerHTML = s; },
+  draw(el, h, ok){ el.querySelector('.st8 .rot').setAttribute('transform', 'rotate(' + (-h) + ' 150 150)'); el.querySelectorAll('.star rect').forEach(r => r.setAttribute('stroke', ok ? '#FFE3A6' : 'rgba(244,184,96,.5)')); }});
+
+/* ٤ الطواف */
+add({n:'الطواف', s:'الكعبة بالنص وأنت تدور', tag:'الأكثر إبداعاً', idea:'الكعبة بالنص، وحولها حلقات تدور بهدوء عكس عقارب الساعة مثل الطواف. أنت نقطة ذهبية، وشعاع يطلع منك باتجاه جوالك.', ux:'بدل ما تفكر بالدرجات، تشوف نفسك بالنسبة للكعبة. لما يوصل الشعاع للكعبة، أنت متجه صح.', motion:'حلقات الطواف تدور ببطء دايماً، والشعاع يتوهج ويتصل بالكعبة لما تتطابق.',
+  html:'<svg class="orb" viewBox="0 0 310 310"><g class="rings"><circle cx="155" cy="155" r="70" fill="none" stroke="rgba(244,184,96,.22)" stroke-dasharray="2 7"/><circle cx="155" cy="155" r="98" fill="none" stroke="rgba(244,184,96,.14)" stroke-dasharray="1 9"/><circle cx="155" cy="155" r="126" fill="none" stroke="rgba(244,184,96,.08)" stroke-dasharray="1 11"/></g><use href="#kaaba" x="125" y="125" width="60" height="60"/><g class="me"><line class="ray" x1="155" y1="290" x2="155" y2="190" stroke="#F4B860" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 6"/><circle cx="155" cy="290" r="9" fill="#F4B860"/></g></svg>',
+  init(el){ const g = el.querySelector('.rings'); if(!RM) g.animate([{transform:'rotate(0deg)'},{transform:'rotate(-360deg)'}], {duration:40000, iterations:Infinity}); g.style.transformOrigin = '155px 155px'; },
+  draw(el, h, ok){ const d = diffOf(h); el.querySelector('.me').setAttribute('transform', 'rotate(' + d + ' 155 155)'); const ray = el.querySelector('.ray');
+    ray.setAttribute('stroke-dasharray', ok ? '0' : '4 6'); ray.setAttribute('y2', ok ? 186 : 200); ray.style.filter = ok ? 'drop-shadow(0 0 6px #F4B860)' : 'none'; }});
+
+/* ٥ النحاس */
+add({n:'البوصلة النحاسية', s:'آلة كلاسيكية فخمة', tag:'الأفخم', idea:'بوصلة نحاس حقيقية: إطار معدني لامع، ووجه ورقي قديم بنقوش محفورة، وإبرة ذهبية وحمرا، وزجاج يعكس الضو.', ux:'شكل يعرفه الكل من أول نظرة، والإبرة الذهبية تأشر للقبلة على طول.', motion:'الإبرة تتمايل وترتد بثقل مثل إبرة حقيقية بالزيت.',
+  html:'<div class="brass"><div class="face"><svg viewBox="0 0 272 272"></svg></div><div class="glass"></div></div>',
+  init(el){ const c = 136; let s = '<g class="rot">';
+    for(let a = 0; a < 360; a += 2) s += '<line x1="136" y1="8" x2="136" y2="' + (a % 10 ? 13 : a % 30 ? 17 : 22) + '" stroke="#5A3D17" stroke-width="' + (a % 30 ? .7 : 1.4) + '" transform="rotate(' + a + ' 136 136)"/>';
+    for(let a = 30; a < 360; a += 30) if(a % 90) s += '<text x="136" y="36" text-anchor="middle" font-size="10" fill="#6E4C1E" font-family="Readex Pro" transform="rotate(' + a + ' 136 136)">' + a + '</text>';
+    DIRS.forEach(([ar, en, a]) => s += '<text x="136" y="44" text-anchor="middle" font-size="18" font-family="Amiri" fill="' + (a ? '#3A2A12' : '#9C2B1E') + '" transform="rotate(' + a + ' 136 136)">' + ar + '</text>');
+    s += '<path d="M136 56 L148 136 L136 216 L124 136Z" fill="none" stroke="#B8955A" stroke-width=".8"/><path d="M56 136 L136 124 L216 136 L136 148Z" fill="none" stroke="#B8955A" stroke-width=".8"/>';
+    s += '<g transform="rotate(' + Q + ' 136 136)"><use href="#kaaba" x="122" y="48" width="28" height="28"/></g></g>';
+    s += '<g class="ndl"><path d="M136 60 L143 136 L129 136Z" fill="url(#gGold)" stroke="#7A5420" stroke-width=".6"/><path d="M129 136 L143 136 L136 206Z" fill="#9C2B1E"/><circle cx="136" cy="136" r="9" fill="#7A5420"/><circle cx="136" cy="136" r="4" fill="#F1D59A"/></g>';
+    el.querySelector('.face svg').innerHTML = s; },
+  draw(el, h){ el.querySelector('.face .rot').setAttribute('transform', 'rotate(' + (-h) + ' 136 136)'); el.querySelector('.face .ndl').setAttribute('transform', 'rotate(' + diffOf(h) + ' 136 136)'); }});
+
+/* ٦ الرادار */
+add({n:'الرادار', s:'مسح ومسافة لمكة', tag:'الأكثر تقنية', idea:'شاشة رادار: حلقات مسافات (٥٠٠ و١٠٠٠ و١٥٠٠ كم) ومكة نقطة على مسافتها الحقيقية. خط المسح يدور، وخط اتجاهك ثابت فوق.', ux:'تشوف الاتجاه والمسافة الحقيقية لمكة بنفس الشاشة.', motion:'خط المسح يلف دايماً، ولما يعدي على مكة تومض النقطة. لما تتطابق تصير الشاشة ذهبية.',
+  html:'<svg class="rdr" viewBox="0 0 310 310"></svg>',
+  init(el){ let s = '<defs><radialGradient id="rg"><stop offset="0" stop-color="#0E2A26"/><stop offset="1" stop-color="#06100F"/></radialGradient><linearGradient id="sw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(127,209,232,0)"/><stop offset="1" stop-color="rgba(127,209,232,.45)"/></linearGradient></defs>';
+    s += '<circle cx="155" cy="155" r="145" fill="url(#rg)" stroke="rgba(127,209,232,.35)"/><g class="rot">';
+    [500, 1000, 1500].forEach(k => { const r = k / 1600 * 140; s += '<circle cx="155" cy="155" r="' + r + '" fill="none" stroke="rgba(127,209,232,.2)"/><text x="' + (155 + 4) + '" y="' + (155 - r + 12) + '" font-size="8.5" fill="rgba(127,209,232,.6)" font-family="Readex Pro">' + k + ' كم</text>'; });
+    s += '<line x1="155" y1="12" x2="155" y2="298" stroke="rgba(127,209,232,.12)"/><line x1="12" y1="155" x2="298" y2="155" stroke="rgba(127,209,232,.12)"/>';
+    DIRS.forEach(([ar, en, a]) => s += '<text x="155" y="28" text-anchor="middle" font-size="11" fill="' + (a ? 'rgba(127,209,232,.8)' : '#F4B860') + '" font-family="Readex Pro" transform="rotate(' + a + ' 155 155)">' + ar + ' ' + en + '</text>');
+    const r = DIST / 1600 * 140; s += '<g transform="rotate(' + Q + ' 155 155)"><circle class="blip" cx="155" cy="' + (155 - r) + '" r="6" fill="#F4B860"/><use href="#kaaba" x="140" y="' + (155 - r - 36) + '" width="30" height="30"/></g></g>';
+    s += '<g class="sweep"><path d="M155 155 L155 10 A145 145 0 0 1 238 36 Z" fill="url(#sw)" opacity=".7"/></g><line x1="155" y1="155" x2="155" y2="10" stroke="#F4B860" stroke-width="1.5"/><circle cx="155" cy="155" r="4" fill="#F4B860"/>';
+    el.querySelector('.rdr').innerHTML = s; const sw = el.querySelector('.sweep'); sw.style.transformOrigin = '155px 155px';
+    if(!RM) sw.animate([{transform:'rotate(0deg)'},{transform:'rotate(360deg)'}], {duration:3600, iterations:Infinity}); },
+  draw(el, h, ok){ el.querySelector('.rdr .rot').setAttribute('transform', 'rotate(' + (-h) + ' 155 155)'); el.querySelector('.rdr circle').setAttribute('stroke', ok ? '#F4B860' : 'rgba(127,209,232,.35)'); }});
+
+/* ٧ السهم ثلاثي الأبعاد */
+add({n:'السهم المجسّم', s:'سهم ثلاثي الأبعاد على أرضية', tag:'الأحدث شكلاً', idea:'البوصلة أرضية مائلة كأنها على الطاولة، وفوقها سهم ذهبي واقف مجسّم بظله، يأشر للقبلة.', ux:'العمق يخلي الاتجاه واضح جداً، كأنك تشوف سهم حقيقي قدامك.', motion:'السهم يلف على الأرضية بظله، ويطلع لفوق شوي ويلمع لما تتطابق.',
+  html:'<div class="p3"><div class="plane"><div class="disc"><svg viewBox="0 0 320 320"></svg></div><div class="shadow"></div><div class="arrow3"><svg class="a" viewBox="0 0 52 120"><path d="M26 0 L52 46 H36 V120 H16 V46 H0 Z" fill="url(#gGold)"/><path d="M26 0 L52 46 H36 V120 H26 Z" fill="#000" opacity=".18"/></svg></div></div></div>',
+  init(el){ let s = '<g class="rot">'; for(let a = 0; a < 360; a += 10) s += '<line x1="160" y1="14" x2="160" y2="' + (a % 90 ? 22 : 32) + '" stroke="rgba(236,234,243,' + (a % 90 ? .3 : .8) + ')" stroke-width="' + (a % 90 ? 1 : 2) + '" transform="rotate(' + a + ' 160 160)"/>';
+    DIRS.forEach(([ar, en, a]) => s += '<text x="160" y="56" text-anchor="middle" font-size="18" font-weight="500" fill="' + (a ? '#ECEAF3' : '#F4B860') + '" font-family="Readex Pro" transform="rotate(' + a + ' 160 160)">' + ar + '</text>');
+    s += '<circle cx="160" cy="160" r="100" fill="none" stroke="rgba(244,184,96,.15)"/><g transform="rotate(' + Q + ' 160 160)"><use href="#kaaba" x="140" y="64" width="40" height="40"/></g></g>'; el.querySelector('.disc svg').innerHTML = s; },
+  draw(el, h, ok){ el.querySelector('.disc .rot').setAttribute('transform', 'rotate(' + (-h) + ' 160 160)'); const d = diffOf(h);
+    el.querySelector('.arrow3').style.transform = 'rotateZ(' + d + 'deg)'; el.querySelector('.shadow').style.transform = 'rotate(' + d + 'deg) skewX(-10deg)';
+    el.querySelector('.arrow3 .a').style.transform = 'rotateX(-58deg) translateZ(' + (ok ? 16 : 0) + 'px)'; el.querySelector('.arrow3 .a').style.transition = 'transform .4s cubic-bezier(.3,1.35,.5,1)'; }});
+
+/* ٨ الحلقة الذهبية */
+add({n:'الحلقة الذهبية', s:'قوس يتعبى لين توصل', tag:'الأسهل للكبار', idea:'ما فيه إبرة أبد. حلقة فيها قوس ذهبي يبين كم باقي تلف، ورقم كبير بالنص: «لف 37° يمين». لما توصل، تكتمل الحلقة وتطلع الكعبة.', ux:'أوضح تصميم للي ما يحب البوصلات: يقولك بالضبط كم تلف ولوين.', motion:'القوس يقصر وأنت تقرب، ولما توصل الحلقة تكتمل دائرة ذهبية والكعبة تطلع بنابض.',
+  html:'<svg class="gr" viewBox="0 0 300 300"><circle cx="150" cy="150" r="124" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="14"/><path class="arc" fill="none" stroke="url(#gGold)" stroke-width="14" stroke-linecap="round"/><circle class="full" cx="150" cy="150" r="124" fill="none" stroke="#F4B860" stroke-width="14" opacity="0"/><g class="kb8" opacity="0"><use href="#kaaba" x="110" y="96" width="80" height="80"/></g><text class="big" x="150" y="150" text-anchor="middle" font-size="52" font-weight="200" fill="#ECEAF3" font-family="Readex Pro"></text><text class="sm" x="150" y="186" text-anchor="middle" font-size="15" fill="#9095AB" font-family="Readex Pro"></text></svg>',
+  init(){},
+  draw(el, h, ok){ const d = diffOf(h), a = Math.abs(d), sv = el.querySelector('.gr');
+    const ang = (d > 0 ? 1 : -1) * Math.min(a, 179.9), r = 124, x = 150 + r * Math.sin(ang * R), y = 150 - r * Math.cos(ang * R);
+    sv.querySelector('.arc').setAttribute('d', 'M150 26 A124 124 0 ' + (a > 180 ? 1 : 0) + ' ' + (d > 0 ? 1 : 0) + ' ' + x.toFixed(1) + ' ' + y.toFixed(1)); sv.querySelector('.arc').style.opacity = ok ? 0 : 1;
+    sv.querySelector('.full').setAttribute('opacity', ok ? 1 : 0); sv.querySelector('.kb8').setAttribute('opacity', ok ? 1 : 0);
+    sv.querySelector('.big').textContent = ok ? '' : Math.round(a) + '°'; sv.querySelector('.sm').textContent = ok ? '' : (d > 0 ? 'لف يمين ←' : '→ لف يسار'); }});
+
+/* ٩ الضوء */
+add({n:'شعاع النور', s:'ضو يطلع من جوالك', tag:'الأكثر جو', idea:'شاشة ليلية، ومن جوالك يطلع شعاع نور باتجاهك. الكعبة بعيدة بالظلام على اتجاهها الحقيقي، ولما يوصل الضو لها تنور.', ux:'إحساس بسيط وجميل: «نوّر على الكعبة» بدل حسابات الدرجات.', motion:'الشعاع يلف معك بنعومة، والكعبة تبدأ خافتة وتنور تدريجياً كل ما قربت.',
+  html:'<div class="beam"><div class="stars"></div><svg class="kb9" viewBox="0 0 64 64"><use href="#kaaba"/></svg><div class="cone"><i></i></div><span class="me"></span></div>',
+  init(el){ let s = ''; for(let i = 0; i < 60; i++) s += '<i style="left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 80) + '%;opacity:' + (.15 + Math.random() * .5) + '"></i>'; el.querySelector('.stars').innerHTML = s; },
+  draw(el, h, ok){ const d = diffOf(h), bm = el.querySelector('.beam'), W = bm.clientWidth, H = bm.clientHeight, k = el.querySelector('.kb9');
+    const ang = Math.max(-75, Math.min(75, d)), x = W / 2 + Math.sin(ang * R) * (H - 90), y = H - 30 - Math.cos(ang * R) * (H - 90);
+    k.style.left = x + 'px'; k.style.top = y + 'px'; const a = Math.abs(d), lit = Math.max(0, 1 - a / 25);
+    k.style.opacity = .25 + lit * .75; k.style.filter = 'drop-shadow(0 0 ' + (lit * 26) + 'px rgba(255,214,140,' + lit + '))';
+    el.querySelector('.cone').style.transform = 'rotate(0deg)'; }});
+
+</script>
+<script src="qibla-more.js"></script>
+<script>
+/* ===== بناء + تفاعل ===== */
+const scr = document.getElementById('scr');
+D.forEach((d, i) => {
+  scr.insertAdjacentHTML('beforeend', '<section class="d d' + (i + 1) + '" id="q' + i + '"><div class="ttl"><div><b>اتجاه القبلة</b><small>مكة على بعد ' + DIST.toLocaleString('en') + ' كم</small></div><button class="live">تفعيل البوصلة الحية</button></div><div class="stg">' + d.html + '</div><div class="rd"><div class="deg"></div><div class="msg"></div></div><div class="hint">اسحب يمين ويسار عشان تجرب ↔</div></section>');
+  d.el = document.getElementById('q' + i); d.init(d.el);
+});
+// اتجاه الجوال (محاكاة بالسحب أو البوصلة الحقيقية) مع نابض
+let target = norm(Q - 70), cur = target, vel = 0, raf = 0, wasOk = false, active = 0;
+function loop(){
+  let d = ((target - cur + 540) % 360) - 180; const a = d * 140 - vel * 16; vel += a * .016; cur = norm(cur + vel * .016);
+  if(Math.abs(d) < .05 && Math.abs(vel) < .05){ cur = target; vel = 0; }
+  render(); raf = (Math.abs(d) > .05 || Math.abs(vel) > .05) ? requestAnimationFrame(loop) : 0;
+}
+function setH(h, instant){ target = norm(h); if(instant || RM){ cur = target; vel = 0; render(); return; } if(!raf) raf = requestAnimationFrame(loop); }
+function render(){
+  const d = D[active], dd = diffOf(cur), ok = Math.abs(dd) < 3;
+  d.draw(d.el, cur, ok); d.el.classList.toggle('ok', ok);
+  d.el.querySelector('.deg').textContent = Math.round(Q) + '°';
+  d.el.querySelector('.msg').textContent = msgOf(dd);
+  if(ok && !wasOk && navigator.vibrate) navigator.vibrate(20); wasOk = ok;
+}
+let drag = null;
+scr.addEventListener('pointerdown', e => { if(e.target.closest('button')) return; drag = {x:e.clientX, h:target}; scr.setPointerCapture(e.pointerId); });
+scr.addEventListener('pointermove', e => { if(!drag) return; setH(drag.h - (e.clientX - drag.x) * .45); });
+scr.addEventListener('pointerup', () => drag = null);
+let liveOn = false;
+function startLive(){
+  const h = e => { const v = e.webkitCompassHeading != null ? e.webkitCompassHeading : (e.alpha != null ? 360 - e.alpha : null); if(v != null) setH(v); };
+  const go = () => { liveOn = true; addEventListener('deviceorientationabsolute', h); addEventListener('deviceorientation', h); document.querySelectorAll('.live').forEach(b => { b.classList.add('on'); b.textContent = 'البوصلة الحية شغالة'; }); };
+  if(typeof DeviceOrientationEvent !== 'undefined' && DeviceOrientationEvent.requestPermission) DeviceOrientationEvent.requestPermission().then(s => s === 'granted' && go()).catch(() => {}); else go();
+}
+document.querySelectorAll('.live').forEach(b => b.onclick = startLive);
+
+/* ===== صفحة العرض ===== */
+const pick = document.getElementById('pick'), info = document.getElementById('info'), N = D.length;
+pick.innerHTML = D.map((d, i) => '<button data-i="' + i + '"><b>' + (i + 1) + ' · ' + d.n + '</b><span>' + d.s + '</span></button>').join('');
+document.getElementById('dots').innerHTML = D.map((d, i) => '<i data-i="' + i + '" title="' + d.n + '"></i>').join('');
+function sel(i){
+  i = (i + N) % N; active = i;
+  [...pick.children].forEach((b, j) => b.classList.toggle('on', i === j));
+  document.querySelectorAll('#dots i').forEach((b, j) => b.classList.toggle('on', i === j));
+  D.forEach((d, j) => d.el.classList.toggle('on', i === j));
+  const d = D[i];
+  document.getElementById('ct').innerHTML = '<b>' + (i + 1) + ' · ' + d.n + '</b><small>' + (i + 1) + ' من ' + N + '</small>';
+  info.innerHTML = '<h2>' + d.n + '</h2><div class="tag">' + d.tag + '</div><dl><dt>الفكرة</dt><dd>' + d.idea + '</dd><dt>التجربة</dt><dd>' + d.ux + '</dd><dt>الموشن</dt><dd>' + d.motion + '</dd></dl>';
+  wasOk = false;
+  if(!liveOn){ setH(Q - 70, true); setTimeout(() => setH(Q - 18), 350); } else render();
+  
+}
+pick.onclick = e => { const b = e.target.closest('button'); if(b) sel(+b.dataset.i); };
+document.getElementById('dots').onclick = e => { const b = e.target.closest('i'); if(b) sel(+b.dataset.i); };
+document.getElementById('nx').onclick = () => sel(active + 1);
+document.getElementById('pv').onclick = () => sel(active - 1);
+addEventListener('keydown', e => { if(e.key === 'ArrowLeft') sel(active + 1); if(e.key === 'ArrowRight') sel(active - 1); });
+const _fromHash = () => sel(Math.max(0, Math.min(N - 1, (parseInt(location.hash.slice(1)) || 1) - 1))); _fromHash(); addEventListener('hashchange', _fromHash);
+</script>
+</body>
+</html>
