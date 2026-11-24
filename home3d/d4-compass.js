@@ -41,11 +41,11 @@ export async function mount(root){
   .d4 .np .rm{font-size:12.5px; color:#E0BE6C; text-align:left;}
   .d4 .row{display:flex; justify-content:space-between; font-size:12px; color:#BFB394; padding-top:14px;}
   .d4 .row b{display:block; color:#F1E7D0; font-size:20px; font-weight:400; margin-top:2px;}
-  .d4 .btn{position:absolute; z-index:3; bottom:12px; left:50%; transform:translateX(-50%); font:inherit; font-size:12px; padding:7px 14px; border-radius:16px; border:1px solid rgba(201,162,74,.5); background:rgba(15,42,34,.6); color:#E0BE6C;}
+  .d4 .d4cmp{position:absolute; z-index:3; bottom:6px; left:50%; transform:translateX(-50%); width:auto; height:auto; min-width:0; margin:0; white-space:nowrap; line-height:1.2; font:inherit; font-size:12px; padding:6px 14px; border-radius:14px; box-shadow:none; border:1px solid rgba(201,162,74,.5); background:rgba(15,42,34,.6); color:#E0BE6C;}
   `);
   const dist = (() => { const R = 6371, t = Math.PI / 180, a = LOC.lat * t, b = 21.4225 * t, dl = (39.8262 - LOC.lng) * t; return Math.round(R * Math.acos(Math.sin(a) * Math.sin(b) + Math.cos(a) * Math.cos(b) * Math.cos(dl))); })();
   const dirAr = d => ['الشمال','الشمال الشرقي','الشرق','الجنوب الشرقي','الجنوب','الجنوب الغربي','الغرب','الشمال الغربي'][Math.round(d / 45) % 8];
-  root.innerHTML = `<div class="d4"><div class="hero"><div class="hd"><div class="t" id="d4c"></div><div class="d" id="d4d"></div></div><button class="btn" id="d4b">فعّل البوصلة</button></div>
+  root.innerHTML = `<div class="d4"><div class="hero"><div class="hd"><div class="t" id="d4c"></div><div class="d" id="d4d"></div></div><button class="d4cmp" id="d4b">فعّل البوصلة</button></div>
     <div class="body"><div class="q"><div><div class="k">اتجاه القبلة</div><div class="v">${dirAr(Q)} · مكة ${dist.toLocaleString('en')} كم</div></div><div class="deg">${Math.round(Q)}°</div></div>
       <div class="np"><div><div class="k" style="font-size:12px;color:#BFB394">الصلاة الجاية</div><div class="nm" id="d4n">—</div></div><div><div class="tm" id="d4t">—</div><div class="rm" id="d4r">—</div></div></div>
       <div class="row"><div>الحرارة<b id="d4w">--°</b></div><div>الرطوبة<b id="d4h">--%</b></div><div>الرياح<b id="d4wi">--</b></div></div></div></div>`;

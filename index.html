@@ -8036,7 +8036,7 @@ render();
 (function(){
   const home = document.getElementById('tab-home'); if(!home) return;
   const FILES = ['d1-earth','d2-moon','d3-dunes','d4-compass','d5-orbit','d6-calendar','d8-solar'];
-  const VER = '1795536429';
+  const VER = '1795538193';
   const FONTS = [['','خط التصميم'],["'Readex Pro'",'Readex Pro'],["'IBM Plex Sans Arabic'",'IBM Plex'],["'Tajawal'",'تجوّل'],["'Cairo'",'القاهرة'],["'Almarai'",'المراعي'],["'Changa'",'Changa'],["'Noto Kufi Arabic'",'نوتو كوفي'],["'Reem Kufi'",'ريم كوفي'],["'El Messiri'",'المسيري'],["'Amiri'",'أميري'],["'Noto Naskh Arabic'",'نوتو نسخ'],["'Lalezar'",'لاله زار'],["'Marhey'",'مرحي']];
   const get = (k, d) => { try{ const v = localStorage.getItem(k); return v == null ? d : v; }catch(e){ return d; } };
   const put = (k, v) => { try{ localStorage.setItem(k, v); }catch(e){} };
