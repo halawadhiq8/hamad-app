@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rihala-cache-v20';
+const CACHE_NAME = 'rihala-cache-v21';
 // كاش منفصل لأداة إزالة الخلفية ونماذجها، ما ينمسح مع تحديث التطبيق عشان تشتغل بدون نت
 const MODELS_CACHE = 'kashkoli-models-v1';
 const MODEL_HOSTS = ['cdn.jsdelivr.net', 'staticimgly.com'];
