@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rihala-cache-v27';
+const CACHE_NAME = 'rihala-cache-v28';
 // كاشات ثابتة ما تنمسح مع تحديث التطبيق عشان كل شي يشتغل بدون نت:
 //  kashkoli-models-v1: إزالة الخلفية ونماذجها ومكتبات CDN · kashkoli-assets-v1: ملفات التطبيق اللي تتحمل مسبقاً
 //  kashkoli-live-v1: آخر بيانات طقس وخرائط (تنعرض بدون نت لين يرجع)
